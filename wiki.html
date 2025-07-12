@@ -1,43 +1,310 @@
-<div style="width: 100%; position: fixed; top: 0; left: 0; right: 0;" id="header-placeholder"></div>
-<div id="three-column-layout" style="display: flex; width: 100%; margin-top: 120px; position: relative; z-index: -1; height: auto;">
-  <div style="width: 20%; background-color: rgb(25, 100, 25); position: fixed; left: 0; top: 120px; bottom: 0; z-index: -1;"></div>
-  <div style="width: 60%; background-color: transparent;"></div>
-  <div style="width: 20%; background-color: transparent;"></div>
-</div>
-<script>
-  function loadHeader() {
-    // Remove existing header if any
-    const existingHeader = document.getElementById('header-placeholder').querySelector('.header');
-    if (existingHeader) {
-      existingHeader.remove();
-    }
-    // Fetch header.html and insert its body content into the placeholder div
-    fetch('header.html')
-      .then(response => response.text())
-      .then(data => {
-        // Parse the fetched HTML text
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(data, 'text/html');
-        // Extract the header div from the fetched document
-        const headerDiv = doc.querySelector('.header');
-        // Insert the headerDiv as is into the placeholder
-        if (headerDiv) {
-          document.getElementById('header-placeholder').appendChild(headerDiv);
-        }
-        // Also insert the styles from header.html's head into this document's head
-        const style = doc.querySelector('style');
-        if (style) {
-          document.head.appendChild(style);
-        }
-      })
-      .catch(error => {
-        console.error('Error loading header:', error);
-      });
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="https://github.com/user-attachments/assets/134de4f5-9a3c-434c-9926-755a2d930e1d" />
+<title>Pixalator Wiki</title>
+<style>
+  .header img {
+    height: 100px;
+    margin-right: 20px;;
   }
-  // Load header initially
-  loadHeader();
-  // Reload header on page refresh (optional, can be removed if not needed)
-  window.addEventListener('beforeunload', () => {
-    loadHeader();
-  });
+  .header h1 {
+    color: white;
+    font-size: 2rem;
+    margin: 0;
+    letter-spacing: 1px;
+    font-family: minecraft;
+    text-shadow: 2px 2px 0px black, 3px 3px 0px black, 4px 4px 0px black, 5px 5px 0px black;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    background-color: forestgreen;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  @media (min-width: 768px) {
+  #three-column-layout {
+      margin-top: 0 !important;
+    }
+  body {
+    padding-top: 80px; /* initial header height */
+  }
+  .header {
+    z-index: 10;
+    background-color: forestgreen;
+  }
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      align-items: center;
+    }
+    .header > div:last-child {
+      margin-left: 0;
+      margin-top: 10px;
+      align-items: center !important;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+  .header button {
+  font-family: minecraft;
+  font-size: 16px;
+  background-color: forestgreen;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: black;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-left: 25px;
+}
+
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 0px;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: forestgreen;
+  min-width: 160px;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  z-index: 1;
+  flex-direction: column;
+}
+
+/* Show the dropdown content on hover */
+.dropdown:hover .dropdown-content {
+  display: flex;
+}
+
+/* Style dropdown buttons */
+.dropdown-content button {
+  background-color: forestgreen;
+  border: 3px solid;
+  color: black;
+  padding: 0.25em 0.5em;
+  text-transform: uppercase;
+  font-family: minecraft;
+  font-size: 16px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  box-shadow: none;
+  margin: 0;
+  width: 100%;
+  text-align: left;
+}
+
+/* Dropdown buttons hover effect */
+.dropdown-content button:hover {
+  background-color: darkgreen;
+}
+
+.header button:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+h1 {
+  font-family: Arial;
+  padding: 5px;
+}
+
+h2 {
+  font-family: Arial;
+  padding: 5px;
+}
+
+h3 {
+  font-family: Arial;
+  padding: 5px;
+}
+
+h4 {
+  font-family: Arial;
+  padding: 5px;
+}
+
+p {
+  font-family: Arial;
+  padding: 5px;
+}
+
+.general-box {
+  background-color: #dddddd;
+  outline: #aaaaaa solid 3px;
+  border-radius: 2px;
+  margin-top: 20px;
+  padding: 1px;
+}
+
+@media (min-width: 768px) {
+  .header .button {
+    padding: 0.25em 0.75em;
+  }
+  .columns {
+    margin-top: 0.75ex;
+  }
+}
+
+</style>
+</head>
+<body>
+  <div class="header">
+    <div style="display: flex; align-items: center;">
+      <img alt="pixalator_icon" src="https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2F6cLD7M1s%2FChat-GPT-Image-Jul-1-2025-10-20-04-PM.png" />
+      <h1>Pixalator Wiki</h1>
+    </div>
+    <div style="display: flex; align-items: right; margin-left: auto; margin-right: 20px;">
+      <button onclick="window.open('https://modrinth.com/mod/pixelator')">Mod Page</button>
+      <div class="dropdown">
+        <button class="dropbtn">Pages</button>
+        <div class="dropdown-content">
+          <button>Basics</button>
+          <button>Information</button>
+          <button>Recipes</button>
+        </div>
+      </div>
+      <button onclick="window.open('https://github.com/firemarios/Pixelator/issues')">Issues</button>
+    </div>
+  </div>
+  <div id="three-column-layout" class="columns" style="display: flex; position: fixed; margin-top: 0px; left: 0; right: 0; bottom: 0; overflow-y: auto; height: auto;">
+  <div id="sidebar-column" style="width: 20%; background-color: rgb(25, 100, 25); height: 100vh; display: flex; flex-direction: column;">
+    <div style="width: 100%; padding: 20px 10px 10px 10px; box-sizing: border-box; color: white; flex-grow: 1; overflow-y: auto;">
+        <h2 style="text-align: center; font-family: minecraft; letter-spacing: 1px; text-shadow: 2px 2px 0px black, 3px 3px 0px black, 4px 4px 0px black, 5px 5px 0px black; margin-top: 0px;">Page Content</h2>
+        <a id="toc-list" style="padding-left: 20px;"></a>
+      </div>
+    </div>
+    <div id="toc-column" style="width: 55%; background-color: transparent; margin-left: 0; padding-left: 20px; overflow-y: visible; height: 100vh; box-sizing: border-box; margin-top: -6px;">
+      <div class="general-box">
+        <h2>Latest Version</h2>
+        <p>Version: 1.2.1</p>
+        <p>Release Date: 2025-07-12</p>
+        <p>Download: <a href="https://modrinth.com/mod/pixelator">Modrinth</a>, <a href="https://www.curseforge.com/minecraft/mc-mods/pixelator">Curseforge</a></p>
+        <h3>Changelog</h3>
+        <p>◆ Removed requirement for geckolib</p>
+        <p>◆ Added server-side support</p>
+      </div>
+      <div class="general-box">
+        <h3>Help us improve the Wiki!</h3>
+        <p>If you have suggestions or find issues, please report them on our <a href="https://discord.gg/quqkGBbkYB">Discord server</a> or on the <a href="https://github.com/firemarios/Pixelator/issues">GitHub issues page</a>.</p>
+        <p>We appreciate your feedback and contributions to make the Pixalator Wiki better!</p>        
+      </div>
+    </div>
+    <div style="width: 24%; background-color: transparent; margin-top: -6px; padding-left: 10px; padding-right: 10px;">
+      <div class="general-box" style="text-align: center;">
+        <img src="https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2F6cLD7M1s%2FChat-GPT-Image-Jul-1-2025-10-20-04-PM.png" width="100%" />
+        <p>Welcome to the official Pixelator mod Wiki.</p>
+        <p>Pixelator, a mod created by firemariosXD , is a Minecraft mod that takes the pixelator system from Luigi's mansion 2 and adds it to Minecraft.</p>
+      </div>
+    </div>
+  </div>
+<script>
+  function adjustLayoutMargin() {
+    const header = document.querySelector('.header');
+    const layout = document.getElementById('three-column-layout');
+    if (header && layout) {
+      const headerHeight = header.clientHeight;
+      layout.style.marginTop = headerHeight + 'px';
+      layout.style.height = `calc(100vh - ${headerHeight}px)`;
+    }
+  }
+  window.addEventListener('load', adjustLayoutMargin);
+  window.addEventListener('resize', adjustLayoutMargin);
 </script>
+<script>
+  function handleScroll() {
+    const header = document.querySelector('.header');
+    const layout = document.getElementById('three-column-layout');
+    if (!header || !layout) return;
+    if (window.scrollY > 0) {
+      header.classList.add('scrolled');
+      layout.style.paddingTop = '60px';
+    } else {
+      header.classList.remove('scrolled');
+      layout.style.paddingTop = '80px';
+    }
+  }
+  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('load', () => {
+    adjustLayoutMargin();
+    handleScroll();
+  });
+  window.addEventListener('resize', () => {
+    adjustLayoutMargin();
+    handleScroll();
+  });
+
+  function generateTOC() {
+        const content = document.getElementById('toc-column');
+        const headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        const tocList = document.getElementById('toc-list');
+        tocList.innerHTML = '';
+
+        let counters = [0, 0, 0, 0, 0, 0]; // counters for h1 to h6
+        headings.forEach(heading => {
+          if (!heading.id) {
+            heading.id = 'heading-' + Math.random().toString(36).substr(2, 9);
+          }
+          const level = parseInt(heading.tagName.substring(1)) - 1; // 0-based index for counters
+          counters[level]++;
+          // Reset counters for deeper levels
+          for (let i = level + 1; i < counters.length; i++) {
+            counters[i] = 0;
+          }
+          // Build numbering string like 1, 1.1, 1.1.1 etc.
+          let numberStr = '';
+          for (let i = 0; i <= level; i++) {
+            if (counters[i] === 0) continue;
+            numberStr += counters[i] + '.';
+          }
+
+          const li = document.createElement('p');
+          li.style.marginLeft = (level * 0) + 'px'; // indent based on level
+          const a = document.createElement('a');
+          a.href = '#' + heading.id;
+          a.textContent = numberStr + ' ' + heading.textContent;
+          a.style.cursor = 'pointer';
+          a.style.textDecoration = 'none';
+          a.style.fontSize = '22px';
+          a.style.fontFamily = 'arial';
+          a.style.color = 'white';
+          a.style.marginLeft = '20px';
+          a.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = document.getElementById(heading.id);
+            if (target) {
+              const header = document.querySelector('.header');
+              const headerHeight = header ? header.offsetHeight : 0;
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              window.scrollBy(0, -headerHeight);
+            }
+          });
+          li.appendChild(a);
+          tocList.appendChild(li);
+        });
+      }
+      window.addEventListener('load', generateTOC);
+</script>
+</body>
+</html>
