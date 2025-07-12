@@ -9,9 +9,9 @@
 <h1>Code</h1>
 
 <ul>
-  <li><a href="tree/Forge-1.20.1">Forge 1.20.1</a></li>
-  <li><a href="tree/Forge-1.21.1">Neoforge 1.21.1</a></li>
-  <li><a href="tree/Forge-1.21.4">Neoforge 1.21.4</a></li>
+  <li><a href="https://github.com/firemarios/Pixelator/tree/Forge-1.20.1">Forge 1.20.1</a></li>
+  <li><a href="https://github.com/firemarios/Pixelator/tree/Neoforge-1.21.1">Neoforge 1.21.1</a></li>
+  <li><a href="https://github.com/firemarios/Pixelator/tree/Neoforge-1.21.4">Neoforge 1.21.4</a></li>
 </ul>
 
 <h2>New update</h2>
