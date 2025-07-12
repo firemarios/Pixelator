@@ -5,26 +5,39 @@
   <div style="width: 20%; background-color: transparent;"></div>
 </div>
 <script>
-  // Fetch header.html and insert its body content into the placeholder div
-  fetch('header.html')
-    .then(response => response.text())
-    .then(data => {
-      // Parse the fetched HTML text
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(data, 'text/html');
-      // Extract the header div from the fetched document
-      const headerDiv = doc.querySelector('.header');
-      // Insert the headerDiv as is into the placeholder
-      if (headerDiv) {
-        document.getElementById('header-placeholder').appendChild(headerDiv);
-      }
-      // Also insert the styles from header.html's head into this document's head
-      const style = doc.querySelector('style');
-      if (style) {
-        document.head.appendChild(style);
-      }
-    })
-    .catch(error => {
-      console.error('Error loading header:', error);
-    });
+  function loadHeader() {
+    // Remove existing header if any
+    const existingHeader = document.getElementById('header-placeholder').querySelector('.header');
+    if (existingHeader) {
+      existingHeader.remove();
+    }
+    // Fetch header.html and insert its body content into the placeholder div
+    fetch('header.html')
+      .then(response => response.text())
+      .then(data => {
+        // Parse the fetched HTML text
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data, 'text/html');
+        // Extract the header div from the fetched document
+        const headerDiv = doc.querySelector('.header');
+        // Insert the headerDiv as is into the placeholder
+        if (headerDiv) {
+          document.getElementById('header-placeholder').appendChild(headerDiv);
+        }
+        // Also insert the styles from header.html's head into this document's head
+        const style = doc.querySelector('style');
+        if (style) {
+          document.head.appendChild(style);
+        }
+      })
+      .catch(error => {
+        console.error('Error loading header:', error);
+      });
+  }
+  // Load header initially
+  loadHeader();
+  // Reload header on page refresh (optional, can be removed if not needed)
+  window.addEventListener('beforeunload', () => {
+    loadHeader();
+  });
 </script>
