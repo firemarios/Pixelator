@@ -1,6 +1,0 @@
-{
-  "parent": "pixelator:displaysettings/automatic_pixelator_screen",
-  "textures": {
-    "particle": "pixelator:block/automatic_pixelator_screen"
-  }
-}
