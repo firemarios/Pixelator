@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "aba",
+    "cdc",
+    " e "
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:glass_pane"
+    },
+    "b": {
+      "item": "minecraft:lime_stained_glass_pane"
+    },
+    "c": {
+      "item": "minecraft:iron_ingot"
+    },
+    "d": {
+      "item": "pixelator:bounder"
+    },
+    "e": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "pixelator:pixelator_camera_left",
+    "count": 2
+  }
+}

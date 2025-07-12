@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    " a ",
+    "bcb"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:ender_pearl"
+    },
+    "b": {
+      "item": "minecraft:redstone_block"
+    },
+    "c": {
+      "item": "pixelator:bounder"
+    }
+  },
+  "result": {
+    "item": "pixelator:automatic_pixelator_screen",
+    "count": 1
+  }
+}

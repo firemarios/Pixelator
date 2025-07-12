@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "pixelator:block/router",
+    "particle": "pixelator:block/router"
+  },
+  "render_type": "solid"
+}
