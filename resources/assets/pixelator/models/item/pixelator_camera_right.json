@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "pixelator:item/pixelator_camera_right"
+  },
+  "render_type": "translucent"
+}

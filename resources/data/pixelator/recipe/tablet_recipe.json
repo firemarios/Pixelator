@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " a ",
+    "bbb"
+  ],
+  "key": {
+    "a": {
+      "item": "pixelator:antenna"
+    },
+    "b": {
+      "tag": "c:glass_blocks/cheap"
+    }
+  },
+  "result": {
+    "id": "pixelator:pixelator_tablet",
+    "count": 1
+  }
+}

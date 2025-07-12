@@ -1,0 +1,36 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="pixelator"
+version="1.2.1"
+displayName="Pixelator"
+displayURL="https://modrinth.com/mod/pixelator"
+logoFile="logo.png"
+credits="Created by firemariosXD"
+authors="firemariosXD"
+description="A mod based on lugis Mansion 2"
+
+# Start of user code block mod configuration
+# End of user code block mod configuration
+
+[[dependencies.pixelator]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.1.65,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.pixelator]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.1]"
+    ordering="AFTER"
+    side="BOTH"
+
+
+
+
+# Start of user code block dependencies configuration
+# End of user code block dependencies configuration

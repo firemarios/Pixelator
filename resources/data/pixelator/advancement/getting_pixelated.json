@@ -1,0 +1,36 @@
+{
+  "display": {
+    "background": "minecraft:textures/block/stone.png",
+    "icon": {
+      "id": "pixelator:bounder"
+    },
+    "title": {
+      "translate": "advancements.getting_pixelated.title"
+    },
+    "description": {
+      "translate": "advancements.getting_pixelated.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "getting_pixelated_0": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "pixelator:bounder"
+            ],
+            "count": {
+              "min": 1,
+              "max": 128
+            }
+          }
+        ]
+      }
+    }
+  }
+}
