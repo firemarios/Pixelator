@@ -1,0 +1,6 @@
+{
+  "parent": "pixelator:displaysettings/pixelator_screen",
+  "textures": {
+    "particle": "pixelator:block/pixelator_screen"
+  }
+}
