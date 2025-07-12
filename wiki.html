@@ -1,0 +1,26 @@
+<div id="header-placeholder"></div>
+<div style="background-color: rgb(130, 130, 130); width:100vw;">
+    <img width="100" height="100" alt="piexlator_icon" src="https://github.com/user-attachments/assets/134de4f5-9a3c-434c-9926-755a2d930e1d" />
+</div>
+<script>
+  // Fetch header.html and insert its body content into the placeholder div
+  fetch('header.html')
+    .then(response => response.text())
+    .then(data => {
+      // Parse the fetched HTML text
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(data, 'text/html');
+      // Extract the header div from the fetched document
+      const headerDiv = doc.querySelector('.header');
+      // Insert the header div into the placeholder
+      document.getElementById('header-placeholder').appendChild(headerDiv);
+      // Also insert the styles from header.html's head into this document's head
+      const style = doc.querySelector('style');
+      if (style) {
+        document.head.appendChild(style);
+      }
+    })
+    .catch(error => {
+      console.error('Error loading header:', error);
+    });
+</script>
