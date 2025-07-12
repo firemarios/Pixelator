@@ -105,3 +105,7 @@
 <p style="text-align:center;">
   <img src="https://cdn.modrinth.com/data/cached_images/1dbfc6cbacaf9018e13b96c08faef4ea0016ada3.png" alt="Antenna Crafting Recipe" />
 </p>
+
+<h2>Licence</h2>
+
+<p>All rights reserved unless explicitly stated.</p>
