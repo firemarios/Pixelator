@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pixalator Minecraft Mod Wiki</title>
+<style>
+  .header img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;;
+  }
+  .header h1 {
+    color: white;
+    font-size: 2rem;
+    margin: 0;
+    letter-spacing: 1px;
+    font-family: minecraft;
+    text-shadow: 2px 2px 0px black, 3px 3px 0px black, 4px 4px 0px black, 5px 5px 0px black;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    background-color: forestgreen;
+    padding: 20px;
+  }
+  .header button {
+  font-family: minecraft;
+  font-size: 16px;
+  background-color: forestgreen;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: black;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-left: 25px;
+}
+
+.header button:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+@media (min-width: 768px) {
+  .header .button {
+    padding: 0.25em 0.75em;
+  }
+}
+</style>
+</head>
+<body>
+  <div class="header">
+    <div style="display: flex; align-items: center;">
+      <img alt="pixalator_icon" src="https://github.com/user-attachments/assets/134de4f5-9a3c-434c-9926-755a2d930e1d" />
+      <h1>Pixalator Wiki</h1>
+    </div>
+    <div style="display: flex; align-items: right; margin-left: auto; margin-right: 20px;">
+      <button onclick="window.open('https://modrinth.com/mod/pixelator')">Mod Page</button>
+      <button>Pages</button>
+      <button>Issues</button>
+    </div>
+  </div>
+</body>
+</html>
