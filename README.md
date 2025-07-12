@@ -109,3 +109,7 @@
 <h2>Licence</h2>
 
 <p>All rights reserved unless explicitly stated.</p>
+
+<h2>Notes</h2>
+
+<p>If you would like to contribute to the project (<a href="https://github.com/firemarios/Pixelator/wiki">editing the wiki</a>), please message on <a href="https://discord.gg/quqkGBbkYB">discord</a> or leave a comment on the project page.</p>
