@@ -195,7 +195,7 @@ html, body {
   position: relative;
   width: 400px;
   height: 200px;
-  background: url('https://minecraft.wiki/images/Crafting3x3.png?083a2') no-repeat center;
+  background: url('') no-repeat center;
   background-size: cover;
 }
 
@@ -212,16 +212,17 @@ html, body {
 .result-slot {
   position: absolute;
   top: 79px;
-  left: 278px;
+  left: 180px;
   width: 64px;
   height: 64px;
-  background-color: #777;
 }
 
 .slot {
   width: 48px;
   height: 48px;
-  background-color: #777;
+  background-color: #adadad;
+  border-radius: 7px;
+  border-color: #adadad solid 2px;
   position: relative;
 }
 
