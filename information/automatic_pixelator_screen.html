@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="https://github.com/user-attachments/assets/134de4f5-9a3c-434c-9926-755a2d930e1d" />
+<link rel="stylesheet" href="../css/style.css">
+<title>Pixalator Wiki | Automatic Pixelator Screen</title>
+</head>
+<body>
+  <div class="header">
+    <div style="display: flex; align-items: center;">
+      <img alt="pixalator_icon" onclick="document.location='../wiki.html'" src="https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2F6cLD7M1s%2FChat-GPT-Image-Jul-1-2025-10-20-04-PM.png" />
+      <h1>Pixalator Wiki</h1>
+    </div>
+    <div style="display: flex; align-items: right; margin-left: auto; margin-right: 20px;">
+      <button onclick="window.open('https://modrinth.com/mod/pixelator')">Mod Page</button>
+      <div class="dropdown">
+        <button class="dropbtn">Pages</button>
+        <div class="dropdown-content">
+          <button onclick="document.location='../basics.html'">Basics</button>
+          <button onclick="document.location='../information.html'">Information</button>
+        </div>
+      </div>
+      <button onclick="window.open('https://github.com/firemarios/Pixelator/issues')">Issues</button>
+    </div>
+  </div>
+  <div id="three-column-layout" class="columns" style="display: flex; position: fixed; margin-top: 0px; left: 0; right: 0; bottom: 0; overflow-y: auto; height: auto;">
+  <div id="sidebar-column" style="width: 20%; background-color: rgb(25, 100, 25); display: flex; flex-direction: column; overflow-y: visible; padding: 10px; height: auto; overflow-x: hidden;">
+    <div style="width: 100%; padding: 20px 10px 10px 10px; box-sizing: border-box; color: white; flex-grow: 1; overflow-y: auto;">
+        <h2 style="text-align: center; font-family: minecraft-pixelator; letter-spacing: 1px; text-shadow: 2px 2px 0px black, 3px 3px 0px black, 4px 4px 0px black, 5px 5px 0px black; margin-top: 0px;">Page Content</h2>
+        <a id="toc-list" style="padding-left: 20px;"></a>
+      </div>
+    </div>
+    <div id="toc-column" style="width: 55%; background-color: transparent; margin-left: 0; margin-bottom: 50vh; padding-left: 20px; overflow-y: visible; height: 100vh; box-sizing: border-box; margin-top: -6px;">
+        <h1>Automatic Pixelator Screen</h1>
+        <hr>
+        <p>The automatic pixelator screen is as the name says an Automatic Pixelator Screen</a>.</p>
+        <h2>Gameplay</h2>
+        <hr>
+        <p>
+        To use the Automatic Pixelator Screen you need to right click and in the gui 
+        enter the name for the destination camera. Connect redstone to it and activate it.
+        The Automatic Pixelator Screen will teleport every player in a 10 block radius to the camera.
+        </p>
+        <h2>Placement</h2>
+        <hr>
+        <p>
+        Place the Automatic Pixelator Screen on the ground and wait for it to activate. To trigger it connect it with redstone.
+        </p>
+        <h2>Sounds</h2>
+        <hr>
+        <p>automatic.pixelator.screen.base.opening</p>
+        <audio controls style="width: 100%;"><source src="../assets/sounds/automatic_pixelator_screen_base_opening.ogg" type="audio/ogg"></audio>
+        <p>pixelator.screen.activate</p>
+        <audio controls style="width: 100%;"><source src="../assets/sounds/pixelator_screen_activate.ogg" type="audio/ogg"></audio>
+        <h1>Changelog</h1>
+        <hr>
+        <h4>Version 1.1.0</h4>
+        <p>Added new block: Automatic Pixelator Screen.</p>
+        <h4>Version 2.1.2</h4>
+        <p>Removed requirement for geckolib</p>
+    </div>
+    <div style="width: 24%; background-color: transparent; margin-top: -6px; padding-left: 10px; padding-right: 10px;">
+        <div class="general-box" style="justify-content: center; align-items: center; text-align: center;">
+            <h2>3D Item</h2>
+            <img src="../assets/3d_images/automatic_pixelator_screen_activated.png" style="width: 200px; margin-top: -10px; margin-bottom: 20px;">
+        </div>
+        <div class="general-box" style="justify-content: center; align-items: center; text-align: center;">
+            <h2>Crafting</h2>
+            <div class="crafting-ui" style="width: 100%; margin-top: -25px;">
+            <!-- Crafting Grid -->
+            <div class="crafting-grid">
+                <div class="slot">
+                </div>
+                <div class="slot">
+                </div>
+                <div class="slot">
+                </div>
+                <div class="slot">
+                </div>
+                <div class="slot">
+                <img src="../assets/crafting/ender_pearl.png" alt="Iron Ingot">
+                <div class="tooltip">Ender Pearl</div>
+                </div>
+                <div class="slot">
+                </div>
+                <div class="slot">
+                <img src="../assets/crafting/redstone_block.png" alt="Iron Ingot">
+                <div class="tooltip">Redstone Block</div>
+                </div>
+                <div class="slot">
+                <img src="../assets/bounder.png" alt="Iron Ingot">
+                <div class="tooltip">Bounder</div>
+                </div>
+                <div class="slot">
+                <img src="../assets/crafting/redstone_block.png" alt="Iron Ingot">
+                <div class="tooltip">Redstone Block</div>
+                </div>
+            </div>
+
+            <!-- Result Slot -->
+            <div class="slot result-slot" style="width: 72px; height: 72px;">
+                <img src="../assets/automatic_pixelator_screen.png">
+                <div class="tooltip">Automatic Pixelator Screen</div>
+            </div>
+            </div>
+        </div>
+    </div>
+<script>
+  function adjustLayoutMargin() {
+    const header = document.querySelector('.header');
+    const layout = document.getElementById('three-column-layout');
+    if (header && layout) {
+      const headerHeight = header.clientHeight;
+      layout.style.marginTop = headerHeight + 'px';
+      layout.style.height = `calc(100vh - ${headerHeight}px)`;
+    }
+  }
+  window.addEventListener('load', adjustLayoutMargin);
+  window.addEventListener('resize', adjustLayoutMargin);
+</script>
+<script>
+  function handleScroll() {
+    const header = document.querySelector('.header');
+    const layout = document.getElementById('three-column-layout');
+    if (!header || !layout) return;
+    if (window.scrollY > 0) {
+      header.classList.add('scrolled');
+      layout.style.paddingTop = '60px';
+    } else {
+      header.classList.remove('scrolled');
+      layout.style.paddingTop = '80px';
+    }
+  }
+  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('load', () => {
+    adjustLayoutMargin();
+    handleScroll();
+  });
+  window.addEventListener('resize', () => {
+    adjustLayoutMargin();
+    handleScroll();
+  });
+
+  function generateTOC() {
+        const content = document.getElementById('toc-column');
+        const headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        const tocList = document.getElementById('toc-list');
+        tocList.innerHTML = '';
+
+        let counters = [0, 0, 0, 0, 0, 0]; // counters for h1 to h6
+        headings.forEach(heading => {
+          if (!heading.id) {
+            heading.id = 'heading-' + Math.random().toString(36).substr(2, 9);
+          }
+          const level = parseInt(heading.tagName.substring(1)) - 1; // 0-based index for counters
+          counters[level]++;
+          // Reset counters for deeper levels
+          for (let i = level + 1; i < counters.length; i++) {
+            counters[i] = 0;
+          }
+          // Build numbering string like 1, 1.1, 1.1.1 etc.
+          let numberStr = '';
+          for (let i = 0; i <= level; i++) {
+            if (counters[i] === 0) continue;
+            numberStr += counters[i] + '.';
+          }
+
+          const li = document.createElement('p');
+          li.style.marginLeft = (level * 0) + 'px'; // indent based on level
+          const a = document.createElement('a');
+          a.href = '#' + heading.id;
+          a.textContent = numberStr + ' ' + heading.textContent;
+          a.style.cursor = 'pointer';
+          a.style.textDecoration = 'none';
+          a.style.fontSize = '18px';
+          a.style.fontFamily = 'arial';
+          a.style.color = 'white';
+          a.style.marginLeft = '20px';
+          a.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = document.getElementById(heading.id);
+            if (target) {
+              const header = document.querySelector('.header');
+              const headerHeight = header ? header.offsetHeight : 0;
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              setTimeout(() => {
+                window.scrollBy(0, -headerHeight);
+              }, 100);
+            }
+          });
+          li.appendChild(a);
+          tocList.appendChild(li);
+        });
+      }
+      window.addEventListener('load', generateTOC);
+  
+  function stretchSidebar() {
+    const sidebar = document.getElementById('sidebar-column');
+    const fullHeight = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    );
+    sidebar.style.height = fullHeight + 'px';
+  }
+
+  window.addEventListener('load', stretchSidebar);
+  window.addEventListener('resize', stretchSidebar);
+  window.addEventListener('scroll', stretchSidebar);
+
+  document.querySelectorAll('.slot').forEach(slot => {
+    const tooltip = slot.querySelector('.tooltip');
+    if (!tooltip) return;
+
+    slot.addEventListener('mousemove', e => {
+      // Reset position first
+      tooltip.style.left = '0';
+      tooltip.style.right = 'auto';
+
+      const tooltipRect = tooltip.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+
+      // Check if tooltip overflows on the right
+      if (tooltipRect.right > viewportWidth) {
+        // Move tooltip to the left side of the slot
+        tooltip.style.left = 'auto';
+        tooltip.style.right = '0';
+      } else {
+        // Default: tooltip appears on the left: 0 (aligned to slot's left)
+        tooltip.style.left = '0';
+        tooltip.style.right = 'auto';
+      }
+    });
+  });
+</script>
+</body>
+</html>
