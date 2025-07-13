@@ -1,0 +1,192 @@
+  @font-face {
+    font-family: 'minecraft-pixelator';
+    src: url('../assets/MinecraftRegular-Bmg3.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  .header img {
+    height: 100px;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  .header h1 {
+    color: white;
+    font-size: 2rem;
+    margin: 0;
+    letter-spacing: 1px;
+    font-family: minecraft-pixelator;
+    text-shadow: 2px 2px 0px black, 3px 3px 0px black, 4px 4px 0px black, 5px 5px 0px black;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    background-color: forestgreen;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  @media (max-width: 820px) {
+    .header {
+      flex-direction: column;
+      align-items: center;
+    }
+    .header > div:last-child {
+      margin-left: 0;
+      margin-top: 10px;
+      align-items: center !important;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 0px) {
+    .header {
+      z-index: 10;
+      background-color: forestgreen;
+    }
+  }
+
+  .header button {
+  font-family: minecraft-pixelator;
+  font-size: 16px;
+  background-color: forestgreen;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: black;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-left: 25px;
+}
+
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 0px;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: forestgreen;
+  min-width: 160px;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  z-index: 1;
+  flex-direction: column;
+}
+
+/* Show the dropdown content on hover */
+.dropdown:hover .dropdown-content {
+  display: flex;
+}
+
+/* Style dropdown buttons */
+.dropdown-content button {
+  background-color: forestgreen;
+  border: 3px solid;
+  color: black;
+  padding: 0.25em 0.5em;
+  text-transform: uppercase;
+  font-family: minecraft-pixelator;
+  font-size: 16px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  box-shadow: none;
+  margin: 0;
+  width: 100%;
+  text-align: left;
+}
+
+/* Dropdown buttons hover effect */
+.dropdown-content button:hover {
+  background-color: darkgreen;
+}
+
+.header button:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+h1 {
+  font-family: Arial;
+  padding: 5px;
+}
+
+h2 {
+  font-family: Arial;
+  padding: 5px;
+}
+
+h3 {
+  font-family: Arial;
+  padding: 5px;
+}
+
+h4 {
+  font-family: Arial;
+  padding: 5px;
+}
+
+p {
+  font-family: Arial;
+  padding: 5px;
+}
+
+.general-box {
+  background-color: #dddddd;
+  outline: #aaaaaa solid 3px;
+  border-radius: 2px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 1px;
+}
+html, body {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f9fa;
+}
+#sidebar-column {
+  position: sticky; 
+  top: 0;
+}
+.page-button {
+  font-family: minecraft-pixelator;
+  font-size: 16px;
+  letter-spacing: 0.4px;
+  background-color: #ebebeb;
+  letter-spacing: 2px;
+  cursor: pointer;
+  border: #c0c0c0 2px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: #8d8d8d 0px 5px 0px 0px;
+  margin: 15px;
+}
+
+.page-button:hover {
+  background-color: rgb(204, 204, 204);
+}
+
+.page-button:active {
+  transform: translateY(0.25em);
+  transition: 0.1s;
+  box-shadow: #8d8d8d 0px 0px 0px 0px;
+}
+
+.page-box {
+  background-color: transparent;
+  border-color: #8d8d8d solid 1px;
+}
