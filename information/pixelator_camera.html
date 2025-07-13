@@ -10,7 +10,7 @@
 <body>
   <div class="header">
     <div style="display: flex; align-items: center;">
-      <img alt="pixalator_icon" onclick="document.location='wiki.html'" src="https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2F6cLD7M1s%2FChat-GPT-Image-Jul-1-2025-10-20-04-PM.png" />
+      <img alt="pixalator_icon" onclick="document.location='../wiki.html'" src="https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2F6cLD7M1s%2FChat-GPT-Image-Jul-1-2025-10-20-04-PM.png" />
       <h1>Pixalator Wiki</h1>
     </div>
     <div style="display: flex; align-items: right; margin-left: auto; margin-right: 20px;">
@@ -33,12 +33,92 @@
         <a id="toc-list" style="padding-left: 20px;"></a>
       </div>
     </div>
-    <div id="toc-column" style="width: 55%; background-color: transparent; margin-left: 0; margin-bottom: 200px; padding-left: 20px; overflow-y: visible; height: 100vh; box-sizing: border-box; margin-top: -6px;">
-
+    <div id="toc-column" style="width: 55%; background-color: transparent; margin-left: 0; margin-bottom: 75vh; padding-left: 20px; overflow-y: visible; height: 100vh; box-sizing: border-box; margin-top: -6px;">
+        <h1>Pixelator Camera</h1>
+        <hr>
+        <p>The pixelator camera is the end destination of the teleportation starting from the <a href="pixelator_screen.html">Pixelator Screen</a> or the <a href="automatic_pixelator_screen.html">Automatic Pixelator Screen</a>.</p>
+        <h2>Gameplay</h2>
+        <hr>
+        <p>
+        To use the Pixelator Camera you need to right click it with the <a href="bounder.html">Bounder</a>. After that a gui 
+        will open where you need to enter an name for the camera. <strong>Note: The name must be unique and not include spaces.</strong>
+        If everithing is correct you will see a message in the chat.
+        </p>
+        <p>
+        Placing a <a href="router.html">Router</a> nearby and rebinding the camera will connect it to the network.
+        If the camera didn't connect try placing the router closer. That will allow you to teleport to the camera 
+        from everiwhere in the world using the <a href="tablet.html">Tablet</a>.
+        </p>
+        <h2>Placement</h2>
+        <hr>
+        <p>
+        The camera can be placed on any solid block. Place it 2 blocks above the ground for correct spawning location.
+        </p>
+        <h2>Sounds</h2>
+        <hr>
+        <p>pixelator.camera.turning</p>
+        <audio controls style="width: 100%;"><source src="../assets/sounds/pixelator_camera_turning.ogg" type="audio/ogg"></audio>
+        <p>pixelator.camera.spawning</p>
+        <audio controls style="width: 100%;"><source src="../assets/sounds/pixelator_camera_spawn.ogg" type="audio/ogg"></audio>
+        <h1>Changelog</h1>
+        <hr>
+        <h4>Version 1.0.0</h4>
+        <p>Added Pixelator Camera</p>
+        <h4>Version 1.0.1</h4>
+        <p>Bug: Fixed teleportation not loading properly</p>
+        <h4>Version 2.1.2</h4>
+        <p>Removed requirement for geckolib</p>
     </div>
     <div style="width: 24%; background-color: transparent; margin-top: -6px; padding-left: 10px; padding-right: 10px;">
-        
-  </div>
+        <div class="general-box" style="justify-content: center; align-items: center; text-align: center;">
+            <h2>Image</h2>
+            <img src="../assets/pixelator_camera.png" style="width: 200px; margin-top: -80px;">
+        </div>
+        <div class="general-box" style="justify-content: center; align-items: center; text-align: center;">
+            <h2>Crafting</h2>
+            <div class="crafting-ui" style="width: 100%; margin-top: -25px;">
+            <!-- Crafting Grid -->
+            <div class="crafting-grid">
+                <div class="slot">
+                <img src="../assets/crafting/glass_pane.png" alt="Planks">
+                <div class="tooltip">Glass Pane</div>
+                </div>
+                <div class="slot">
+                <img src="../assets/crafting/green_stained_glass_pane.png" alt="Planks">
+                <div class="tooltip">Green Stained Glass Pane</div>
+                </div>
+                <div class="slot">
+                <img src="../assets/crafting/glass_pane.png" alt="Planks">
+                <div class="tooltip">Glass Pane</div>
+                </div>
+                <div class="slot">
+                <img src="../assets/crafting/iron_ingot.png" alt="Planks">
+                <div class="tooltip">Iron Ingot</div>
+                </div>
+                <div class="slot">
+                <img src="../assets/bounder.png" alt="Iron Ingot">
+                <div class="tooltip">Bounder</div>
+                </div>
+                <div class="slot">
+                <img src="../assets/crafting/iron_ingot.png" alt="Planks">
+                <div class="tooltip">Iron Ingot</div>
+                </div>
+                <div class="slot"></div>
+                <div class="slot">
+                <img src="../assets/crafting/redstone_dust.png" alt="Planks">
+                <div class="tooltip">Redstone Dust</div>
+                </div>
+                <div class="slot"></div>
+            </div>
+
+            <!-- Result Slot -->
+            <div class="slot result-slot" style="width: 72px; height: 72px;">
+                <img src="../assets/pixelator_camera.png" alt="Iron Pickaxe">
+                <div class="tooltip">Pixelator Camera</div>
+            </div>
+            </div>
+        </div>
+    </div>
 <script>
   function adjustLayoutMargin() {
     const header = document.querySelector('.header');
@@ -140,6 +220,31 @@
   window.addEventListener('load', stretchSidebar);
   window.addEventListener('resize', stretchSidebar);
   window.addEventListener('scroll', stretchSidebar);
+
+  document.querySelectorAll('.slot').forEach(slot => {
+    const tooltip = slot.querySelector('.tooltip');
+    if (!tooltip) return;
+
+    slot.addEventListener('mousemove', e => {
+      // Reset position first
+      tooltip.style.left = '0';
+      tooltip.style.right = 'auto';
+
+      const tooltipRect = tooltip.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+
+      // Check if tooltip overflows on the right
+      if (tooltipRect.right > viewportWidth) {
+        // Move tooltip to the left side of the slot
+        tooltip.style.left = 'auto';
+        tooltip.style.right = '0';
+      } else {
+        // Default: tooltip appears on the left: 0 (aligned to slot's left)
+        tooltip.style.left = '0';
+        tooltip.style.right = 'auto';
+      }
+    });
+  });
 </script>
 </body>
 </html>
