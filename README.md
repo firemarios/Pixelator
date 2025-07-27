@@ -18,10 +18,10 @@
 
 <p>|||||||--------------------------------------------------- 10% there</p>
 <p>In this update I will be adding</p>
-<li>
-  <u>New Ui for the Pixelator Screen, Automatic Pixelator Screen and Tablet that will list all the camera. WARNING this addition will require you to rebound all the existing cameras!!!</u>
-  <u>Havent planed anything else maybe animation. Make suggestions in the issue page</u>
-</li>
+<ul>
+  <li>New Ui for the Pixelator Screen, Automatic Pixelator Screen and Tablet that will list all the camera. WARNING this addition will require you to rebound all the existing cameras!!!</li>
+  <li>Havent planed anything else maybe animation. Make suggestions in the issue page</li>
+</ul>
 
 <h2>Licence</h2>
 
