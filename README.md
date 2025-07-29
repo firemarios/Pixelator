@@ -16,10 +16,12 @@
 
 <h2>New update</h2>
 
-<p>|||||||--------------------------------------------------- 10% there</p>
+<p>||||||||||||||||||||||||||||||||------------------------- 50% there</p>
 <p>In this update I will be adding</p>
 <ul>
-  <li>New Ui for the Pixelator Screen, Automatic Pixelator Screen and Tablet that will list all the camera. WARNING this addition will require you to rebound all the existing cameras!!!</li>
+  <li>New Ui for the Pixelator Screen, Automatic Pixelator Screen and Tablet that will list all the camera. WARNING this addition will require you to rebound all the existing cameras!!! ✅</li>
+  <li>New langauges: German, French, Russian and Greek ✅</li>
+  <li>Spawning and pixelation animations ❌</li>
   <li>Havent planed anything else maybe animation. Make suggestions in the issue page</li>
 </ul>
 
