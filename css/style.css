@@ -119,6 +119,16 @@
   left: 5px;
 }
 
+.download {
+  height: 25px;
+  margin-left: 10px;
+} 
+
+.download:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
 h1 {
   font-family: Arial;
   padding: 5px;
@@ -142,6 +152,17 @@ h4 {
 p {
   font-family: Arial;
   padding: 5px;
+}
+
+li {
+  font-family: Arial;
+  padding: 5px;
+}
+
+b {
+  font-family: Arial;
+  padding: 5px;
+  font-size: 20px;
 }
 
 .general-box {
@@ -251,4 +272,37 @@ html, body {
 
 .slot:hover .tooltip {
   display: block;
+}
+
+.alpha-icon {
+  background-color: #c80000;
+  color: black;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  margin-left: 10px;
+  align-items: center;
+}
+
+.beta-icon {
+  background-color: #ffb300;
+  color: black;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  margin-left: 10px;
+  align-items: center;
+}
+
+.release-icon {
+  background-color: #27b400;
+  color: black;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  margin-left: 10px;
+  align-items: center;
 }
