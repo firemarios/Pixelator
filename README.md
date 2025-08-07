@@ -16,7 +16,7 @@
 
 <h2>New update</h2>
 
-<p>|||||||||||||||||||||||||||||||||||||-------------------- 60% there</p>
+<p>||||||||||||||||||||||||||||||||||||||||----------------- 65% there</p>
 <p>In this update I will be adding</p>
 <ul>
   <li>New Ui for the Pixelator Screen, Automatic Pixelator Screen and Tablet that will list all the camera. WARNING this addition will require you to rebound all the existing cameras!!! ✅</li>
