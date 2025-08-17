@@ -21,9 +21,13 @@ public class PixelatorModTabs {
 				tabData.accept(PixelatorModItems.PIXELATOR_TABLET.get());
 				tabData.accept(PixelatorModItems.ANTENNA.get());
 				tabData.accept(PixelatorModBlocks.PIXELATOR_CAMERA_RIGHT.get().asItem());
+				tabData.accept(PixelatorModBlocks.PIXELATOR_CAMERA_LEFT.get().asItem());
 				tabData.accept(PixelatorModBlocks.PIXELATOR_SCREEN.get().asItem());
 				tabData.accept(PixelatorModBlocks.AUTOMATIC_PIXELATOR_SCREEN.get().asItem());
 				tabData.accept(PixelatorModBlocks.ROUTER.get().asItem());
-				tabData.accept(PixelatorModBlocks.PIXELATOR_CAMERA_LEFT.get().asItem());
+				tabData.accept(PixelatorModBlocks.SERVER.get().asItem());
+				tabData.accept(PixelatorModItems.ID_CARD.get());
+				tabData.accept(PixelatorModItems.CABLE.get());
+				tabData.accept(PixelatorModItems.USB.get());
 			}).build());
 }

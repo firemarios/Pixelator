@@ -53,13 +53,9 @@ public class RouterRenderer implements BlockEntityRenderer<RouterBlockEntity> {
 	}
 
 	@SubscribeEvent
-public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-    event.registerBlockEntityRenderer(
-        (net.minecraft.world.level.block.entity.BlockEntityType<RouterBlockEntity>) PixelatorModBlockEntities.ROUTER.get(),
-        RouterRenderer::new
-    );
-}
-
+	public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+		event.registerBlockEntityRenderer(PixelatorModBlockEntities.ROUTER.get(), RouterRenderer::new);
+	}
 
 	private static final class CustomHierarchicalModel extends ModelRouter {
 		private final ModelPart root;

@@ -18,7 +18,9 @@ public class AutomaticPixelatorScreenSelectProcedure {
 		if (entity == null)
 			return;
 		{
-			String _setval = (entity instanceof Player _entity && _entity.containerMenu instanceof PixelatorModMenus.MenuAccessor _menu0) ? _menu0.getMenuState(0, "automaticscreenteleportname", "") : "";
+			String _setval = ((entity instanceof Player _entity0 && _entity0.containerMenu instanceof PixelatorModMenus.MenuAccessor _menu0) ? _menu0.getMenuState(0, "teleportname", "") : "").isEmpty()
+					? (entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).selected_cam
+					: ((entity instanceof Player _entity1 && _entity1.containerMenu instanceof PixelatorModMenus.MenuAccessor _menu1) ? _menu1.getMenuState(0, "teleportname", "") : "");
 			entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
 				capability.automaticscreenteleportname = _setval;
 				capability.syncPlayerVariables(entity);
@@ -40,7 +42,7 @@ public class AutomaticPixelatorScreenSelectProcedure {
 									+ (entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).automaticscreenteleportname));
 			} else {
 				if (entity instanceof Player _player && !_player.level().isClientSide())
-					_player.displayClientMessage(Component.literal("\u00A7cError: Do not include spaces"), false);
+					_player.displayClientMessage(Component.literal((Component.translatable("msg.pixelator.camera.error.char").getString())), false);
 			}
 		}
 	}

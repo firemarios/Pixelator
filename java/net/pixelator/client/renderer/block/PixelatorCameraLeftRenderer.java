@@ -34,74 +34,51 @@ public class PixelatorCameraLeftRenderer implements BlockEntityRenderer<Pixelato
 	private final CustomHierarchicalModel model;
 	private final ResourceLocation texture;
 
-	public PixelatorCameraLeftRenderer(BlockEntityRendererProvider.Context context) {
+	PixelatorCameraLeftRenderer(BlockEntityRendererProvider.Context context) {
 		this.model = new CustomHierarchicalModel(context.bakeLayer(Modelpixelator_camera.LAYER_LOCATION));
-		this.texture = new ResourceLocation("pixelator", "textures/block/pixelator_camera.png");
+		this.texture = ResourceLocation.parse("pixelator:textures/block/pixelator_camera.png");
 	}
 
 	private void updateRenderState(PixelatorCameraLeftBlockEntity blockEntity) {
-		if (blockEntity.getLevel() == null) return;
 		int tickCount = (int) blockEntity.getLevel().getGameTime();
-
-		boolean spawnAnim = PixelatorCameraAnimationSpawnProcedure.execute(
-			blockEntity.getLevel(),
-			blockEntity.getBlockPos().getX(),
-			blockEntity.getBlockPos().getY(),
-			blockEntity.getBlockPos().getZ()
-		);
-
-		boolean idleAnim = PixelatorCameraAnimationIdleProcedure.execute(
-			blockEntity.getLevel(),
-			blockEntity.getBlockPos().getX(),
-			blockEntity.getBlockPos().getY(),
-			blockEntity.getBlockPos().getZ()
-		);
-
-		blockEntity.animationState0.animateWhen(spawnAnim, tickCount);
-		blockEntity.animationState1.animateWhen(idleAnim, tickCount);
+		blockEntity.animationState0.animateWhen(PixelatorCameraAnimationSpawnProcedure.execute(blockEntity.getLevel(), blockEntity.getBlockPos().getX(), blockEntity.getBlockPos().getY(), blockEntity.getBlockPos().getZ()), tickCount);
+		blockEntity.animationState1.animateWhen(PixelatorCameraAnimationIdleProcedure.execute(blockEntity.getLevel(), blockEntity.getBlockPos().getX(), blockEntity.getBlockPos().getY(), blockEntity.getBlockPos().getZ()), tickCount);
 	}
 
 	@Override
 	public void render(PixelatorCameraLeftBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource renderer, int light, int overlayLight) {
 		updateRenderState(blockEntity);
-
 		poseStack.pushPose();
 		poseStack.scale(-1, -1, 1);
 		poseStack.translate(-0.5, -0.5, 0.5);
-
 		BlockState state = blockEntity.getBlockState();
 		Direction facing = state.getValue(PixelatorCameraLeftBlock.FACING);
 		switch (facing) {
+			case NORTH -> {
+			}
 			case EAST -> poseStack.mulPose(Axis.YP.rotationDegrees(90));
 			case WEST -> poseStack.mulPose(Axis.YP.rotationDegrees(-90));
 			case SOUTH -> poseStack.mulPose(Axis.YP.rotationDegrees(180));
-			default -> {}
 		}
-
 		poseStack.translate(0, -1, 0);
 		VertexConsumer builder = renderer.getBuffer(RenderType.entityCutout(texture));
 		model.setupBlockEntityAnim(blockEntity, blockEntity.getLevel().getGameTime() + partialTick);
-		model.renderToBuffer(poseStack, builder, light, OverlayTexture.NO_OVERLAY, 1f, 1f, 1f, 1f);
+		model.renderToBuffer(poseStack, builder, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 		poseStack.popPose();
 	}
 
 	@SubscribeEvent
 	public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-		event.registerBlockEntityRenderer(
-			(net.minecraft.world.level.block.entity.BlockEntityType<PixelatorCameraLeftBlockEntity>) 
-			(Object) PixelatorModBlockEntities.PIXELATOR_CAMERA_LEFT.get(), 
-			PixelatorCameraLeftRenderer::new
-		);
+		event.registerBlockEntityRenderer(PixelatorModBlockEntities.PIXELATOR_CAMERA_LEFT.get(), PixelatorCameraLeftRenderer::new);
 	}
 
 	private static final class CustomHierarchicalModel extends Modelpixelator_camera {
 		private final ModelPart root;
-		private final BlockEntityHierarchicalModel animator;
+		private final BlockEntityHierarchicalModel animator = new BlockEntityHierarchicalModel();
 
 		public CustomHierarchicalModel(ModelPart root) {
 			super(root);
 			this.root = root;
-			this.animator = new BlockEntityHierarchicalModel(root);
 		}
 
 		public void setupBlockEntityAnim(PixelatorCameraLeftBlockEntity blockEntity, float ageInTicks) {
@@ -113,27 +90,20 @@ public class PixelatorCameraLeftRenderer implements BlockEntityRenderer<Pixelato
 			return root;
 		}
 
-		private static class BlockEntityHierarchicalModel extends HierarchicalModel<Entity> {
-			private final ModelPart rootPart;
-
-			public BlockEntityHierarchicalModel(ModelPart root) {
-				this.rootPart = root;
-			}
-
+		private class BlockEntityHierarchicalModel extends HierarchicalModel<Entity> {
 			@Override
 			public ModelPart root() {
-				return rootPart;
+				return root;
 			}
 
 			@Override
 			public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-				// No entity animations here
 			}
 
 			public void setupBlockEntityAnim(PixelatorCameraLeftBlockEntity blockEntity, float ageInTicks) {
-				rootPart.getAllParts().forEach(ModelPart::resetPose);
-				this.animate(blockEntity.animationState0, pixelator_cameraAnimation.left, ageInTicks, 1f);
-				this.animate(blockEntity.animationState1, pixelator_cameraAnimation.idle, ageInTicks, 1f);
+				animator.root().getAllParts().forEach(ModelPart::resetPose);
+				animator.animate(blockEntity.animationState0, pixelator_cameraAnimation.left, ageInTicks, 1f);
+				animator.animate(blockEntity.animationState1, pixelator_cameraAnimation.idle, ageInTicks, 1f);
 			}
 		}
 	}

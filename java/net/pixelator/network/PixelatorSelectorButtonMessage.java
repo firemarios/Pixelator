@@ -1,6 +1,14 @@
 package net.pixelator.network;
 
-import net.pixelator.procedures.PixelatorSelectProcedure;
+import net.pixelator.procedures.TeleportationMenuPreviousPageProcedure;
+import net.pixelator.procedures.TeleportationMenuNextPageProcedure;
+import net.pixelator.procedures.PixelatorTeleportOpenSearchProcedure;
+import net.pixelator.procedures.PixelatorTeleportCam6BtnPProcedure;
+import net.pixelator.procedures.PixelatorTeleportCam5BtnPProcedure;
+import net.pixelator.procedures.PixelatorTeleportCam4BtnPProcedure;
+import net.pixelator.procedures.PixelatorTeleportCam3BtnPProcedure;
+import net.pixelator.procedures.PixelatorTeleportCam2BtnPProcedure;
+import net.pixelator.procedures.PixelatorTeleportCam1BtnPProcedure;
 import net.pixelator.PixelatorMod;
 
 import net.minecraftforge.network.NetworkEvent;
@@ -60,7 +68,39 @@ public class PixelatorSelectorButtonMessage {
 			return;
 		if (buttonID == 0) {
 
-			PixelatorSelectProcedure.execute(world, x, y, z, entity);
+			TeleportationMenuNextPageProcedure.execute(world, entity);
+		}
+		if (buttonID == 1) {
+
+			TeleportationMenuPreviousPageProcedure.execute(entity);
+		}
+		if (buttonID == 2) {
+
+			PixelatorTeleportCam1BtnPProcedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 3) {
+
+			PixelatorTeleportCam2BtnPProcedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 4) {
+
+			PixelatorTeleportCam3BtnPProcedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 5) {
+
+			PixelatorTeleportCam4BtnPProcedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 6) {
+
+			PixelatorTeleportCam5BtnPProcedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 7) {
+
+			PixelatorTeleportCam6BtnPProcedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 8) {
+
+			PixelatorTeleportOpenSearchProcedure.execute(world, x, y, z, entity);
 		}
 	}
 

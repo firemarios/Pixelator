@@ -65,13 +65,9 @@ public class AutomaticPixelatorScreenActivatedRenderer implements BlockEntityRen
 	}
 
 	@SubscribeEvent
-public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-    event.registerBlockEntityRenderer(
-        (net.minecraft.world.level.block.entity.BlockEntityType<AutomaticPixelatorScreenActivatedBlockEntity>) PixelatorModBlockEntities.AUTOMATIC_PIXELATOR_SCREEN_ACTIVATED.get(),
-        AutomaticPixelatorScreenActivatedRenderer::new
-    );
-}
-
+	public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+		event.registerBlockEntityRenderer(PixelatorModBlockEntities.AUTOMATIC_PIXELATOR_SCREEN_ACTIVATED.get(), AutomaticPixelatorScreenActivatedRenderer::new);
+	}
 
 	private static final class CustomHierarchicalModel extends Modelautomatic_pixelator_screen_activated {
 		private final ModelPart root;

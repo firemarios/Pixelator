@@ -2,6 +2,7 @@ package net.pixelator.block;
 
 import net.pixelator.procedures.RouterRemoveProcedure;
 import net.pixelator.procedures.RouterActivationProcedure;
+import net.pixelator.init.PixelatorModBlocks;
 import net.pixelator.block.entity.RouterActivatedBlockEntity;
 
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -53,7 +54,7 @@ public class RouterActivatedBlock extends Block implements EntityBlock {
 
 	@Override
 	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
-		return ItemStack.EMPTY;
+		return new ItemStack(PixelatorModBlocks.ROUTER.get());
 	}
 
 	@Override

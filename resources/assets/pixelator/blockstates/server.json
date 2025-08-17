@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "pixelator:block/server"
+    },
+    "facing=east": {
+      "model": "pixelator:block/server",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "pixelator:block/server",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "pixelator:block/server",
+      "y": 270
+    }
+  }
+}

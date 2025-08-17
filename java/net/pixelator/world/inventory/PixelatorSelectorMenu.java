@@ -1,5 +1,6 @@
 package net.pixelator.world.inventory;
 
+import net.pixelator.procedures.PixelatorSelectorThisGUIIsOpenedProcedure;
 import net.pixelator.init.PixelatorModMenus;
 
 import net.minecraftforge.items.ItemStackHandler;
@@ -26,7 +27,7 @@ public class PixelatorSelectorMenu extends AbstractContainerMenu implements Pixe
 	public final Map<String, Object> menuState = new HashMap<>() {
 		@Override
 		public Object put(String key, Object value) {
-			if (!this.containsKey(key) && this.size() >= 3)
+			if (!this.containsKey(key) && this.size() >= 17)
 				return null;
 			return super.put(key, value);
 		}
@@ -55,6 +56,7 @@ public class PixelatorSelectorMenu extends AbstractContainerMenu implements Pixe
 			this.z = pos.getZ();
 			access = ContainerLevelAccess.create(world, pos);
 		}
+		PixelatorSelectorThisGUIIsOpenedProcedure.execute(entity);
 	}
 
 	@Override

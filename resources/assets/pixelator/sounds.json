@@ -38,5 +38,13 @@
         "stream": false
       }
     ]
+  },
+  "access_denied": {
+    "sounds": [
+      {
+        "name": "pixelator:access_denied",
+        "stream": false
+      }
+    ]
   }
 }

@@ -35,9 +35,9 @@ public class PixelatorCameraSpawnParticleParticle extends TextureSheetParticle {
 		super(world, x, y, z);
 		this.spriteSet = spriteSet;
 		this.setSize(0.8f, 1.8f);
-		this.lifetime = (int) Math.max(1, 80 + (this.random.nextInt(6) - 3));
-		this.gravity = 0f;
-		this.hasPhysics = true;
+		this.lifetime = (int) Math.max(1, 10 + (this.random.nextInt(20) - 10));
+		this.gravity = -0.5f;
+		this.hasPhysics = false;
 		this.xd = vx * 0.3;
 		this.yd = vy * 0.3;
 		this.zd = vz * 0.3;

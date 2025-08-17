@@ -1,6 +1,7 @@
 package net.pixelator.procedures;
 
 import net.pixelator.world.inventory.PixelatorSelectorMenu;
+import net.pixelator.network.PixelatorModVariables;
 import net.pixelator.PixelatorMod;
 
 import net.minecraftforge.registries.ForgeRegistries;
@@ -61,6 +62,13 @@ public class PixelatorScreenOnBlockRightClickedProcedure {
 						_blockEntity.getPersistentData().putBoolean("activated", false);
 					if (world instanceof Level _level)
 						_level.sendBlockUpdated(_bp, _bs, _bs, 3);
+				}
+				{
+					String _setval = "screen";
+					entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+						capability.teleport_type = _setval;
+						capability.syncPlayerVariables(entity);
+					});
 				}
 				if (entity instanceof ServerPlayer _ent) {
 					BlockPos _bpos = BlockPos.containing(x, y, z);

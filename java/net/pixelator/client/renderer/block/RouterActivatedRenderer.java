@@ -19,7 +19,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.HierarchicalModel;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -29,40 +28,32 @@ public class RouterActivatedRenderer implements BlockEntityRenderer<RouterActiva
 	private final CustomHierarchicalModel model;
 	private final ResourceLocation texture;
 
-	public RouterActivatedRenderer(BlockEntityRendererProvider.Context context) {
+	RouterActivatedRenderer(BlockEntityRendererProvider.Context context) {
 		this.model = new CustomHierarchicalModel(context.bakeLayer(ModelRouterActivated.LAYER_LOCATION));
-		this.texture = new ResourceLocation("pixelator:textures/block/router.png");
+		this.texture = ResourceLocation.parse("pixelator:textures/block/router.png");
 	}
 
 	private void updateRenderState(RouterActivatedBlockEntity blockEntity) {
-		if (blockEntity.getLevel() == null) return;
 		int tickCount = (int) blockEntity.getLevel().getGameTime();
 		blockEntity.animationState0.animateWhen(true, tickCount);
 	}
 
 	@Override
 	public void render(RouterActivatedBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource renderer, int light, int overlayLight) {
-		if (blockEntity.getLevel() == null) return;
-
 		updateRenderState(blockEntity);
 		poseStack.pushPose();
 		poseStack.scale(-1, -1, 1);
 		poseStack.translate(-0.5, -0.5, 0.5);
 		poseStack.translate(0, -1, 0);
-
 		VertexConsumer builder = renderer.getBuffer(RenderType.entityCutout(texture));
 		model.setupBlockEntityAnim(blockEntity, blockEntity.getLevel().getGameTime() + partialTick);
 		model.renderToBuffer(poseStack, builder, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-
 		poseStack.popPose();
 	}
 
 	@SubscribeEvent
 	public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-		event.registerBlockEntityRenderer(
-			(BlockEntityType<RouterActivatedBlockEntity>) PixelatorModBlockEntities.ROUTER_ACTIVATED.get(),
-			RouterActivatedRenderer::new
-		);
+		event.registerBlockEntityRenderer(PixelatorModBlockEntities.ROUTER_ACTIVATED.get(), RouterActivatedRenderer::new);
 	}
 
 	private static final class CustomHierarchicalModel extends ModelRouterActivated {
@@ -91,7 +82,6 @@ public class RouterActivatedRenderer implements BlockEntityRenderer<RouterActiva
 
 			@Override
 			public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-				// Not used for block entity animations
 			}
 
 			public void setupBlockEntityAnim(RouterActivatedBlockEntity blockEntity, float ageInTicks) {

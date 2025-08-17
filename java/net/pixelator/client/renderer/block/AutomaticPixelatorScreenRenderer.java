@@ -33,7 +33,7 @@ public class AutomaticPixelatorScreenRenderer implements BlockEntityRenderer<Aut
 	private final CustomHierarchicalModel model;
 	private final ResourceLocation texture;
 
-	public AutomaticPixelatorScreenRenderer(BlockEntityRendererProvider.Context context) {
+	AutomaticPixelatorScreenRenderer(BlockEntityRendererProvider.Context context) {
 		this.model = new CustomHierarchicalModel(context.bakeLayer(Modelautomatic_pixelator_screen.LAYER_LOCATION));
 		this.texture = ResourceLocation.parse("pixelator:textures/block/automatic_pixelator_screen.png");
 	}
@@ -66,13 +66,9 @@ public class AutomaticPixelatorScreenRenderer implements BlockEntityRenderer<Aut
 	}
 
 	@SubscribeEvent
-public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-    event.registerBlockEntityRenderer(
-        (net.minecraft.world.level.block.entity.BlockEntityType<AutomaticPixelatorScreenBlockEntity>) PixelatorModBlockEntities.AUTOMATIC_PIXELATOR_SCREEN.get(),
-        context -> new AutomaticPixelatorScreenRenderer(context)
-    );
-}
-
+	public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+		event.registerBlockEntityRenderer(PixelatorModBlockEntities.AUTOMATIC_PIXELATOR_SCREEN.get(), AutomaticPixelatorScreenRenderer::new);
+	}
 
 	private static final class CustomHierarchicalModel extends Modelautomatic_pixelator_screen {
 		private final ModelPart root;

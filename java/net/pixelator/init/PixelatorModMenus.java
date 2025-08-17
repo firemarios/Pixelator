@@ -3,10 +3,11 @@
  */
 package net.pixelator.init;
 
-import net.pixelator.world.inventory.TabletSelectorMenu;
+import net.pixelator.world.inventory.ServerPropertiesMenu;
 import net.pixelator.world.inventory.PixelatorSelectorMenu;
+import net.pixelator.world.inventory.PixelatorCameraSearchMenu;
+import net.pixelator.world.inventory.CameraBoundToServerMenu;
 import net.pixelator.world.inventory.CameraBoundMenu;
-import net.pixelator.world.inventory.AutomaticPixelatorScreenSelectorMenu;
 import net.pixelator.network.MenuStateUpdateMessage;
 import net.pixelator.PixelatorMod;
 
@@ -28,9 +29,9 @@ public class PixelatorModMenus {
 	public static final DeferredRegister<MenuType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.MENU_TYPES, PixelatorMod.MODID);
 	public static final RegistryObject<MenuType<CameraBoundMenu>> CAMERA_BOUND = REGISTRY.register("camera_bound", () -> IForgeMenuType.create(CameraBoundMenu::new));
 	public static final RegistryObject<MenuType<PixelatorSelectorMenu>> PIXELATOR_SELECTOR = REGISTRY.register("pixelator_selector", () -> IForgeMenuType.create(PixelatorSelectorMenu::new));
-	public static final RegistryObject<MenuType<AutomaticPixelatorScreenSelectorMenu>> AUTOMATIC_PIXELATOR_SCREEN_SELECTOR = REGISTRY.register("automatic_pixelator_screen_selector",
-			() -> IForgeMenuType.create(AutomaticPixelatorScreenSelectorMenu::new));
-	public static final RegistryObject<MenuType<TabletSelectorMenu>> TABLET_SELECTOR = REGISTRY.register("tablet_selector", () -> IForgeMenuType.create(TabletSelectorMenu::new));
+	public static final RegistryObject<MenuType<PixelatorCameraSearchMenu>> PIXELATOR_CAMERA_SEARCH = REGISTRY.register("pixelator_camera_search", () -> IForgeMenuType.create(PixelatorCameraSearchMenu::new));
+	public static final RegistryObject<MenuType<ServerPropertiesMenu>> SERVER_PROPERTIES = REGISTRY.register("server_properties", () -> IForgeMenuType.create(ServerPropertiesMenu::new));
+	public static final RegistryObject<MenuType<CameraBoundToServerMenu>> CAMERA_BOUND_TO_SERVER = REGISTRY.register("camera_bound_to_server", () -> IForgeMenuType.create(CameraBoundToServerMenu::new));
 
 	public interface MenuAccessor {
 		Map<String, Object> getMenuState();

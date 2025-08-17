@@ -65,97 +65,137 @@ public class AutomaticPixelatorScreenTeleportProcedure {
 					PixelatorMod.queueServerWork(10, () -> {
 						if (world instanceof ServerLevel _level)
 							_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
-									"tag @p add tpplayer");
+									"tag @a[distance=..10] add tpplayer");
+						if (world instanceof ServerLevel _level)
+							_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
+									("effect give " + "@a[tag=tpplayer]" + " minecraft:blindness 5 255 true"));
+						if (world instanceof ServerLevel _level)
+							_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
+									("effect give " + "@a[tag=tpplayer]" + " minecraft:slowness 5 255 true"));
 						if (world instanceof ServerLevel _level)
 							_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
 									("execute as @e[type=minecraft:interaction,tag=" + PixelatorModVariables.teleportAddress + ",sort=random] at @e[type=minecraft:interaction,tag=" + PixelatorModVariables.teleportAddress
-											+ ",sort=random] if entity @s[tag=left] run tp " + "@p" + " ~ ~ ~"));
+											+ ",sort=random] if entity @s[tag=left] run tp " + "@a[tag=tpplayer]" + " ~ ~ ~"));
 						if (world instanceof ServerLevel _level)
 							_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
 									("execute as @e[type=minecraft:interaction,tag=" + PixelatorModVariables.teleportAddress + ",sort=random] at @e[type=minecraft:interaction,tag=" + PixelatorModVariables.teleportAddress
-											+ ",sort=random] if entity @s[tag=right] run tp " + "@p" + " ~ ~ ~"));
-						PixelatorMod.queueServerWork(1, () -> {
-							if (world instanceof ServerLevel _level)
-								_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
-										"execute as @a[tag=tpplayer] at @s run summon armor_stand ~ ~ ~ {NoGravity:1,Invisible:1,Tags:[\"tparmorstand\"]}");
-							PixelatorModVariables.tptext1 = ((new Object() {
-								public String getResult(LevelAccessor world, Vec3 pos, String _command) {
-									StringBuilder _result = new StringBuilder();
-									if (world instanceof ServerLevel _level) {
-										CommandSource _dataConsumer = new CommandSource() {
-											@Override
-											public void sendSystemMessage(Component message) {
-												_result.append(message.getString());
-											}
+											+ ",sort=random] if entity @s[tag=right] run tp " + "@a[tag=tpplayer]" + " ~ ~ ~"));
+						if ((new Object() {
+							public String getResult(LevelAccessor world, Vec3 pos, String _command) {
+								StringBuilder _result = new StringBuilder();
+								if (world instanceof ServerLevel _level) {
+									CommandSource _dataConsumer = new CommandSource() {
+										@Override
+										public void sendSystemMessage(Component message) {
+											_result.append(message.getString());
+										}
 
-											@Override
-											public boolean acceptsSuccess() {
-												return true;
-											}
+										@Override
+										public boolean acceptsSuccess() {
+											return true;
+										}
 
-											@Override
-											public boolean acceptsFailure() {
-												return true;
-											}
+										@Override
+										public boolean acceptsFailure() {
+											return true;
+										}
 
-											@Override
-											public boolean shouldInformAdmins() {
-												return false;
-											}
-										};
-										_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(_dataConsumer, pos, Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null), _command);
-									}
-									return _result.toString();
+										@Override
+										public boolean shouldInformAdmins() {
+											return false;
+										}
+									};
+									_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(_dataConsumer, pos, Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null), _command);
 								}
-							}.getResult(world, new Vec3(x, y, z), "execute as @e[tag=tparmorstand] at @s run tp @s ~ ~ ~")).substring(26)).replaceAll(",", "");
-							PixelatorModVariables.tpx = new Object() {
-								double convert(String s) {
-									try {
-										return Double.parseDouble(s.trim());
-									} catch (Exception e) {
-									}
-									return 0;
-								}
-							}.convert(PixelatorModVariables.tptext1.substring(0, PixelatorModVariables.tptext1.indexOf(" ", 0) - 1)) - 0.5;
-							PixelatorModVariables.tptext2 = PixelatorModVariables.tptext1.substring(PixelatorModVariables.tptext1.indexOf(" ", 0) + 1);
-							PixelatorModVariables.tpy = Math.round(new Object() {
-								double convert(String s) {
-									try {
-										return Double.parseDouble(s.trim());
-									} catch (Exception e) {
-									}
-									return 0;
-								}
-							}.convert(PixelatorModVariables.tptext2.substring(0, PixelatorModVariables.tptext2.indexOf(" ", 0) - 1)) - 0.5);
-							PixelatorModVariables.tptext3 = PixelatorModVariables.tptext2.substring(PixelatorModVariables.tptext2.indexOf(" ", 0) + 1);
-							PixelatorModVariables.tpz = new Object() {
-								double convert(String s) {
-									try {
-										return Double.parseDouble(s.trim());
-									} catch (Exception e) {
-									}
-									return 0;
-								}
-							}.convert(PixelatorModVariables.tptext3) - 0.5;
-							PixelatorCameraSpawnAutomaticProcedure.execute(world, PixelatorModVariables.tpx, PixelatorModVariables.tpy, PixelatorModVariables.tpz);
-							if (world instanceof ServerLevel _level)
-								_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
-										("execute as @e[type=minecraft:interaction,tag=" + PixelatorModVariables.teleportAddress + ",sort=random] at @e[type=minecraft:interaction,tag=" + PixelatorModVariables.teleportAddress
-												+ ",sort=random] if entity @s[tag=left] run tp " + "@p" + " ^-1 ^-2.5 ^0.3"));
-							if (world instanceof ServerLevel _level)
-								_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
-										("execute as @e[type=minecraft:interaction,tag=" + PixelatorModVariables.teleportAddress + ",sort=random] at @e[type=minecraft:interaction,tag=" + PixelatorModVariables.teleportAddress
-												+ ",sort=random] if entity @s[tag=right] run tp " + "@p" + " ^1 ^-2.5 ^0.3"));
+								return _result.toString();
+							}
+						}.getResult(world, new Vec3(x, y, z), "execute if entity @a[tag=tpplayer]")).contains("passed")) {
 							PixelatorMod.queueServerWork(1, () -> {
 								if (world instanceof ServerLevel _level)
 									_level.getServer().getCommands().performPrefixedCommand(
 											new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
-											"kill @e[type=armor_stand,tag=tparmorstand]");
+											"execute as @a[tag=tpplayer] at @s run summon armor_stand ~ ~ ~ {NoGravity:1,Invisible:1,Tags:[\"tparmorstand\"]}");
+								PixelatorModVariables.tptext1 = ((new Object() {
+									public String getResult(LevelAccessor world, Vec3 pos, String _command) {
+										StringBuilder _result = new StringBuilder();
+										if (world instanceof ServerLevel _level) {
+											CommandSource _dataConsumer = new CommandSource() {
+												@Override
+												public void sendSystemMessage(Component message) {
+													_result.append(message.getString());
+												}
+
+												@Override
+												public boolean acceptsSuccess() {
+													return true;
+												}
+
+												@Override
+												public boolean acceptsFailure() {
+													return true;
+												}
+
+												@Override
+												public boolean shouldInformAdmins() {
+													return false;
+												}
+											};
+											_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(_dataConsumer, pos, Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null), _command);
+										}
+										return _result.toString();
+									}
+								}.getResult(world, new Vec3(x, y, z), "execute as @e[tag=tparmorstand] at @s run tp @s ~ ~ ~")).substring(26)).replaceAll(",", "");
+								PixelatorModVariables.tpx = new Object() {
+									double convert(String s) {
+										try {
+											return Double.parseDouble(s.trim());
+										} catch (Exception e) {
+										}
+										return 0;
+									}
+								}.convert(PixelatorModVariables.tptext1.substring(0, PixelatorModVariables.tptext1.indexOf(" ", 0) - 1)) - 0.5;
+								PixelatorModVariables.tptext2 = PixelatorModVariables.tptext1.substring(PixelatorModVariables.tptext1.indexOf(" ", 0) + 1);
+								PixelatorModVariables.tpy = Math.round(new Object() {
+									double convert(String s) {
+										try {
+											return Double.parseDouble(s.trim());
+										} catch (Exception e) {
+										}
+										return 0;
+									}
+								}.convert(PixelatorModVariables.tptext2.substring(0, PixelatorModVariables.tptext2.indexOf(" ", 0) - 1)) - 0.5);
+								PixelatorModVariables.tptext3 = PixelatorModVariables.tptext2.substring(PixelatorModVariables.tptext2.indexOf(" ", 0) + 1);
+								PixelatorModVariables.tpz = new Object() {
+									double convert(String s) {
+										try {
+											return Double.parseDouble(s.trim());
+										} catch (Exception e) {
+										}
+										return 0;
+									}
+								}.convert(PixelatorModVariables.tptext3) - 0.5;
+								PixelatorCameraSpawnAutomaticProcedure.execute(world, PixelatorModVariables.tpx, PixelatorModVariables.tpy, PixelatorModVariables.tpz);
 								if (world instanceof ServerLevel _level)
 									_level.getServer().getCommands().performPrefixedCommand(
-											new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(), "tag @a remove tpplayer");
+											new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
+											("execute as @e[type=minecraft:interaction,tag=" + PixelatorModVariables.teleportAddress + ",sort=random] at @e[type=minecraft:interaction,tag=" + PixelatorModVariables.teleportAddress
+													+ ",sort=random] if entity @s[tag=left] run tp " + "@a[tag=tpplayer]" + " ^-1 ^-2.5 ^0.3"));
+								if (world instanceof ServerLevel _level)
+									_level.getServer().getCommands().performPrefixedCommand(
+											new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
+											("execute as @e[type=minecraft:interaction,tag=" + PixelatorModVariables.teleportAddress + ",sort=random] at @e[type=minecraft:interaction,tag=" + PixelatorModVariables.teleportAddress
+													+ ",sort=random] if entity @s[tag=right] run tp " + "@a[tag=tpplayer]" + " ^1 ^-2.5 ^0.3"));
+								PixelatorMod.queueServerWork(1, () -> {
+									if (world instanceof ServerLevel _level)
+										_level.getServer().getCommands().performPrefixedCommand(
+												new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
+												"kill @e[type=armor_stand,tag=tparmorstand]");
+									if (world instanceof ServerLevel _level)
+										_level.getServer().getCommands().performPrefixedCommand(
+												new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(), "tag @a[tag=tpplayer] remove tpplayer");
+								});
 							});
-						});
+						}
 					});
 				});
 			}

@@ -3,6 +3,7 @@
  */
 package net.pixelator.init;
 
+import net.pixelator.block.ServerBlock;
 import net.pixelator.block.RouterBlock;
 import net.pixelator.block.RouterActivatedBlock;
 import net.pixelator.block.PixelatorScreenBlock;
@@ -27,6 +28,7 @@ public class PixelatorModBlocks {
 	public static final RegistryObject<Block> ROUTER = REGISTRY.register("router", () -> new RouterBlock());
 	public static final RegistryObject<Block> ROUTER_ACTIVATED = REGISTRY.register("router_activated", () -> new RouterActivatedBlock());
 	public static final RegistryObject<Block> PIXELATOR_CAMERA_LEFT = REGISTRY.register("pixelator_camera_left", () -> new PixelatorCameraLeftBlock());
+	public static final RegistryObject<Block> SERVER = REGISTRY.register("server", () -> new ServerBlock());
 	// Start of user code block custom blocks
 	// End of user code block custom blocks
 }

@@ -68,13 +68,9 @@ public class PixelatorScreenRenderer implements BlockEntityRenderer<PixelatorScr
 	}
 
 	@SubscribeEvent
-public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-    event.registerBlockEntityRenderer(
-        (net.minecraft.world.level.block.entity.BlockEntityType<PixelatorScreenBlockEntity>) PixelatorModBlockEntities.PIXELATOR_SCREEN.get(),
-        context -> new PixelatorScreenRenderer(context)
-    );
-}
-
+	public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+		event.registerBlockEntityRenderer(PixelatorModBlockEntities.PIXELATOR_SCREEN.get(), PixelatorScreenRenderer::new);
+	}
 
 	private static final class CustomHierarchicalModel extends Modelpixelator_screen {
 		private final ModelPart root;

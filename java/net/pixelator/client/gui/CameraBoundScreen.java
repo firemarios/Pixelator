@@ -43,6 +43,11 @@ public class CameraBoundScreen extends AbstractContainerScreen<CameraBoundMenu> 
 		menuStateUpdateActive = false;
 	}
 
+	@Override
+	public boolean isPauseScreen() {
+		return true;
+	}
+
 	private static final ResourceLocation texture = ResourceLocation.parse("pixelator:textures/screens/camera_bound.png");
 
 	@Override

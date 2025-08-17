@@ -3,7 +3,10 @@
  */
 package net.pixelator.init;
 
+import net.pixelator.item.USBItem;
 import net.pixelator.item.PixelatorTabletItem;
+import net.pixelator.item.IdCardItem;
+import net.pixelator.item.CableItem;
 import net.pixelator.item.BounderItem;
 import net.pixelator.item.AntennaItem;
 import net.pixelator.PixelatorMod;
@@ -26,10 +29,18 @@ public class PixelatorModItems {
 	public static final RegistryObject<Item> AUTOMATIC_PIXELATOR_SCREEN = block(PixelatorModBlocks.AUTOMATIC_PIXELATOR_SCREEN);
 	public static final RegistryObject<Item> ROUTER = block(PixelatorModBlocks.ROUTER);
 	public static final RegistryObject<Item> PIXELATOR_CAMERA_LEFT = block(PixelatorModBlocks.PIXELATOR_CAMERA_LEFT);
+	public static final RegistryObject<Item> SERVER = block(PixelatorModBlocks.SERVER);
+	public static final RegistryObject<Item> ID_CARD = REGISTRY.register("id_card", () -> new IdCardItem());
+	public static final RegistryObject<Item> CABLE = REGISTRY.register("cable", () -> new CableItem());
+	public static final RegistryObject<Item> USB = REGISTRY.register("usb", () -> new USBItem());
 
 	// Start of user code block custom items
 	// End of user code block custom items
 	private static RegistryObject<Item> block(RegistryObject<Block> block) {
-		return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
+		return block(block, new Item.Properties());
+	}
+
+	private static RegistryObject<Item> block(RegistryObject<Block> block, Item.Properties properties) {
+		return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), properties));
 	}
 }
