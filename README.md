@@ -16,16 +16,7 @@
 
 <h2>New update</h2>
 
-<p>|||||||||||||||||||||||||||||||||||||||||||||||||||||----- 90% there</p>
-<p>In this update I will be adding</p>
-<ul>
-  <li>New Ui for the Pixelator Screen, Automatic Pixelator Screen and Tablet that will list all the camera. WARNING this addition will require you to rebound all the existing cameras!!! ✅</li>
-  <li>Spawning and pixelation animations ✅</li>
-  <li>Survival Friendly ✅</li>
-  <li>Adding new features ✅</li>
-  <li>Adding to the wiki ❌</li>
-  <li>Havent planed anything else maybe animation. Make suggestions in the issue page</li>
-</ul>
+<p>Go and download the new update 1.3.0</p>
 
 <h2>Licence</h2>
 
