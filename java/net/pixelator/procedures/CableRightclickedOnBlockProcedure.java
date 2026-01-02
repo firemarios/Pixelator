@@ -45,32 +45,19 @@ public class CableRightclickedOnBlockProcedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, BlockState blockstate, Entity entity, ItemStack itemstack) {
 		if (entity == null)
 			return;
+		String text_search = "";
+		String text_computer = "";
 		{
-			String _setval = "";
-			entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-				capability.itemstack_server_bound_network = _setval;
-				capability.syncPlayerVariables(entity);
+			entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+				capability.itemstack_server_bound_network = "";
+				capability.markSyncDirty();
 			});
 		}
 		if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == PixelatorModBlocks.SERVER.get()) {
 			if (entity instanceof Player _player)
 				_player.getCooldowns().addCooldown(itemstack.getItem(), 5);
-			if (!(new Object() {
-				public String getValue(LevelAccessor world, BlockPos pos, String tag) {
-					BlockEntity blockEntity = world.getBlockEntity(pos);
-					if (blockEntity != null)
-						return blockEntity.getPersistentData().getString(tag);
-					return "";
-				}
-			}.getValue(world, BlockPos.containing(x, y, z), "network_name")).isEmpty()) {
-				itemstack.getOrCreateTag().putString("network_name", (new Object() {
-					public String getValue(LevelAccessor world, BlockPos pos, String tag) {
-						BlockEntity blockEntity = world.getBlockEntity(pos);
-						if (blockEntity != null)
-							return blockEntity.getPersistentData().getString(tag);
-						return "";
-					}
-				}.getValue(world, BlockPos.containing(x, y, z), "network_name")));
+			if (!(getBlockNBTString(world, BlockPos.containing(x, y, z), "network_name")).isEmpty()) {
+				itemstack.getOrCreateTag().putString("network_name", (getBlockNBTString(world, BlockPos.containing(x, y, z), "network_name")));
 				itemstack.getOrCreateTag().putString("server_pos", (x + "+" + y + "+" + z));
 				if (world instanceof Level _level) {
 					if (!_level.isClientSide()) {
@@ -89,88 +76,23 @@ public class CableRightclickedOnBlockProcedure {
 				|| (world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == PixelatorModBlocks.PIXELATOR_CAMERA_LEFT.get()) {
 			if (entity instanceof Player _player)
 				_player.getCooldowns().addCooldown(itemstack.getItem(), 5);
-			if (!((new Object() {
-				public String getResult(LevelAccessor world, Vec3 pos, String _command) {
-					StringBuilder _result = new StringBuilder();
-					if (world instanceof ServerLevel _level) {
-						CommandSource _dataConsumer = new CommandSource() {
-							@Override
-							public void sendSystemMessage(Component message) {
-								_result.append(message.getString());
-							}
-
-							@Override
-							public boolean acceptsSuccess() {
-								return true;
-							}
-
-							@Override
-							public boolean acceptsFailure() {
-								return true;
-							}
-
-							@Override
-							public boolean shouldInformAdmins() {
-								return false;
-							}
-						};
-						_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(_dataConsumer, pos, Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null), _command);
-					}
-					return _result.toString();
-				}
-			}.getResult(world, new Vec3(x, y, z), "execute positioned ~ ~ ~ if entity @e[type=minecraft:interaction,distance=..1.8]")).contains("passed"))) {
+			if (!(executeCommandGetResult(world, new Vec3(x, y, z), "execute positioned ~ ~ ~ if entity @e[type=minecraft:interaction,distance=..0.5")).contains("passed")) {
 				if (!(itemstack.getOrCreateTag().getString("network_name")).isEmpty()) {
 					{
-						String _setval = itemstack.getOrCreateTag().getString("network_name");
-						entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.itemstack_server_bound_network = _setval;
-							capability.syncPlayerVariables(entity);
-						});
-					}
-					{
-						String _setval = itemstack.getOrCreateTag().getString("server_pos");
-						entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.itemstack_server_bound_pos = _setval;
-							capability.syncPlayerVariables(entity);
+						entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+							capability.itemstack_server_bound_network = itemstack.getOrCreateTag().getString("network_name");
+							capability.itemstack_server_bound_pos = itemstack.getOrCreateTag().getString("server_pos");
+							capability.markSyncDirty();
 						});
 					}
 					itemstack.getOrCreateTag().putString("network_name", "");
 					{
-						double _setval = x;
-						entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.cam_x = _setval;
-							capability.syncPlayerVariables(entity);
-						});
-					}
-					{
-						double _setval = y;
-						entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.cam_y = _setval;
-							capability.syncPlayerVariables(entity);
-						});
-					}
-					{
-						double _setval = z;
-						entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.cam_z = _setval;
-							capability.syncPlayerVariables(entity);
-						});
-					}
-					{
-						Direction _setval = new Object() {
-							public Direction getDirection(BlockState _bs) {
-								Property<?> _prop = _bs.getBlock().getStateDefinition().getProperty("facing");
-								if (_prop instanceof DirectionProperty _dp)
-									return _bs.getValue(_dp);
-								_prop = _bs.getBlock().getStateDefinition().getProperty("axis");
-								return _prop instanceof EnumProperty _ep && _ep.getPossibleValues().toArray()[0] instanceof Direction.Axis
-										? Direction.fromAxisAndDirection((Direction.Axis) _bs.getValue(_ep), Direction.AxisDirection.POSITIVE)
-										: Direction.NORTH;
-							}
-						}.getDirection(blockstate);
-						entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.cam_face = _setval;
-							capability.syncPlayerVariables(entity);
+						entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+							capability.cam_x = x;
+							capability.cam_y = y;
+							capability.cam_z = z;
+							capability.cam_face = getDirectionFromBlockState(blockstate);
+							capability.markSyncDirty();
 						});
 					}
 					if (entity instanceof ServerPlayer _ent) {
@@ -192,163 +114,43 @@ public class CableRightclickedOnBlockProcedure {
 						_player.displayClientMessage(Component.literal((Component.translatable("msg.pixelator.cable.error.click_on_server_first").getString())), false);
 				}
 			} else {
-				if ((new Object() {
-					public String getResult(LevelAccessor world, Vec3 pos, String _command) {
-						StringBuilder _result = new StringBuilder();
-						if (world instanceof ServerLevel _level) {
-							CommandSource _dataConsumer = new CommandSource() {
-								@Override
-								public void sendSystemMessage(Component message) {
-									_result.append(message.getString());
-								}
-
-								@Override
-								public boolean acceptsSuccess() {
-									return true;
-								}
-
-								@Override
-								public boolean acceptsFailure() {
-									return true;
-								}
-
-								@Override
-								public boolean shouldInformAdmins() {
-									return false;
-								}
-							};
-							_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(_dataConsumer, pos, Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null), _command);
-						}
-						return _result.toString();
-					}
-				}.getResult(world, new Vec3(x, y, z), "execute positioned ~ ~ ~ as @e[type=minecraft:interaction,distance=..1.8] at @s if entity @s[tag=private]")).contains("passed")) {
+				if ((executeCommandGetResult(world, new Vec3(x, y, z), "execute positioned ~ ~ ~ as @e[type=minecraft:interaction,distance=..0.5] at @s if entity @s[tag=private]")).contains("passed")) {
 					{
-						String _setval = itemstack.getOrCreateTag().getString("network_name");
-						entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.itemstack_server_bound_network = _setval;
-							capability.syncPlayerVariables(entity);
+						entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+							capability.itemstack_server_bound_network = itemstack.getOrCreateTag().getString("network_name");
+							capability.markSyncDirty();
 						});
 					}
 					itemstack.getOrCreateTag().putString("network_name", "");
-					if ((new Object() {
-						public String getResult(LevelAccessor world, Vec3 pos, String _command) {
-							StringBuilder _result = new StringBuilder();
-							if (world instanceof ServerLevel _level) {
-								CommandSource _dataConsumer = new CommandSource() {
-									@Override
-									public void sendSystemMessage(Component message) {
-										_result.append(message.getString());
-									}
-
-									@Override
-									public boolean acceptsSuccess() {
-										return true;
-									}
-
-									@Override
-									public boolean acceptsFailure() {
-										return true;
-									}
-
-									@Override
-									public boolean shouldInformAdmins() {
-										return false;
-									}
-								};
-								_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(_dataConsumer, pos, Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null), _command);
-							}
-							return _result.toString();
-						}
-					}.getResult(world, new Vec3(x, y, z), "tag @e[type=minecraft:interaction,distance=..1.8] list"))
-							.contains((entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).itemstack_server_bound_network)) {
+					if ((executeCommandGetResult(world, new Vec3(x, y, z), "tag @e[type=minecraft:interaction,distance=..1.8] list"))
+							.contains(entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).itemstack_server_bound_network)) {
 						{
-							double _setval = 0;
-							entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-								capability.index_teleport = _setval;
-								capability.syncPlayerVariables(entity);
+							entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+								capability.index_teleport = 0;
+								capability.markSyncDirty();
 							});
 						}
 						{
-							String[] _array = ((new Object() {
-								public String getResult(LevelAccessor world, Vec3 pos, String _command) {
-									StringBuilder _result = new StringBuilder();
-									if (world instanceof ServerLevel _level) {
-										CommandSource _dataConsumer = new CommandSource() {
-											@Override
-											public void sendSystemMessage(Component message) {
-												_result.append(message.getString());
-											}
-
-											@Override
-											public boolean acceptsSuccess() {
-												return true;
-											}
-
-											@Override
-											public boolean acceptsFailure() {
-												return true;
-											}
-
-											@Override
-											public boolean shouldInformAdmins() {
-												return false;
-											}
-										};
-										_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(_dataConsumer, pos, Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null), _command);
-									}
-									return _result.toString();
-								}
-							}.getResult(world, new Vec3(x, y, z), "tag @e[type=minecraft:interaction,distance=..1.8] list")).substring(24)).split(Pattern.quote(","));
+							String[] _array = ((executeCommandGetResult(world, new Vec3(x, y, z), "tag @e[type=minecraft:interaction,distance=..1.8] list")).substring(24)).split(Pattern.quote(","));
 							if (_array.length != 0) {
 								for (String stringiterator : _array) {
 									if (stringiterator.contains("+")) {
 										{
-											String _setval = stringiterator;
-											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-												capability.server_pos = _setval;
-												capability.syncPlayerVariables(entity);
+											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+												capability.server_pos = stringiterator;
+												capability.markSyncDirty();
 											});
 										}
 									}
 								}
 							} else {
-								String stringiterator = ((new Object() {
-									public String getResult(LevelAccessor world, Vec3 pos, String _command) {
-										StringBuilder _result = new StringBuilder();
-										if (world instanceof ServerLevel _level) {
-											CommandSource _dataConsumer = new CommandSource() {
-												@Override
-												public void sendSystemMessage(Component message) {
-													_result.append(message.getString());
-												}
-
-												@Override
-												public boolean acceptsSuccess() {
-													return true;
-												}
-
-												@Override
-												public boolean acceptsFailure() {
-													return true;
-												}
-
-												@Override
-												public boolean shouldInformAdmins() {
-													return false;
-												}
-											};
-											_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(_dataConsumer, pos, Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null), _command);
-										}
-										return _result.toString();
-									}
-								}.getResult(world, new Vec3(x, y, z), "tag @e[type=minecraft:interaction,distance=..1.8] list")).substring(24));
+								String stringiterator = ((executeCommandGetResult(world, new Vec3(x, y, z), "tag @e[type=minecraft:interaction,distance=..1.8] list")).substring(24));
 								for (int _yourmother = 0; _yourmother < 1; _yourmother++) {
 									if (stringiterator.contains("+")) {
 										{
-											String _setval = stringiterator;
-											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-												capability.server_pos = _setval;
-												capability.syncPlayerVariables(entity);
+											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+												capability.server_pos = stringiterator;
+												capability.markSyncDirty();
 											});
 										}
 									}
@@ -356,137 +158,171 @@ public class CableRightclickedOnBlockProcedure {
 							}
 						}
 						{
-							String[] _array = ((entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).server_pos).split(Pattern.quote("+"));
+							String[] _array = entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).server_pos.split(Pattern.quote("+"));
 							if (_array.length != 0) {
 								for (String stringiterator : _array) {
-									if ((entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).index_teleport == 0) {
+									if (entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).index_teleport == 0) {
 										{
-											double _setval = new Object() {
-												double convert(String s) {
-													try {
-														return Double.parseDouble(s.trim());
-													} catch (Exception e) {
+											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+												capability.x_server = new Object() {
+													double convert(String s) {
+														try {
+															return Double.parseDouble(s.trim());
+														} catch (Exception e) {
+														}
+														return 0;
 													}
-													return 0;
-												}
-											}.convert(stringiterator);
-											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-												capability.x_server = _setval;
-												capability.syncPlayerVariables(entity);
+												}.convert(stringiterator);
+												capability.markSyncDirty();
 											});
 										}
-									} else if ((entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).index_teleport == 1) {
+									} else if (entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).index_teleport == 1) {
 										{
-											double _setval = new Object() {
-												double convert(String s) {
-													try {
-														return Double.parseDouble(s.trim());
-													} catch (Exception e) {
+											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+												capability.y_server = new Object() {
+													double convert(String s) {
+														try {
+															return Double.parseDouble(s.trim());
+														} catch (Exception e) {
+														}
+														return 0;
 													}
-													return 0;
-												}
-											}.convert(stringiterator);
-											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-												capability.y_server = _setval;
-												capability.syncPlayerVariables(entity);
+												}.convert(stringiterator);
+												capability.markSyncDirty();
 											});
 										}
-									} else if ((entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).index_teleport == 2) {
+									} else if (entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).index_teleport == 2) {
 										{
-											double _setval = new Object() {
-												double convert(String s) {
-													try {
-														return Double.parseDouble(s.trim());
-													} catch (Exception e) {
+											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+												capability.z_server = new Object() {
+													double convert(String s) {
+														try {
+															return Double.parseDouble(s.trim());
+														} catch (Exception e) {
+														}
+														return 0;
 													}
-													return 0;
-												}
-											}.convert(stringiterator);
-											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-												capability.z_server = _setval;
-												capability.syncPlayerVariables(entity);
+												}.convert(stringiterator);
+												capability.markSyncDirty();
 											});
 										}
 									}
-									((entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).index_teleport)++;
+									entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).index_teleport++;
 								}
 							} else {
-								String stringiterator = ((entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).server_pos);
+								String stringiterator = entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).server_pos;
 								for (int _yourmother = 0; _yourmother < 1; _yourmother++) {
-									if ((entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).index_teleport == 0) {
+									if (entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).index_teleport == 0) {
 										{
-											double _setval = new Object() {
-												double convert(String s) {
-													try {
-														return Double.parseDouble(s.trim());
-													} catch (Exception e) {
+											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+												capability.x_server = new Object() {
+													double convert(String s) {
+														try {
+															return Double.parseDouble(s.trim());
+														} catch (Exception e) {
+														}
+														return 0;
 													}
-													return 0;
-												}
-											}.convert(stringiterator);
-											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-												capability.x_server = _setval;
-												capability.syncPlayerVariables(entity);
+												}.convert(stringiterator);
+												capability.markSyncDirty();
 											});
 										}
-									} else if ((entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).index_teleport == 1) {
+									} else if (entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).index_teleport == 1) {
 										{
-											double _setval = new Object() {
-												double convert(String s) {
-													try {
-														return Double.parseDouble(s.trim());
-													} catch (Exception e) {
+											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+												capability.y_server = new Object() {
+													double convert(String s) {
+														try {
+															return Double.parseDouble(s.trim());
+														} catch (Exception e) {
+														}
+														return 0;
 													}
-													return 0;
-												}
-											}.convert(stringiterator);
-											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-												capability.y_server = _setval;
-												capability.syncPlayerVariables(entity);
+												}.convert(stringiterator);
+												capability.markSyncDirty();
 											});
 										}
-									} else if ((entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).index_teleport == 2) {
+									} else if (entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).index_teleport == 2) {
 										{
-											double _setval = new Object() {
-												double convert(String s) {
-													try {
-														return Double.parseDouble(s.trim());
-													} catch (Exception e) {
+											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+												capability.z_server = new Object() {
+													double convert(String s) {
+														try {
+															return Double.parseDouble(s.trim());
+														} catch (Exception e) {
+														}
+														return 0;
 													}
-													return 0;
-												}
-											}.convert(stringiterator);
-											entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-												capability.z_server = _setval;
-												capability.syncPlayerVariables(entity);
+												}.convert(stringiterator);
+												capability.markSyncDirty();
 											});
 										}
 									}
-									((entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).index_teleport)++;
+									entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).index_teleport++;
 								}
 							}
 						}
 						if (!world.isClientSide()) {
-							BlockPos _bp = BlockPos.containing((entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).x_server,
-									(entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).y_server,
-									(entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).z_server);
+							BlockPos _bp = BlockPos.containing(entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).x_server,
+									entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).y_server,
+									entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).z_server);
 							BlockEntity _blockEntity = world.getBlockEntity(_bp);
 							BlockState _bs = world.getBlockState(_bp);
-							if (_blockEntity != null)
-								_blockEntity.getPersistentData().putDouble("cams", ((new Object() {
-									public double getValue(LevelAccessor world, BlockPos pos, String tag) {
-										BlockEntity blockEntity = world.getBlockEntity(pos);
-										if (blockEntity != null)
-											return blockEntity.getPersistentData().getDouble(tag);
-										return -1;
-									}
-								}.getValue(world,
-										BlockPos.containing((entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).x_server,
-												(entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).y_server,
-												(entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).z_server),
-										"cams")) - 1));
+							if (_blockEntity != null) {
+								_blockEntity.getPersistentData().putDouble("cams",
+										(getBlockNBTNumber(world,
+												BlockPos.containing(entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).x_server,
+														entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).y_server,
+														entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).z_server),
+												"cams") - 1));
+							}
 							if (world instanceof Level _level)
 								_level.sendBlockUpdated(_bp, _bs, _bs, 3);
+						}
+						text_search = x + "+" + y + "+" + z;
+						text_computer = getBlockNBTString(world,
+								BlockPos.containing(entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).x_server,
+										entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).y_server + 1,
+										entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).z_server),
+								"cams");
+						{
+							String[] _array = text_computer.split(Pattern.quote(","));
+							if (_array.length != 0) {
+								for (String stringiterator : _array) {
+									if (stringiterator.contains(text_search)) {
+										if (!world.isClientSide()) {
+											BlockPos _bp = BlockPos.containing(entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).x_server,
+													entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).y_server + 1,
+													entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).z_server);
+											BlockEntity _blockEntity = world.getBlockEntity(_bp);
+											BlockState _bs = world.getBlockState(_bp);
+											if (_blockEntity != null) {
+												_blockEntity.getPersistentData().putString("cams", (text_computer.replace(text_search + ",", "")));
+											}
+											if (world instanceof Level _level)
+												_level.sendBlockUpdated(_bp, _bs, _bs, 3);
+										}
+									}
+								}
+							} else {
+								String stringiterator = text_computer;
+								for (int _yourmother = 0; _yourmother < 1; _yourmother++) {
+									if (stringiterator.contains(text_search)) {
+										if (!world.isClientSide()) {
+											BlockPos _bp = BlockPos.containing(entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).x_server,
+													entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).y_server + 1,
+													entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).z_server);
+											BlockEntity _blockEntity = world.getBlockEntity(_bp);
+											BlockState _bs = world.getBlockState(_bp);
+											if (_blockEntity != null) {
+												_blockEntity.getPersistentData().putString("cams", (text_computer.replace(text_search + ",", "")));
+											}
+											if (world instanceof Level _level)
+												_level.sendBlockUpdated(_bp, _bs, _bs, 3);
+										}
+									}
+								}
+							}
 						}
 						if (world instanceof ServerLevel _level) {
 							ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(PixelatorModItems.CABLE.get()));
@@ -502,5 +338,56 @@ public class CableRightclickedOnBlockProcedure {
 				}
 			}
 		}
+	}
+
+	private static String getBlockNBTString(LevelAccessor world, BlockPos pos, String tag) {
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity != null)
+			return blockEntity.getPersistentData().getString(tag);
+		return "";
+	}
+
+	private static String executeCommandGetResult(LevelAccessor world, Vec3 pos, String command) {
+		StringBuilder result = new StringBuilder();
+		if (world instanceof ServerLevel level) {
+			CommandSource dataConsumer = new CommandSource() {
+				@Override
+				public void sendSystemMessage(Component message) {
+					result.append(message.getString());
+				}
+
+				@Override
+				public boolean acceptsSuccess() {
+					return true;
+				}
+
+				@Override
+				public boolean acceptsFailure() {
+					return true;
+				}
+
+				@Override
+				public boolean shouldInformAdmins() {
+					return false;
+				}
+			};
+			level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(dataConsumer, pos, Vec2.ZERO, level, 4, "", Component.literal(""), level.getServer(), null), command);
+		}
+		return result.toString();
+	}
+
+	private static Direction getDirectionFromBlockState(BlockState blockState) {
+		Property<?> prop = blockState.getBlock().getStateDefinition().getProperty("facing");
+		if (prop instanceof DirectionProperty dp)
+			return blockState.getValue(dp);
+		prop = blockState.getBlock().getStateDefinition().getProperty("axis");
+		return prop instanceof EnumProperty ep && ep.getPossibleValues().toArray()[0] instanceof Direction.Axis ? Direction.fromAxisAndDirection((Direction.Axis) blockState.getValue(ep), Direction.AxisDirection.POSITIVE) : Direction.NORTH;
+	}
+
+	private static double getBlockNBTNumber(LevelAccessor world, BlockPos pos, String tag) {
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity != null)
+			return blockEntity.getPersistentData().getDouble(tag);
+		return -1;
 	}
 }

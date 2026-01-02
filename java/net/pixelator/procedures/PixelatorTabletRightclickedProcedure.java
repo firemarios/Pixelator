@@ -23,10 +23,9 @@ public class PixelatorTabletRightclickedProcedure {
 		if (entity == null)
 			return;
 		{
-			String _setval = "tablet";
-			entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-				capability.teleport_type = _setval;
-				capability.syncPlayerVariables(entity);
+			entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+				capability.teleport_type = "tablet";
+				capability.markSyncDirty();
 			});
 		}
 		if (entity instanceof ServerPlayer _ent) {

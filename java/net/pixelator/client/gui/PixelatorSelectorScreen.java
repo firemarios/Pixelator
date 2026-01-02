@@ -1,21 +1,7 @@
 package net.pixelator.client.gui;
 
 import net.pixelator.world.inventory.PixelatorSelectorMenu;
-import net.pixelator.procedures.PixelatorTeleportPreviousBtnProcedure;
-import net.pixelator.procedures.PixelatorTeleportNoCamRegTextProcedure;
-import net.pixelator.procedures.PixelatorTeleportNextBtnProcedure;
-import net.pixelator.procedures.PixelatorTeleportCam6TextVProcedure;
-import net.pixelator.procedures.PixelatorTeleportCam6TextProcedure;
-import net.pixelator.procedures.PixelatorTeleportCam5TextVProcedure;
-import net.pixelator.procedures.PixelatorTeleportCam5TextProcedure;
-import net.pixelator.procedures.PixelatorTeleportCam4TextVProcedure;
-import net.pixelator.procedures.PixelatorTeleportCam4TextProcedure;
-import net.pixelator.procedures.PixelatorTeleportCam3TextVProcedure;
-import net.pixelator.procedures.PixelatorTeleportCam3TextProcedure;
-import net.pixelator.procedures.PixelatorTeleportCam2TextVProcedure;
-import net.pixelator.procedures.PixelatorTeleportCam2TextProcedure;
-import net.pixelator.procedures.PixelatorTeleportCam1TextVProcedure;
-import net.pixelator.procedures.PixelatorTeleportCam1TextProcedure;
+import net.pixelator.procedures.*;
 import net.pixelator.network.PixelatorSelectorButtonMessage;
 import net.pixelator.init.PixelatorModScreens;
 import net.pixelator.PixelatorMod;
@@ -36,15 +22,15 @@ public class PixelatorSelectorScreen extends AbstractContainerScreen<PixelatorSe
 	private final int x, y, z;
 	private final Player entity;
 	private boolean menuStateUpdateActive = false;
-	Button button_empty;
-	Button button_empty1;
-	Button button_t;
-	Button button_t1;
-	Button button_t2;
-	Button button_t3;
-	Button button_t4;
-	Button button_t5;
-	Button button_search;
+	private Button button_empty;
+	private Button button_empty1;
+	private Button button_t;
+	private Button button_t1;
+	private Button button_t2;
+	private Button button_t3;
+	private Button button_t4;
+	private Button button_t5;
+	private Button button_search;
 
 	public PixelatorSelectorScreen(PixelatorSelectorMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -54,7 +40,7 @@ public class PixelatorSelectorScreen extends AbstractContainerScreen<PixelatorSe
 		this.z = container.z;
 		this.entity = container.entity;
 		this.imageWidth = 180;
-		this.imageHeight = 172;
+		this.imageHeight = 155;
 	}
 
 	@Override
@@ -78,6 +64,7 @@ public class PixelatorSelectorScreen extends AbstractContainerScreen<PixelatorSe
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		guiGraphics.blit(texture, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
+		guiGraphics.blit(ResourceLocation.parse("pixelator:textures/screens/title_island.png"), this.leftPos + 8, this.topPos + -6, 0, 0, 120, 15, 120, 15);
 		RenderSystem.disableBlend();
 	}
 
@@ -91,35 +78,22 @@ public class PixelatorSelectorScreen extends AbstractContainerScreen<PixelatorSe
 	}
 
 	@Override
-	protected void containerTick() {
-		super.containerTick();
-		this.button_empty.visible = PixelatorTeleportNextBtnProcedure.execute(world, entity);
-		this.button_empty1.visible = PixelatorTeleportPreviousBtnProcedure.execute(entity);
-		this.button_t.visible = PixelatorTeleportCam1TextVProcedure.execute(entity);
-		this.button_t1.visible = PixelatorTeleportCam2TextVProcedure.execute(entity);
-		this.button_t2.visible = PixelatorTeleportCam3TextVProcedure.execute(entity);
-		this.button_t3.visible = PixelatorTeleportCam4TextVProcedure.execute(entity);
-		this.button_t4.visible = PixelatorTeleportCam5TextVProcedure.execute(entity);
-		this.button_t5.visible = PixelatorTeleportCam6TextVProcedure.execute(entity);
-	}
-
-	@Override
 	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-		guiGraphics.drawString(this.font, Component.translatable("gui.pixelator.pixelator_selector.label_teleportation_menu"), 8, 10, -12829636, false);
+		guiGraphics.drawString(this.font, Component.translatable("gui.pixelator.pixelator_selector.label_teleportation_menu"), 21, -1, -12829636, false);
 		if (PixelatorTeleportCam1TextVProcedure.execute(entity))
-			guiGraphics.drawString(this.font, PixelatorTeleportCam1TextProcedure.execute(entity), 8, 28, -12829636, false);
+			guiGraphics.drawString(this.font, PixelatorTeleportCam1TextProcedure.execute(entity), 8, 16, -12829636, false);
 		if (PixelatorTeleportCam2TextVProcedure.execute(entity))
-			guiGraphics.drawString(this.font, PixelatorTeleportCam2TextProcedure.execute(entity), 8, 46, -12829636, false);
+			guiGraphics.drawString(this.font, PixelatorTeleportCam2TextProcedure.execute(entity), 8, 34, -12829636, false);
 		if (PixelatorTeleportCam3TextVProcedure.execute(entity))
-			guiGraphics.drawString(this.font, PixelatorTeleportCam3TextProcedure.execute(entity), 8, 64, -12829636, false);
+			guiGraphics.drawString(this.font, PixelatorTeleportCam3TextProcedure.execute(entity), 8, 52, -12829636, false);
 		if (PixelatorTeleportCam4TextVProcedure.execute(entity))
-			guiGraphics.drawString(this.font, PixelatorTeleportCam4TextProcedure.execute(entity), 8, 82, -12829636, false);
+			guiGraphics.drawString(this.font, PixelatorTeleportCam4TextProcedure.execute(entity), 8, 70, -12829636, false);
 		if (PixelatorTeleportCam5TextVProcedure.execute(entity))
-			guiGraphics.drawString(this.font, PixelatorTeleportCam5TextProcedure.execute(entity), 8, 100, -12829636, false);
+			guiGraphics.drawString(this.font, PixelatorTeleportCam5TextProcedure.execute(entity), 8, 88, -12829636, false);
 		if (PixelatorTeleportCam6TextVProcedure.execute(entity))
-			guiGraphics.drawString(this.font, PixelatorTeleportCam6TextProcedure.execute(entity), 8, 118, -12829636, false);
+			guiGraphics.drawString(this.font, PixelatorTeleportCam6TextProcedure.execute(entity), 8, 106, -12829636, false);
 		if (PixelatorTeleportNoCamRegTextProcedure.execute(world))
-			guiGraphics.drawString(this.font, Component.translatable("gui.pixelator.pixelator_selector.label_no_cameras_registed"), 8, 28, -6710887, false);
+			guiGraphics.drawString(this.font, Component.translatable("gui.pixelator.pixelator_selector.label_no_cameras_registed"), 8, 16, -6710887, false);
 	}
 
 	@Override
@@ -132,7 +106,7 @@ public class PixelatorSelectorScreen extends AbstractContainerScreen<PixelatorSe
 				PixelatorMod.PACKET_HANDLER.sendToServer(new PixelatorSelectorButtonMessage(0, x, y, z));
 				PixelatorSelectorButtonMessage.handleButtonAction(entity, 0, x, y, z);
 			}
-		}).bounds(this.leftPos + 143, this.topPos + 145, 30, 20).build();
+		}).bounds(this.leftPos + 143, this.topPos + 127, 30, 20).build();
 		this.addRenderableWidget(button_empty);
 		button_empty1 = Button.builder(Component.translatable("gui.pixelator.pixelator_selector.button_empty1"), e -> {
 			int x = PixelatorSelectorScreen.this.x;
@@ -141,7 +115,7 @@ public class PixelatorSelectorScreen extends AbstractContainerScreen<PixelatorSe
 				PixelatorMod.PACKET_HANDLER.sendToServer(new PixelatorSelectorButtonMessage(1, x, y, z));
 				PixelatorSelectorButtonMessage.handleButtonAction(entity, 1, x, y, z);
 			}
-		}).bounds(this.leftPos + 8, this.topPos + 145, 30, 20).build();
+		}).bounds(this.leftPos + 8, this.topPos + 127, 30, 20).build();
 		this.addRenderableWidget(button_empty1);
 		button_t = Button.builder(Component.translatable("gui.pixelator.pixelator_selector.button_t"), e -> {
 			int x = PixelatorSelectorScreen.this.x;
@@ -150,7 +124,7 @@ public class PixelatorSelectorScreen extends AbstractContainerScreen<PixelatorSe
 				PixelatorMod.PACKET_HANDLER.sendToServer(new PixelatorSelectorButtonMessage(2, x, y, z));
 				PixelatorSelectorButtonMessage.handleButtonAction(entity, 2, x, y, z);
 			}
-		}).bounds(this.leftPos + 143, this.topPos + 23, 30, 20).build();
+		}).bounds(this.leftPos + 143, this.topPos + 10, 30, 20).build();
 		this.addRenderableWidget(button_t);
 		button_t1 = Button.builder(Component.translatable("gui.pixelator.pixelator_selector.button_t1"), e -> {
 			int x = PixelatorSelectorScreen.this.x;
@@ -159,7 +133,7 @@ public class PixelatorSelectorScreen extends AbstractContainerScreen<PixelatorSe
 				PixelatorMod.PACKET_HANDLER.sendToServer(new PixelatorSelectorButtonMessage(3, x, y, z));
 				PixelatorSelectorButtonMessage.handleButtonAction(entity, 3, x, y, z);
 			}
-		}).bounds(this.leftPos + 143, this.topPos + 41, 30, 20).build();
+		}).bounds(this.leftPos + 143, this.topPos + 28, 30, 20).build();
 		this.addRenderableWidget(button_t1);
 		button_t2 = Button.builder(Component.translatable("gui.pixelator.pixelator_selector.button_t2"), e -> {
 			int x = PixelatorSelectorScreen.this.x;
@@ -168,7 +142,7 @@ public class PixelatorSelectorScreen extends AbstractContainerScreen<PixelatorSe
 				PixelatorMod.PACKET_HANDLER.sendToServer(new PixelatorSelectorButtonMessage(4, x, y, z));
 				PixelatorSelectorButtonMessage.handleButtonAction(entity, 4, x, y, z);
 			}
-		}).bounds(this.leftPos + 143, this.topPos + 59, 30, 20).build();
+		}).bounds(this.leftPos + 143, this.topPos + 46, 30, 20).build();
 		this.addRenderableWidget(button_t2);
 		button_t3 = Button.builder(Component.translatable("gui.pixelator.pixelator_selector.button_t3"), e -> {
 			int x = PixelatorSelectorScreen.this.x;
@@ -177,7 +151,7 @@ public class PixelatorSelectorScreen extends AbstractContainerScreen<PixelatorSe
 				PixelatorMod.PACKET_HANDLER.sendToServer(new PixelatorSelectorButtonMessage(5, x, y, z));
 				PixelatorSelectorButtonMessage.handleButtonAction(entity, 5, x, y, z);
 			}
-		}).bounds(this.leftPos + 143, this.topPos + 77, 30, 20).build();
+		}).bounds(this.leftPos + 143, this.topPos + 64, 30, 20).build();
 		this.addRenderableWidget(button_t3);
 		button_t4 = Button.builder(Component.translatable("gui.pixelator.pixelator_selector.button_t4"), e -> {
 			int x = PixelatorSelectorScreen.this.x;
@@ -186,7 +160,7 @@ public class PixelatorSelectorScreen extends AbstractContainerScreen<PixelatorSe
 				PixelatorMod.PACKET_HANDLER.sendToServer(new PixelatorSelectorButtonMessage(6, x, y, z));
 				PixelatorSelectorButtonMessage.handleButtonAction(entity, 6, x, y, z);
 			}
-		}).bounds(this.leftPos + 143, this.topPos + 95, 30, 20).build();
+		}).bounds(this.leftPos + 143, this.topPos + 82, 30, 20).build();
 		this.addRenderableWidget(button_t4);
 		button_t5 = Button.builder(Component.translatable("gui.pixelator.pixelator_selector.button_t5"), e -> {
 			int x = PixelatorSelectorScreen.this.x;
@@ -195,7 +169,7 @@ public class PixelatorSelectorScreen extends AbstractContainerScreen<PixelatorSe
 				PixelatorMod.PACKET_HANDLER.sendToServer(new PixelatorSelectorButtonMessage(7, x, y, z));
 				PixelatorSelectorButtonMessage.handleButtonAction(entity, 7, x, y, z);
 			}
-		}).bounds(this.leftPos + 143, this.topPos + 113, 30, 20).build();
+		}).bounds(this.leftPos + 143, this.topPos + 100, 30, 20).build();
 		this.addRenderableWidget(button_t5);
 		button_search = Button.builder(Component.translatable("gui.pixelator.pixelator_selector.button_search"), e -> {
 			int x = PixelatorSelectorScreen.this.x;
@@ -204,7 +178,20 @@ public class PixelatorSelectorScreen extends AbstractContainerScreen<PixelatorSe
 				PixelatorMod.PACKET_HANDLER.sendToServer(new PixelatorSelectorButtonMessage(8, x, y, z));
 				PixelatorSelectorButtonMessage.handleButtonAction(entity, 8, x, y, z);
 			}
-		}).bounds(this.leftPos + 62, this.topPos + 145, 56, 20).build();
+		}).bounds(this.leftPos + 62, this.topPos + 127, 56, 20).build();
 		this.addRenderableWidget(button_search);
+	}
+
+	@Override
+	protected void containerTick() {
+		super.containerTick();
+		this.button_empty.visible = PixelatorTeleportNextBtnProcedure.execute(world, entity);
+		this.button_empty1.visible = PixelatorTeleportPreviousBtnProcedure.execute(entity);
+		this.button_t.visible = PixelatorTeleportCam1TextVProcedure.execute(entity);
+		this.button_t1.visible = PixelatorTeleportCam2TextVProcedure.execute(entity);
+		this.button_t2.visible = PixelatorTeleportCam3TextVProcedure.execute(entity);
+		this.button_t3.visible = PixelatorTeleportCam4TextVProcedure.execute(entity);
+		this.button_t4.visible = PixelatorTeleportCam5TextVProcedure.execute(entity);
+		this.button_t5.visible = PixelatorTeleportCam6TextVProcedure.execute(entity);
 	}
 }

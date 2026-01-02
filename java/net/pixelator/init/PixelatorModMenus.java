@@ -3,11 +3,7 @@
  */
 package net.pixelator.init;
 
-import net.pixelator.world.inventory.ServerPropertiesMenu;
-import net.pixelator.world.inventory.PixelatorSelectorMenu;
-import net.pixelator.world.inventory.PixelatorCameraSearchMenu;
-import net.pixelator.world.inventory.CameraBoundToServerMenu;
-import net.pixelator.world.inventory.CameraBoundMenu;
+import net.pixelator.world.inventory.*;
 import net.pixelator.network.MenuStateUpdateMessage;
 import net.pixelator.PixelatorMod;
 
@@ -32,6 +28,11 @@ public class PixelatorModMenus {
 	public static final RegistryObject<MenuType<PixelatorCameraSearchMenu>> PIXELATOR_CAMERA_SEARCH = REGISTRY.register("pixelator_camera_search", () -> IForgeMenuType.create(PixelatorCameraSearchMenu::new));
 	public static final RegistryObject<MenuType<ServerPropertiesMenu>> SERVER_PROPERTIES = REGISTRY.register("server_properties", () -> IForgeMenuType.create(ServerPropertiesMenu::new));
 	public static final RegistryObject<MenuType<CameraBoundToServerMenu>> CAMERA_BOUND_TO_SERVER = REGISTRY.register("camera_bound_to_server", () -> IForgeMenuType.create(CameraBoundToServerMenu::new));
+	public static final RegistryObject<MenuType<ComputerLoginMenu>> COMPUTER_LOGIN = REGISTRY.register("computer_login", () -> IForgeMenuType.create(ComputerLoginMenu::new));
+	public static final RegistryObject<MenuType<ComputerRegisterMenu>> COMPUTER_REGISTER = REGISTRY.register("computer_register", () -> IForgeMenuType.create(ComputerRegisterMenu::new));
+	public static final RegistryObject<MenuType<ComputerGUIMenu>> COMPUTER_GUI = REGISTRY.register("computer_gui", () -> IForgeMenuType.create(ComputerGUIMenu::new));
+	public static final RegistryObject<MenuType<CameraViewPropertiesMenu>> CAMERA_VIEW_PROPERTIES = REGISTRY.register("camera_view_properties", () -> IForgeMenuType.create(CameraViewPropertiesMenu::new));
+	public static final RegistryObject<MenuType<AlarmSettingsMenu>> ALARM_SETTINGS = REGISTRY.register("alarm_settings", () -> IForgeMenuType.create(AlarmSettingsMenu::new));
 
 	public interface MenuAccessor {
 		Map<String, Object> getMenuState();

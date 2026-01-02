@@ -31,7 +31,7 @@ public class ServerPropertiesMenu extends AbstractContainerMenu implements Pixel
 	public final Map<String, Object> menuState = new HashMap<>() {
 		@Override
 		public Object put(String key, Object value) {
-			if (!this.containsKey(key) && this.size() >= 40)
+			if (!this.containsKey(key) && this.size() >= 41)
 				return null;
 			return super.put(key, value);
 		}
@@ -407,12 +407,14 @@ public class ServerPropertiesMenu extends AbstractContainerMenu implements Pixel
 				}
 				return ItemStack.EMPTY;
 			}
-			if (itemstack1.getCount() == 0)
-				slot.set(ItemStack.EMPTY);
-			else
+			if (itemstack1.isEmpty()) {
+				slot.setByPlayer(ItemStack.EMPTY);
+			} else {
 				slot.setChanged();
-			if (itemstack1.getCount() == itemstack.getCount())
+			}
+			if (itemstack1.getCount() == itemstack.getCount()) {
 				return ItemStack.EMPTY;
+			}
 			slot.onTake(playerIn, itemstack1);
 		}
 		return itemstack;

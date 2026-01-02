@@ -26,7 +26,7 @@ public class CameraBoundToServerMenu extends AbstractContainerMenu implements Pi
 	public final Map<String, Object> menuState = new HashMap<>() {
 		@Override
 		public Object put(String key, Object value) {
-			if (!this.containsKey(key) && this.size() >= 5)
+			if (!this.containsKey(key) && this.size() >= 9)
 				return null;
 			return super.put(key, value);
 		}

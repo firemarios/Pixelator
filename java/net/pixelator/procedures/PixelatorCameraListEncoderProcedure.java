@@ -46,7 +46,7 @@ public class PixelatorCameraListEncoderProcedure {
 			index++;
 		}
 		PixelatorModVariables.MapVariables.get(world).cameras = cameras;
-		PixelatorModVariables.MapVariables.get(world).syncData(world);
+		PixelatorModVariables.MapVariables.get(world).markSyncDirty();
 		PixelatorMod.LOGGER.info("Encoding Done");
 		less_than_6 = false;
 		list_lenght = PixelatorModVariables.cameras_decoded.size();
@@ -54,7 +54,7 @@ public class PixelatorCameraListEncoderProcedure {
 			if (list_lenght <= 6) {
 				less_than_6 = true;
 				PixelatorModVariables.MapVariables.get(world).teleport_max_pages = pages + 1;
-				PixelatorModVariables.MapVariables.get(world).syncData(world);
+				PixelatorModVariables.MapVariables.get(world).markSyncDirty();
 			}
 			list_lenght = list_lenght - 6;
 			pages++;

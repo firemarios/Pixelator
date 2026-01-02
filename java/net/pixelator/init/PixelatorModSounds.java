@@ -21,4 +21,5 @@ public class PixelatorModSounds {
 			() -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("pixelator", "automatic_pixelator_screen_activation")));
 	public static final RegistryObject<SoundEvent> PIXELATOR_SCREEN_ACTIVATE = REGISTRY.register("pixelator_screen_activate", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("pixelator", "pixelator_screen_activate")));
 	public static final RegistryObject<SoundEvent> ACCESS_DENIED = REGISTRY.register("access_denied", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("pixelator", "access_denied")));
+	public static final RegistryObject<SoundEvent> ALARM = REGISTRY.register("alarm", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("pixelator", "alarm")));
 }

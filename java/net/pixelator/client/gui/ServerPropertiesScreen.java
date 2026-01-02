@@ -14,9 +14,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Checkbox;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.Minecraft;
 
@@ -27,9 +27,9 @@ public class ServerPropertiesScreen extends AbstractContainerScreen<ServerProper
 	private final int x, y, z;
 	private final Player entity;
 	private boolean menuStateUpdateActive = false;
-	EditBox network_name;
-	Checkbox everybody_teleport;
-	Button button_apply;
+	private EditBox network_name;
+	private Checkbox everybody_teleport;
+	private ImageButton imagebutton_done_btn;
 
 	public ServerPropertiesScreen(ServerPropertiesMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -45,6 +45,16 @@ public class ServerPropertiesScreen extends AbstractContainerScreen<ServerProper
 	@Override
 	public void updateMenuState(int elementType, String name, Object elementState) {
 		menuStateUpdateActive = true;
+		if (elementType == 0 && elementState instanceof String stringState) {
+			if (name.equals("network_name"))
+				network_name.setValue(stringState);
+		}
+		if (elementType == 1 && elementState instanceof Boolean logicState) {
+			if (name.equals("everybody_teleport")) {
+				if (everybody_teleport.selected() != logicState)
+					everybody_teleport.onPress();
+			}
+		}
 		menuStateUpdateActive = false;
 	}
 
@@ -65,6 +75,7 @@ public class ServerPropertiesScreen extends AbstractContainerScreen<ServerProper
 		RenderSystem.defaultBlendFunc();
 		guiGraphics.blit(texture, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
 		guiGraphics.blit(ResourceLocation.parse("pixelator:textures/screens/usb_hint.png"), this.leftPos + 51, this.topPos + 120, 0, 0, 16, 16, 16, 16);
+		guiGraphics.blit(ResourceLocation.parse("pixelator:textures/screens/title_island.png"), this.leftPos + 6, this.topPos + -4, 0, 0, 120, 15, 120, 15);
 		RenderSystem.disableBlend();
 	}
 
@@ -80,12 +91,6 @@ public class ServerPropertiesScreen extends AbstractContainerScreen<ServerProper
 	}
 
 	@Override
-	protected void containerTick() {
-		super.containerTick();
-		network_name.tick();
-	}
-
-	@Override
 	public void resize(Minecraft minecraft, int width, int height) {
 		String network_nameValue = network_name.getValue();
 		super.resize(minecraft, width, height);
@@ -94,7 +99,7 @@ public class ServerPropertiesScreen extends AbstractContainerScreen<ServerProper
 
 	@Override
 	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-		guiGraphics.drawString(this.font, Component.translatable("gui.pixelator.server_properties.label_server"), 5, 7, -12829636, false);
+		guiGraphics.drawString(this.font, Component.translatable("gui.pixelator.server_properties.label_server"), 49, 1, -12829636, false);
 		guiGraphics.drawString(this.font, Component.translatable("gui.pixelator.server_properties.label_cameras_bounded"), 5, 23, -12829636, false);
 		guiGraphics.drawString(this.font, GuiGetServerCamerasProcedure.execute(world, x, y, z), 5, 32, -12829636, false);
 		guiGraphics.drawString(this.font, Component.translatable("gui.pixelator.server_properties.label_can_eveyone_teleport"), 5, 50, -12829636, false);
@@ -108,22 +113,22 @@ public class ServerPropertiesScreen extends AbstractContainerScreen<ServerProper
 	public void init() {
 		super.init();
 		network_name = new EditBox(this.font, this.leftPos + 6, this.topPos + 141, 118, 18, Component.translatable("gui.pixelator.server_properties.network_name"));
-		network_name.setHint(Component.translatable("gui.pixelator.server_properties.network_name"));
 		network_name.setMaxLength(8192);
 		network_name.setResponder(content -> {
 			if (!menuStateUpdateActive)
 				menu.sendMenuStateUpdate(entity, 0, "network_name", content, false);
 		});
+		network_name.setHint(Component.translatable("gui.pixelator.server_properties.network_name"));
 		this.addWidget(this.network_name);
-		button_apply = Button.builder(Component.translatable("gui.pixelator.server_properties.button_apply"), e -> {
+		imagebutton_done_btn = new ImageButton(this.leftPos + 130, this.topPos + 141, 18, 18, 0, 0, 18, ResourceLocation.parse("pixelator:textures/screens/atlas/imagebutton_done_btn.png"), 18, 36, e -> {
 			int x = ServerPropertiesScreen.this.x;
 			int y = ServerPropertiesScreen.this.y;
 			if (true) {
 				PixelatorMod.PACKET_HANDLER.sendToServer(new ServerPropertiesButtonMessage(0, x, y, z));
 				ServerPropertiesButtonMessage.handleButtonAction(entity, 0, x, y, z);
 			}
-		}).bounds(this.leftPos + 131, this.topPos + 140, 51, 20).build();
-		this.addRenderableWidget(button_apply);
+		});
+		this.addRenderableWidget(imagebutton_done_btn);
 		boolean everybody_teleportSelected = GuiGetServerCheckboxTeleportAllProcedure.execute(world, x, y, z);
 		everybody_teleport = new Checkbox(this.leftPos + 5, this.topPos + 66, 20, 20, Component.translatable("gui.pixelator.server_properties.everybody_teleport"), everybody_teleportSelected) {
 			@Override
@@ -136,5 +141,11 @@ public class ServerPropertiesScreen extends AbstractContainerScreen<ServerProper
 		if (everybody_teleportSelected)
 			menu.sendMenuStateUpdate(entity, 1, "everybody_teleport", true, false);
 		this.addRenderableWidget(everybody_teleport);
+	}
+
+	@Override
+	protected void containerTick() {
+		super.containerTick();
+		network_name.tick();
 	}
 }

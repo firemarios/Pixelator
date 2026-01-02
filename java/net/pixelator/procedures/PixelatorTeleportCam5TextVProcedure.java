@@ -9,7 +9,7 @@ public class PixelatorTeleportCam5TextVProcedure {
 		if (entity == null)
 			return false;
 		boolean show = false;
-		if (PixelatorModVariables.cameras_decoded.size() >= 6 * (entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).teleport_page - 1) {
+		if (PixelatorModVariables.cameras_decoded.size() >= 6 * entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).teleport_page - 1) {
 			show = true;
 		} else {
 			show = false;

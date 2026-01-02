@@ -1,5 +1,6 @@
 package net.pixelator.block.entity;
 
+import net.pixelator.procedures.PixelatorCameraSlotAutomationProcedure;
 import net.pixelator.init.PixelatorModBlockEntities;
 
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
@@ -29,7 +30,7 @@ import javax.annotation.Nullable;
 import java.util.stream.IntStream;
 
 public class PixelatorCameraLeftBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
-	private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(9, ItemStack.EMPTY);
+	private NonNullList<ItemStack> stacks = NonNullList.withSize(30, ItemStack.EMPTY);
 	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
 	public final AnimationState animationState0 = new AnimationState();
 	public final AnimationState animationState1 = new AnimationState();
@@ -83,11 +84,6 @@ public class PixelatorCameraLeftBlockEntity extends RandomizableContainerBlockEn
 	}
 
 	@Override
-	public int getMaxStackSize() {
-		return 99;
-	}
-
-	@Override
 	public AbstractContainerMenu createMenu(int id, Inventory inventory) {
 		return ChestMenu.threeRows(id, inventory);
 	}
@@ -119,12 +115,12 @@ public class PixelatorCameraLeftBlockEntity extends RandomizableContainerBlockEn
 
 	@Override
 	public boolean canPlaceItemThroughFace(int index, ItemStack itemstack, @Nullable Direction direction) {
-		return this.canPlaceItem(index, itemstack);
+		return this.canPlaceItem(index, itemstack) && PixelatorCameraSlotAutomationProcedure.execute();
 	}
 
 	@Override
 	public boolean canTakeItemThroughFace(int index, ItemStack itemstack, Direction direction) {
-		return true;
+		return PixelatorCameraSlotAutomationProcedure.execute();
 	}
 
 	@Override

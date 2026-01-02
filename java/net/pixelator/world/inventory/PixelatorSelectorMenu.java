@@ -5,6 +5,9 @@ import net.pixelator.init.PixelatorModMenus;
 
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.Level;
@@ -23,11 +26,12 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
 
+@Mod.EventBusSubscriber
 public class PixelatorSelectorMenu extends AbstractContainerMenu implements PixelatorModMenus.MenuAccessor {
 	public final Map<String, Object> menuState = new HashMap<>() {
 		@Override
 		public Object put(String key, Object value) {
-			if (!this.containsKey(key) && this.size() >= 17)
+			if (!this.containsKey(key) && this.size() >= 18)
 				return null;
 			return super.put(key, value);
 		}
@@ -56,7 +60,6 @@ public class PixelatorSelectorMenu extends AbstractContainerMenu implements Pixe
 			this.z = pos.getZ();
 			access = ContainerLevelAccess.create(world, pos);
 		}
-		PixelatorSelectorThisGUIIsOpenedProcedure.execute(entity);
 	}
 
 	@Override
@@ -85,5 +88,17 @@ public class PixelatorSelectorMenu extends AbstractContainerMenu implements Pixe
 	@Override
 	public Map<String, Object> getMenuState() {
 		return menuState;
+	}
+
+	@SubscribeEvent
+	public static void onContainerOpen(PlayerContainerEvent.Open event) {
+		Player entity = event.getEntity();
+		if (event.getContainer() instanceof PixelatorSelectorMenu menu) {
+			Level world = menu.world;
+			double x = menu.x;
+			double y = menu.y;
+			double z = menu.z;
+			PixelatorSelectorThisGUIIsOpenedProcedure.execute(entity);
+		}
 	}
 }

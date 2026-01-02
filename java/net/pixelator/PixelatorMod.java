@@ -3,13 +3,7 @@ package net.pixelator;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
-import net.pixelator.init.PixelatorModTabs;
-import net.pixelator.init.PixelatorModSounds;
-import net.pixelator.init.PixelatorModParticleTypes;
-import net.pixelator.init.PixelatorModMenus;
-import net.pixelator.init.PixelatorModItems;
-import net.pixelator.init.PixelatorModBlocks;
-import net.pixelator.init.PixelatorModBlockEntities;
+import net.pixelator.init.*;
 
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.network.NetworkRegistry;
@@ -48,13 +42,9 @@ public class PixelatorMod {
 		PixelatorModBlocks.REGISTRY.register(bus);
 		PixelatorModBlockEntities.REGISTRY.register(bus);
 		PixelatorModItems.REGISTRY.register(bus);
-
 		PixelatorModTabs.REGISTRY.register(bus);
-
-		PixelatorModParticleTypes.REGISTRY.register(bus);
-
 		PixelatorModMenus.REGISTRY.register(bus);
-
+		PixelatorModParticleTypes.REGISTRY.register(bus);
 		// Start of user code block mod init
 		// End of user code block mod init
 	}

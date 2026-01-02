@@ -26,10 +26,9 @@ public class LoadPageProcedure {
 		if (entity == null)
 			return;
 		{
-			double _setval = 1;
-			entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-				capability.teleport_page = _setval;
-				capability.syncPlayerVariables(entity);
+			entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+				capability.teleport_page = 1;
+				capability.markSyncDirty();
 			});
 		}
 	}

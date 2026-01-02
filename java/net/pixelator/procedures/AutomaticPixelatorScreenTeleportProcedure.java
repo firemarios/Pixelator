@@ -32,36 +32,7 @@ public class AutomaticPixelatorScreenTeleportProcedure {
 					}
 				}
 				PixelatorMod.queueServerWork(20, () -> {
-					PixelatorModVariables.teleportAddress = (new Object() {
-						public String getResult(LevelAccessor world, Vec3 pos, String _command) {
-							StringBuilder _result = new StringBuilder();
-							if (world instanceof ServerLevel _level) {
-								CommandSource _dataConsumer = new CommandSource() {
-									@Override
-									public void sendSystemMessage(Component message) {
-										_result.append(message.getString());
-									}
-
-									@Override
-									public boolean acceptsSuccess() {
-										return true;
-									}
-
-									@Override
-									public boolean acceptsFailure() {
-										return true;
-									}
-
-									@Override
-									public boolean shouldInformAdmins() {
-										return false;
-									}
-								};
-								_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(_dataConsumer, pos, Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null), _command);
-							}
-							return _result.toString();
-						}
-					}.getResult(world, new Vec3(x, y, z), "tag @e[type=minecraft:interaction,sort=nearest,limit=1] list")).substring(25);
+					PixelatorModVariables.teleportAddress = (executeCommandGetResult(world, new Vec3(x, y, z), "tag @e[type=minecraft:interaction,sort=nearest,limit=1] list")).substring(25);
 					PixelatorMod.queueServerWork(10, () -> {
 						if (world instanceof ServerLevel _level)
 							_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
@@ -80,71 +51,13 @@ public class AutomaticPixelatorScreenTeleportProcedure {
 							_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
 									("execute as @e[type=minecraft:interaction,tag=" + PixelatorModVariables.teleportAddress + ",sort=random] at @e[type=minecraft:interaction,tag=" + PixelatorModVariables.teleportAddress
 											+ ",sort=random] if entity @s[tag=right] run tp " + "@a[tag=tpplayer]" + " ~ ~ ~"));
-						if ((new Object() {
-							public String getResult(LevelAccessor world, Vec3 pos, String _command) {
-								StringBuilder _result = new StringBuilder();
-								if (world instanceof ServerLevel _level) {
-									CommandSource _dataConsumer = new CommandSource() {
-										@Override
-										public void sendSystemMessage(Component message) {
-											_result.append(message.getString());
-										}
-
-										@Override
-										public boolean acceptsSuccess() {
-											return true;
-										}
-
-										@Override
-										public boolean acceptsFailure() {
-											return true;
-										}
-
-										@Override
-										public boolean shouldInformAdmins() {
-											return false;
-										}
-									};
-									_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(_dataConsumer, pos, Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null), _command);
-								}
-								return _result.toString();
-							}
-						}.getResult(world, new Vec3(x, y, z), "execute if entity @a[tag=tpplayer]")).contains("passed")) {
+						if ((executeCommandGetResult(world, new Vec3(x, y, z), "execute if entity @a[tag=tpplayer]")).contains("passed")) {
 							PixelatorMod.queueServerWork(1, () -> {
 								if (world instanceof ServerLevel _level)
 									_level.getServer().getCommands().performPrefixedCommand(
 											new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
 											"execute as @a[tag=tpplayer] at @s run summon armor_stand ~ ~ ~ {NoGravity:1,Invisible:1,Tags:[\"tparmorstand\"]}");
-								PixelatorModVariables.tptext1 = ((new Object() {
-									public String getResult(LevelAccessor world, Vec3 pos, String _command) {
-										StringBuilder _result = new StringBuilder();
-										if (world instanceof ServerLevel _level) {
-											CommandSource _dataConsumer = new CommandSource() {
-												@Override
-												public void sendSystemMessage(Component message) {
-													_result.append(message.getString());
-												}
-
-												@Override
-												public boolean acceptsSuccess() {
-													return true;
-												}
-
-												@Override
-												public boolean acceptsFailure() {
-													return true;
-												}
-
-												@Override
-												public boolean shouldInformAdmins() {
-													return false;
-												}
-											};
-											_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(_dataConsumer, pos, Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null), _command);
-										}
-										return _result.toString();
-									}
-								}.getResult(world, new Vec3(x, y, z), "execute as @e[tag=tparmorstand] at @s run tp @s ~ ~ ~")).substring(26)).replaceAll(",", "");
+								PixelatorModVariables.tptext1 = ((executeCommandGetResult(world, new Vec3(x, y, z), "execute as @e[tag=tparmorstand] at @s run tp @s ~ ~ ~")).substring(26)).replaceAll(",", "");
 								PixelatorModVariables.tpx = new Object() {
 									double convert(String s) {
 										try {
@@ -200,5 +113,34 @@ public class AutomaticPixelatorScreenTeleportProcedure {
 				});
 			}
 		});
+	}
+
+	private static String executeCommandGetResult(LevelAccessor world, Vec3 pos, String command) {
+		StringBuilder result = new StringBuilder();
+		if (world instanceof ServerLevel level) {
+			CommandSource dataConsumer = new CommandSource() {
+				@Override
+				public void sendSystemMessage(Component message) {
+					result.append(message.getString());
+				}
+
+				@Override
+				public boolean acceptsSuccess() {
+					return true;
+				}
+
+				@Override
+				public boolean acceptsFailure() {
+					return true;
+				}
+
+				@Override
+				public boolean shouldInformAdmins() {
+					return false;
+				}
+			};
+			level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(dataConsumer, pos, Vec2.ZERO, level, 4, "", Component.literal(""), level.getServer(), null), command);
+		}
+		return result.toString();
 	}
 }

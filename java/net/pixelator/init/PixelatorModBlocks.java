@@ -3,14 +3,7 @@
  */
 package net.pixelator.init;
 
-import net.pixelator.block.ServerBlock;
-import net.pixelator.block.RouterBlock;
-import net.pixelator.block.RouterActivatedBlock;
-import net.pixelator.block.PixelatorScreenBlock;
-import net.pixelator.block.PixelatorCameraRightBlock;
-import net.pixelator.block.PixelatorCameraLeftBlock;
-import net.pixelator.block.AutomaticPixelatorScreenBlock;
-import net.pixelator.block.AutomaticPixelatorScreenActivatedBlock;
+import net.pixelator.block.*;
 import net.pixelator.PixelatorMod;
 
 import net.minecraftforge.registries.RegistryObject;
@@ -21,14 +14,30 @@ import net.minecraft.world.level.block.Block;
 
 public class PixelatorModBlocks {
 	public static final DeferredRegister<Block> REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCKS, PixelatorMod.MODID);
-	public static final RegistryObject<Block> PIXELATOR_CAMERA_RIGHT = REGISTRY.register("pixelator_camera_right", () -> new PixelatorCameraRightBlock());
-	public static final RegistryObject<Block> PIXELATOR_SCREEN = REGISTRY.register("pixelator_screen", () -> new PixelatorScreenBlock());
-	public static final RegistryObject<Block> AUTOMATIC_PIXELATOR_SCREEN = REGISTRY.register("automatic_pixelator_screen", () -> new AutomaticPixelatorScreenBlock());
-	public static final RegistryObject<Block> AUTOMATIC_PIXELATOR_SCREEN_ACTIVATED = REGISTRY.register("automatic_pixelator_screen_activated", () -> new AutomaticPixelatorScreenActivatedBlock());
-	public static final RegistryObject<Block> ROUTER = REGISTRY.register("router", () -> new RouterBlock());
-	public static final RegistryObject<Block> ROUTER_ACTIVATED = REGISTRY.register("router_activated", () -> new RouterActivatedBlock());
-	public static final RegistryObject<Block> PIXELATOR_CAMERA_LEFT = REGISTRY.register("pixelator_camera_left", () -> new PixelatorCameraLeftBlock());
-	public static final RegistryObject<Block> SERVER = REGISTRY.register("server", () -> new ServerBlock());
+	public static final RegistryObject<Block> PIXELATOR_CAMERA_RIGHT;
+	public static final RegistryObject<Block> PIXELATOR_SCREEN;
+	public static final RegistryObject<Block> AUTOMATIC_PIXELATOR_SCREEN;
+	public static final RegistryObject<Block> AUTOMATIC_PIXELATOR_SCREEN_ACTIVATED;
+	public static final RegistryObject<Block> ROUTER;
+	public static final RegistryObject<Block> ROUTER_ACTIVATED;
+	public static final RegistryObject<Block> PIXELATOR_CAMERA_LEFT;
+	public static final RegistryObject<Block> SERVER;
+	public static final RegistryObject<Block> COMPUTER;
+	public static final RegistryObject<Block> ALARM_BLOCK;
+	public static final RegistryObject<Block> REDSTONE_EMITTER_MODULE;
+	static {
+		PIXELATOR_CAMERA_RIGHT = REGISTRY.register("pixelator_camera_right", PixelatorCameraRightBlock::new);
+		PIXELATOR_SCREEN = REGISTRY.register("pixelator_screen", PixelatorScreenBlock::new);
+		AUTOMATIC_PIXELATOR_SCREEN = REGISTRY.register("automatic_pixelator_screen", AutomaticPixelatorScreenBlock::new);
+		AUTOMATIC_PIXELATOR_SCREEN_ACTIVATED = REGISTRY.register("automatic_pixelator_screen_activated", AutomaticPixelatorScreenActivatedBlock::new);
+		ROUTER = REGISTRY.register("router", RouterBlock::new);
+		ROUTER_ACTIVATED = REGISTRY.register("router_activated", RouterActivatedBlock::new);
+		PIXELATOR_CAMERA_LEFT = REGISTRY.register("pixelator_camera_left", PixelatorCameraLeftBlock::new);
+		SERVER = REGISTRY.register("server", ServerBlock::new);
+		COMPUTER = REGISTRY.register("computer", ComputerBlock::new);
+		ALARM_BLOCK = REGISTRY.register("alarm_block", AlarmBlockBlock::new);
+		REDSTONE_EMITTER_MODULE = REGISTRY.register("redstone_emitter_module", RedstoneEmitterModuleBlock::new);
+	}
 	// Start of user code block custom blocks
 	// End of user code block custom blocks
 }

@@ -9,10 +9,9 @@ public class PixelatorSelectorThisGUIIsOpenedProcedure {
 		if (entity == null)
 			return;
 		{
-			String _setval = "";
-			entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-				capability.selected_network = _setval;
-				capability.syncPlayerVariables(entity);
+			entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).ifPresent(capability -> {
+				capability.selected_network = "";
+				capability.markSyncDirty();
 			});
 		}
 	}

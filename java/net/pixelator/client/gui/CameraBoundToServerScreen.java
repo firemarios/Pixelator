@@ -12,8 +12,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.Minecraft;
 
@@ -24,8 +24,8 @@ public class CameraBoundToServerScreen extends AbstractContainerScreen<CameraBou
 	private final int x, y, z;
 	private final Player entity;
 	private boolean menuStateUpdateActive = false;
-	EditBox cameraboundname;
-	Button button_done;
+	private EditBox cameraboundname;
+	private ImageButton imagebutton_done_btn;
 
 	public CameraBoundToServerScreen(CameraBoundToServerMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -34,13 +34,17 @@ public class CameraBoundToServerScreen extends AbstractContainerScreen<CameraBou
 		this.y = container.y;
 		this.z = container.z;
 		this.entity = container.entity;
-		this.imageWidth = 215;
+		this.imageWidth = 200;
 		this.imageHeight = 70;
 	}
 
 	@Override
 	public void updateMenuState(int elementType, String name, Object elementState) {
 		menuStateUpdateActive = true;
+		if (elementType == 0 && elementState instanceof String stringState) {
+			if (name.equals("cameraboundname"))
+				cameraboundname.setValue(stringState);
+		}
 		menuStateUpdateActive = false;
 	}
 
@@ -65,7 +69,10 @@ public class CameraBoundToServerScreen extends AbstractContainerScreen<CameraBou
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		guiGraphics.blit(texture, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
-		guiGraphics.blit(ResourceLocation.parse("pixelator:textures/screens/cable.png"), this.leftPos + 5, this.topPos + 5, 0, 0, 24, 24, 24, 24);
+		guiGraphics.blit(ResourceLocation.parse("pixelator:textures/screens/cable.png"), this.leftPos + 9, this.topPos + 12, 0, 0, 24, 24, 24, 24);
+		guiGraphics.blit(ResourceLocation.parse("pixelator:textures/screens/title_island.png"), this.leftPos + 8, this.topPos + -6, 0, 0, 120, 15, 120, 15);
+		guiGraphics.blit(ResourceLocation.parse("pixelator:textures/screens/arrow_exit.png"), this.leftPos + 196, this.topPos + 44, 0, 0, 12, 19, 12, 19);
+		guiGraphics.blit(ResourceLocation.parse("pixelator:textures/screens/title_island_extend.png"), this.leftPos + 33, this.topPos + -6, 0, 0, 116, 15, 116, 15);
 		RenderSystem.disableBlend();
 	}
 
@@ -81,12 +88,6 @@ public class CameraBoundToServerScreen extends AbstractContainerScreen<CameraBou
 	}
 
 	@Override
-	protected void containerTick() {
-		super.containerTick();
-		cameraboundname.tick();
-	}
-
-	@Override
 	public void resize(Minecraft minecraft, int width, int height) {
 		String cameraboundnameValue = cameraboundname.getValue();
 		super.resize(minecraft, width, height);
@@ -95,29 +96,36 @@ public class CameraBoundToServerScreen extends AbstractContainerScreen<CameraBou
 
 	@Override
 	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-		guiGraphics.drawString(this.font, Component.translatable("gui.pixelator.camera_bound_to_server.label_network_name"), 8, 40, -12829636, false);
-		guiGraphics.drawString(this.font, GuiGetServerNetworkNameCableProcedure.execute(entity), 8, 49, -12829636, false);
+		guiGraphics.drawString(this.font, Component.translatable("gui.pixelator.camera_bound_to_server.label_network_name"), 9, 40, -12829636, false);
+		guiGraphics.drawString(this.font, GuiGetServerNetworkNameCableProcedure.execute(entity), 9, 49, -12829636, false);
+		guiGraphics.drawString(this.font, Component.translatable("gui.pixelator.camera_bound_to_server.label_bind_camera_to_server"), 24, -1, -12829636, false);
 	}
 
 	@Override
 	public void init() {
 		super.init();
-		cameraboundname = new EditBox(this.font, this.leftPos + 35, this.topPos + 8, 118, 18, Component.translatable("gui.pixelator.camera_bound_to_server.cameraboundname"));
-		cameraboundname.setHint(Component.translatable("gui.pixelator.camera_bound_to_server.cameraboundname"));
+		cameraboundname = new EditBox(this.font, this.leftPos + 38, this.topPos + 16, 151, 18, Component.translatable("gui.pixelator.camera_bound_to_server.cameraboundname"));
 		cameraboundname.setMaxLength(8192);
 		cameraboundname.setResponder(content -> {
 			if (!menuStateUpdateActive)
 				menu.sendMenuStateUpdate(entity, 0, "cameraboundname", content, false);
 		});
+		cameraboundname.setHint(Component.translatable("gui.pixelator.camera_bound_to_server.cameraboundname"));
 		this.addWidget(this.cameraboundname);
-		button_done = Button.builder(Component.translatable("gui.pixelator.camera_bound_to_server.button_done"), e -> {
+		imagebutton_done_btn = new ImageButton(this.leftPos + 171, this.topPos + 44, 18, 18, 0, 0, 18, ResourceLocation.parse("pixelator:textures/screens/atlas/imagebutton_done_btn.png"), 18, 36, e -> {
 			int x = CameraBoundToServerScreen.this.x;
 			int y = CameraBoundToServerScreen.this.y;
 			if (true) {
 				PixelatorMod.PACKET_HANDLER.sendToServer(new CameraBoundToServerButtonMessage(0, x, y, z));
 				CameraBoundToServerButtonMessage.handleButtonAction(entity, 0, x, y, z);
 			}
-		}).bounds(this.leftPos + 159, this.topPos + 7, 46, 20).build();
-		this.addRenderableWidget(button_done);
+		});
+		this.addRenderableWidget(imagebutton_done_btn);
+	}
+
+	@Override
+	protected void containerTick() {
+		super.containerTick();
+		cameraboundname.tick();
 	}
 }

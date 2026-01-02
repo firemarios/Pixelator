@@ -27,9 +27,5 @@ public class WelcomeProcedure {
 			return;
 		if (entity instanceof Player _player && !_player.level().isClientSide())
 			_player.displayClientMessage(Component.literal((Component.translatable("msg.pixelator.welcome.great").getString())), false);
-		if (entity instanceof Player _player && !_player.level().isClientSide())
-			_player.displayClientMessage(Component.literal((Component.translatable("msg.pixelator.welcome.important").getString())), false);
-		if (entity instanceof Player _player && !_player.level().isClientSide())
-			_player.displayClientMessage(Component.literal((Component.translatable("msg.pixelator.welcome.notice").getString())), false);
 	}
 }

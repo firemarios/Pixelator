@@ -3,14 +3,7 @@
  */
 package net.pixelator.init;
 
-import net.pixelator.block.entity.ServerBlockEntity;
-import net.pixelator.block.entity.RouterBlockEntity;
-import net.pixelator.block.entity.RouterActivatedBlockEntity;
-import net.pixelator.block.entity.PixelatorScreenBlockEntity;
-import net.pixelator.block.entity.PixelatorCameraRightBlockEntity;
-import net.pixelator.block.entity.PixelatorCameraLeftBlockEntity;
-import net.pixelator.block.entity.AutomaticPixelatorScreenBlockEntity;
-import net.pixelator.block.entity.AutomaticPixelatorScreenActivatedBlockEntity;
+import net.pixelator.block.entity.*;
 import net.pixelator.PixelatorMod;
 
 import net.minecraftforge.registries.RegistryObject;
@@ -32,6 +25,8 @@ public class PixelatorModBlockEntities {
 	public static final RegistryObject<BlockEntityType<RouterActivatedBlockEntity>> ROUTER_ACTIVATED = register("router_activated", PixelatorModBlocks.ROUTER_ACTIVATED, RouterActivatedBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<PixelatorCameraLeftBlockEntity>> PIXELATOR_CAMERA_LEFT = register("pixelator_camera_left", PixelatorModBlocks.PIXELATOR_CAMERA_LEFT, PixelatorCameraLeftBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<ServerBlockEntity>> SERVER = register("server", PixelatorModBlocks.SERVER, ServerBlockEntity::new);
+	public static final RegistryObject<BlockEntityType<ComputerBlockEntity>> COMPUTER = register("computer", PixelatorModBlocks.COMPUTER, ComputerBlockEntity::new);
+	public static final RegistryObject<BlockEntityType<AlarmBlockBlockEntity>> ALARM_BLOCK = register("alarm_block", PixelatorModBlocks.ALARM_BLOCK, AlarmBlockBlockEntity::new);
 
 	// Start of user code block custom block entities
 	// End of user code block custom block entities

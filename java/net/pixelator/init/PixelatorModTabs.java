@@ -29,5 +29,14 @@ public class PixelatorModTabs {
 				tabData.accept(PixelatorModItems.ID_CARD.get());
 				tabData.accept(PixelatorModItems.CABLE.get());
 				tabData.accept(PixelatorModItems.USB.get());
+				tabData.accept(PixelatorModBlocks.COMPUTER.get().asItem());
+				tabData.accept(PixelatorModItems.VIDEO_CABLE.get());
+				tabData.accept(PixelatorModBlocks.ALARM_BLOCK.get().asItem());
+				tabData.accept(PixelatorModItems.NIGHT_VISION_MODULE.get());
+				tabData.accept(PixelatorModItems.ENTIY_GLOWING_MODULE.get());
+				tabData.accept(PixelatorModItems.ALARM_MODULE.get());
+				tabData.accept(PixelatorModItems.PLAYER_DETECTION_MODULE.get());
+				tabData.accept(PixelatorModItems.MOTION_DETECTION_MODULE.get());
+				tabData.accept(PixelatorModItems.REDSTONE_MODULE.get());
 			}).build());
 }

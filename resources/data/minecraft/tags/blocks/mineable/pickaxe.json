@@ -1,9 +1,10 @@
 {
   "replace": false,
   "values": [
+    "pixelator:computer",
     "pixelator:server",
-    "pixelator:automatic_pixelator_screen",
     "pixelator:pixelator_camera_left",
+    "pixelator:automatic_pixelator_screen",
     "pixelator:router_activated",
     "pixelator:router",
     "pixelator:pixelator_camera_right",

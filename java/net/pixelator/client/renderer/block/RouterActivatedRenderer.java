@@ -12,7 +12,6 @@ import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.RenderType;
@@ -47,7 +46,7 @@ public class RouterActivatedRenderer implements BlockEntityRenderer<RouterActiva
 		poseStack.translate(0, -1, 0);
 		VertexConsumer builder = renderer.getBuffer(RenderType.entityCutout(texture));
 		model.setupBlockEntityAnim(blockEntity, blockEntity.getLevel().getGameTime() + partialTick);
-		model.renderToBuffer(poseStack, builder, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+		model.renderToBuffer(poseStack, builder, light, overlayLight, 1, 1, 1, 1);
 		poseStack.popPose();
 	}
 
@@ -68,10 +67,6 @@ public class RouterActivatedRenderer implements BlockEntityRenderer<RouterActiva
 		public void setupBlockEntityAnim(RouterActivatedBlockEntity blockEntity, float ageInTicks) {
 			animator.setupBlockEntityAnim(blockEntity, ageInTicks);
 			super.setupAnim(null, 0, 0, ageInTicks, 0, 0);
-		}
-
-		public ModelPart getRoot() {
-			return root;
 		}
 
 		private class BlockEntityHierarchicalModel extends HierarchicalModel<Entity> {

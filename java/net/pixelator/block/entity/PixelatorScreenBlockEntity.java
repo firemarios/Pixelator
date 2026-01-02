@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
 import java.util.stream.IntStream;
 
 public class PixelatorScreenBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
-	private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(9, ItemStack.EMPTY);
+	private NonNullList<ItemStack> stacks = NonNullList.withSize(0, ItemStack.EMPTY);
 	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
 	public final AnimationState animationState0 = new AnimationState();
 	public final AnimationState animationState1 = new AnimationState();
@@ -80,11 +80,6 @@ public class PixelatorScreenBlockEntity extends RandomizableContainerBlockEntity
 	@Override
 	public Component getDefaultName() {
 		return Component.literal("pixelator_screen");
-	}
-
-	@Override
-	public int getMaxStackSize() {
-		return 99;
 	}
 
 	@Override

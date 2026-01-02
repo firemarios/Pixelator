@@ -7,25 +7,18 @@ import net.minecraft.core.BlockPos;
 public class GuiGetServerNetworkNameProcedure {
 	public static String execute(LevelAccessor world, double x, double y, double z) {
 		String string = "";
-		if (!(new Object() {
-			public String getValue(LevelAccessor world, BlockPos pos, String tag) {
-				BlockEntity blockEntity = world.getBlockEntity(pos);
-				if (blockEntity != null)
-					return blockEntity.getPersistentData().getString(tag);
-				return "";
-			}
-		}.getValue(world, BlockPos.containing(x, y, z), "network_name")).isEmpty()) {
-			string = new Object() {
-				public String getValue(LevelAccessor world, BlockPos pos, String tag) {
-					BlockEntity blockEntity = world.getBlockEntity(pos);
-					if (blockEntity != null)
-						return blockEntity.getPersistentData().getString(tag);
-					return "";
-				}
-			}.getValue(world, BlockPos.containing(x, y, z), "network_name");
+		if (!(getBlockNBTString(world, BlockPos.containing(x, y, z), "network_name")).isEmpty()) {
+			string = getBlockNBTString(world, BlockPos.containing(x, y, z), "network_name");
 		} else {
 			string = "-";
 		}
 		return string;
+	}
+
+	private static String getBlockNBTString(LevelAccessor world, BlockPos pos, String tag) {
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity != null)
+			return blockEntity.getPersistentData().getString(tag);
+		return "";
 	}
 }
