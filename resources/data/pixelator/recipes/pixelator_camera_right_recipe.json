@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "pixelator:pixelator_camera_right"
+    }
+  ],
+  "result": {
+    "item": "pixelator:pixelator_camera_left",
+    "count": 1
+  }
+}

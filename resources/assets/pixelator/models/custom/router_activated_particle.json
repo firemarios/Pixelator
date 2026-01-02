@@ -1,0 +1,6 @@
+{
+  "parent": "pixelator:displaysettings/router_activated",
+  "textures": {
+    "particle": "pixelator:block/router"
+  }
+}

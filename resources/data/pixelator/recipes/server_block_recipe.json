@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "aaa",
+    "bcd",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:smooth_stone"
+    },
+    "b": {
+      "item": "pixelator:cable"
+    },
+    "c": {
+      "item": "pixelator:bounder"
+    },
+    "d": {
+      "tag": "forge:stained_glass"
+    }
+  },
+  "result": {
+    "item": "pixelator:server",
+    "count": 1
+  }
+}
