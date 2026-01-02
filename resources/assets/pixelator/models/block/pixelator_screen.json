@@ -1,8 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "pixelator:block/pixelator_screen",
-    "particle": "pixelator:block/pixelator_screen"
-  },
-  "render_type": "solid"
-}
