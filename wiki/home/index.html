@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="https://github.com/user-attachments/assets/134de4f5-9a3c-434c-9926-755a2d930e1d" />
+  <title>Pixalator Wiki | Home</title>
+</head>
+
+<body>
+  <div class="header">
+
+  </div>
+  <div id="three-column-layout" class="columns"
+    style="display: flex; position: fixed; margin-top: 0px; left: 0; right: 0; bottom: 0; overflow-y: auto; height: auto;">
+    <div id="sidebar-column" row="0"
+      style="width: 20%; background-color: rgb(25, 100, 25); display: flex; flex-direction: column; overflow-y: visible; padding: 10px; height: auto; overflow-x: hidden;">
+      <div
+        style="width: 100%; padding: 20px 10px 10px 10px; box-sizing: border-box; color: white; flex-grow: 1; overflow-y: auto;">
+        <h2
+          style="text-align: center; font-family: minecraft-pixelator; letter-spacing: 1px; text-shadow: 2px 2px 0px black, 3px 3px 0px black, 4px 4px 0px black, 5px 5px 0px black; margin-top: 0px;">
+          Page Content</h2>
+        <a id="toc-list" style="padding-left: 20px;"></a>
+      </div>
+    </div>
+    <div id="toc-column" row="2"
+      style="width: 55%; background-color: transparent; margin-left: 0; padding-left: 20px; overflow-y: visible; box-sizing: border-box; margin-top: -6px; height: fit-content;">
+      <div class="general-box">
+        <h2>Latest Version</h2>
+        <p>Version: 1.4.1</p>
+        <p>Release Date: Aug 27, 2026</p>
+        <p>Download:
+          <a onclick="window.open('https://modrinth.com/mod/pixelator')" href="">Modrinth</a>,
+          <a onclcik="window.open('https://www.curseforge.com/minecraft/mc-mods/pixelator')" href="">Curseforge</a>
+        </p>
+        <h3>Changelog</h3>
+        <p><a href="javascript:goTo('changelog')">Click Here</a></p>
+      </div>
+      <div class="general-box">
+        <h3>Help us improve the Wiki!</h3>
+        <p>If you have suggestions or find issues, please report them on our <a
+            href="https://discord.gg/quqkGBbkYB">Discord server</a> or on the <a
+            href="https://github.com/firemarios/Pixelator/issues">GitHub issues page</a>.</p>
+        <p>We appreciate your feedback and contributions to make the Pixalator Wiki better!</p>
+      </div>
+      <div class="general-box" style="padding-bottom: 20px">
+        <h2>Pages</h2>
+        <div
+          style="text-align: center; display: flex; flex-direction: row; align-items: center; justify-content: center; flex-wrap: wrap; gap: 20px;">
+          <div class="page-box" style="display: flex; flex-direction: column; align-items: center;">
+            <img src="/Pixelator/wiki/assets/brush.png" width="100px" />
+            <button class="page-button" onclick="goTo('changelog')">Changelog</button>
+          </div>
+          <div class="page-box" style="display: flex; flex-direction: column; align-items: center;">
+            <img src="/Pixelator/wiki/assets/paper.png" width="100px" />
+            <button class="page-button" onclick="goTo('information')">Information</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="info-column" row="1"
+      style="width: 24%; background-color: transparent; margin-top: -6px; padding-left: 10px; padding-right: 10px;">
+      <div class="general-box" style="text-align: center;">
+        <img src="https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2F6cLD7M1s%2FChat-GPT-Image-Jul-1-2025-10-20-04-PM.png"
+          width="100%" />
+        <p>Welcome to the official Pixelator mod Wiki.</p>
+        <p>Pixelator, created by firemariosXD, is a Minecraft mod that takes the pixelator system from Luigi's mansion 2
+          and adds it to Minecraft with more features.</p>
+      </div>
+    </div>
+    <script src="../code/localUtils.js" type="module"></script>
+</body>
+
+</html>

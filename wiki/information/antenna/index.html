@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="https://github.com/user-attachments/assets/134de4f5-9a3c-434c-9926-755a2d930e1d" />
+  
+  <title>Pixalator Wiki | Antenna</title>
+</head>
+
+<body>
+  <div class="header"></div>
+    <div style="display: flex; align-items: right; margin-left: auto; margin-right: 20px;">
+      <button onclick="window.open('https://modrinth.com/mod/pixelator')">Mod Page</button>
+      <div class="dropdown">
+        <button class="dropbtn">Pages</button>
+        <div class="dropdown-content">
+          <button onclick="document.location='../wiki.html'">Home</button>
+          <button onclick="document.location='../information.html'">Information</button>
+          <button onclick="document.location='../changelog.html'">Changelog</button>
+        </div>
+      </div>
+      <button onclick="window.open('https://github.com/firemarios/Pixelator/issues')">Issues</button>
+    </div>
+  </div>
+  <div id="three-column-layout" class="columns"
+    style="display: flex; position: fixed; margin-top: 0px; left: 0; right: 0; bottom: 0; overflow-y: auto; height: auto;">
+    <div id="sidebar-column"
+      style="width: 20%; background-color: rgb(25, 100, 25); display: flex; flex-direction: column; overflow-y: visible; padding: 10px; height: auto; overflow-x: hidden;">
+      <div
+        style="width: 100%; padding: 20px 10px 10px 10px; box-sizing: border-box; color: white; flex-grow: 1; overflow-y: auto;">
+        <h2
+          style="text-align: center; font-family: minecraft-pixelator; letter-spacing: 1px; text-shadow: 2px 2px 0px black, 3px 3px 0px black, 4px 4px 0px black, 5px 5px 0px black; margin-top: 0px;">
+          Page Content</h2>
+        <a id="toc-list" style="padding-left: 20px;"></a>
+      </div>
+    </div>
+    <div id="toc-column"
+      style="width: 55%; background-color: transparent; margin-left: 0; padding-left: 20px; overflow-y: visible; height: fit-content; box-sizing: border-box; margin-top: -6px;">
+      <h1>Antenna</h1>
+      <hr>
+      <p>The Antenna is used to craft wireless items.</p>
+      <h2>Gameplay</h2>
+      <hr>
+      <h3>Crafting Recipes</h3>
+      <div class="general-box">
+        <h3><a href="javascript:goTo('information/router')">Router</a></h3>
+        <div class="crafting-ui" style="width: 100%; margin-top: -25px;">
+          <!-- Crafting Grid -->
+          <div class="crafting-grid">
+            <div class="slot">
+            </div>
+            <div class="slot">
+              <img src="/Pixelator/wiki/assets/antenna.png" alt="Iron Ingot">
+              <div class="tooltip">Antenna</div>
+            </div>
+            <div class="slot">
+            </div>
+            <div class="slot">
+            </div>
+            <div class="slot">
+              <img src="/Pixelator/wiki/assets/bounder.png" alt="Iron Ingot">
+              <div class="tooltip">Bounder</div>
+            </div>
+            <div class="slot">
+            </div>
+            <div class="slot">
+            </div>
+            <div class="slot">
+              <img src="/Pixelator/wiki/assets/crafting/redstone_block.png" alt="Iron Ingot">
+              <div class="tooltip">Redstone Block</div>
+            </div>
+            <div class="slot">
+            </div>
+          </div>
+
+          <!-- Result Slot -->
+          <div class="slot result-slot" style="width: 72px; height: 72px;">
+            <img src="/Pixelator/wiki/assets/router.png">
+            <div class="tooltip">Router</div>
+          </div>
+        </div>
+      </div>
+      <div class="general-box">
+        <h3><a href="javascript:goTo('information/tablet')">Tablet</a></h3>
+        <div class="crafting-ui" style="width: 100%; margin-top: -25px;">
+          <!-- Crafting Grid -->
+          <div class="crafting-grid">
+            <div class="slot">
+            </div>
+            <div class="slot">
+            </div>
+            <div class="slot">
+            </div>
+            <div class="slot">
+            </div>
+            <div class="slot">
+              <img src="/Pixelator/wiki/assets/antenna.png">
+              <div class="tooltip">Antenna</div>
+            </div>
+            <div class="slot">
+            </div>
+            <div class="slot">
+              <img src="/Pixelator/wiki/assets/crafting/lime_stained_glass.png">
+              <div class="tooltip">Lime Stained Glass</div>
+            </div>
+            <div class="slot">
+              <img src="/Pixelator/wiki/assets/crafting/lime_stained_glass.png">
+              <div class="tooltip">Lime Stained Glass</div>
+            </div>
+            <div class="slot">
+              <img src="/Pixelator/wiki/assets/crafting/lime_stained_glass.png">
+              <div class="tooltip">Lime Stained Glass</div>
+            </div>
+          </div>
+
+          <!-- Result Slot -->
+          <div class="slot result-slot" style="width: 72px; height: 72px;">
+            <img src="/Pixelator/wiki/assets/tablet.png">
+            <div class="tooltip">Tablet</div>
+          </div>
+        </div>
+      </div>
+      <h1>Changelog</h1>
+      <hr>
+      <h4>Version 1.2.0</h4>
+      <p>Added new item: Antenna</p>
+    </div>
+    <div class="info-col"
+      style="width: 24%; background-color: transparent; margin-top: -6px; padding-left: 10px; padding-right: 10px;">
+      <div class="general-box" style="justify-content: center; align-items: center; text-align: center;">
+        <h2>3D Item</h2>
+        <img src="/Pixelator/wiki/assets/antenna.png" style="width: 200px; margin-top: -10px; margin-bottom: 20px;">
+      </div>
+      <div class="general-box" style="justify-content: center; align-items: center; text-align: center;">
+        <h2>Crafting</h2>
+        <div class="crafting-ui" style="width: 100%; margin-top: -25px;">
+          <!-- Crafting Grid -->
+          <div class="crafting-grid">
+            <div class="slot">
+            </div>
+            <div class="slot">
+            </div>
+            <div class="slot">
+            </div>
+            <div class="slot">
+            </div>
+            <div class="slot">
+              <img src="/Pixelator/wiki/assets/crafting/end_rod.png">
+              <div class="tooltip">End Rod</div>
+            </div>
+            <div class="slot">
+            </div>
+            <div class="slot">
+            </div>
+            <div class="slot">
+              <img src="/Pixelator/wiki/assets/crafting/redstone_dust.png">
+              <div class="tooltip">Redstone Dust</div>
+            </div>
+            <div class="slot">
+            </div>
+          </div>
+
+          <!-- Result Slot -->
+          <div class="slot result-slot" style="width: 72px; height: 72px;">
+            <img src="/Pixelator/wiki/assets/antenna.png">
+            <div class="tooltip">Antenna</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+<script src="../../code/localUtils.js" type="module"></script></body>
+
+</html>
+
+
+
+
+
