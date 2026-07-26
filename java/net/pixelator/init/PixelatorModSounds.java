@@ -14,11 +14,12 @@ import net.minecraft.resources.ResourceLocation;
 
 public class PixelatorModSounds {
 	public static final DeferredRegister<SoundEvent> REGISTRY = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, PixelatorMod.MODID);
-	public static final RegistryObject<SoundEvent> PIXELATOR_CAMERA_TURNING = REGISTRY.register("pixelator_camera_turning", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("pixelator", "pixelator_camera_turning")));
-	public static final RegistryObject<SoundEvent> PIXELATOR_CAMERA_SPAWN = REGISTRY.register("pixelator_camera_spawn", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("pixelator", "pixelator_camera_spawn")));
-	public static final RegistryObject<SoundEvent> PIXELATOR_SCREEN_LEVER = REGISTRY.register("pixelator_screen_lever", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("pixelator", "pixelator_screen_lever")));
+	public static final RegistryObject<SoundEvent> PIXELATOR_CAMERA_TURNING = REGISTRY.register("pixelator_camera_turning", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("pixelator", "pixelator_camera_turning")));
+	public static final RegistryObject<SoundEvent> PIXELATOR_CAMERA_SPAWN = REGISTRY.register("pixelator_camera_spawn", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("pixelator", "pixelator_camera_spawn")));
+	public static final RegistryObject<SoundEvent> PIXELATOR_SCREEN_LEVER = REGISTRY.register("pixelator_screen_lever", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("pixelator", "pixelator_screen_lever")));
 	public static final RegistryObject<SoundEvent> AUTOMATIC_PIXELATOR_SCREEN_ACTIVATION = REGISTRY.register("automatic_pixelator_screen_activation",
-			() -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("pixelator", "automatic_pixelator_screen_activation")));
-	public static final RegistryObject<SoundEvent> PIXELATOR_SCREEN_ACTIVATE = REGISTRY.register("pixelator_screen_activate", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("pixelator", "pixelator_screen_activate")));
-	public static final RegistryObject<SoundEvent> ACCESS_DENIED = REGISTRY.register("access_denied", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("pixelator", "access_denied")));
+			() -> SoundEvent.createVariableRangeEvent(new ResourceLocation("pixelator", "automatic_pixelator_screen_activation")));
+	public static final RegistryObject<SoundEvent> PIXELATOR_SCREEN_ACTIVATE = REGISTRY.register("pixelator_screen_activate", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("pixelator", "pixelator_screen_activate")));
+	public static final RegistryObject<SoundEvent> ACCESS_DENIED = REGISTRY.register("access_denied", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("pixelator", "access_denied")));
+	public static final RegistryObject<SoundEvent> ALARM = REGISTRY.register("alarm", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("pixelator", "alarm")));
 }

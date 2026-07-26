@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "pixelator:block/alarm_block"
+    },
+    "facing=east": {
+      "model": "pixelator:block/alarm_block",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "pixelator:block/alarm_block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "pixelator:block/alarm_block",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "pixelator:block/alarm_block",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "pixelator:block/alarm_block",
+      "x": 90
+    }
+  }
+}

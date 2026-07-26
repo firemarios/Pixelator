@@ -29,8 +29,9 @@ public class RouterActivationProcedure {
 				BlockPos _bp = BlockPos.containing(x, y, z);
 				BlockEntity _blockEntity = world.getBlockEntity(_bp);
 				BlockState _bs = world.getBlockState(_bp);
-				if (_blockEntity != null)
+				if (_blockEntity != null) {
 					_blockEntity.getPersistentData().putBoolean("activated", true);
+				}
 				if (world instanceof Level _level)
 					_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 			}
@@ -38,9 +39,9 @@ public class RouterActivationProcedure {
 				if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == PixelatorModBlocks.ROUTER.get()) {
 					if (world instanceof Level _level) {
 						if (!_level.isClientSide()) {
-							_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("pixelator:automatic_pixelator_screen_activation")), SoundSource.BLOCKS, 1, 1);
+							_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pixelator:automatic_pixelator_screen_activation")), SoundSource.BLOCKS, 1, 1);
 						} else {
-							_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("pixelator:automatic_pixelator_screen_activation")), SoundSource.BLOCKS, 1, 1, false);
+							_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pixelator:automatic_pixelator_screen_activation")), SoundSource.BLOCKS, 1, 1, false);
 						}
 					}
 				}
@@ -49,9 +50,9 @@ public class RouterActivationProcedure {
 				if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == PixelatorModBlocks.ROUTER.get()) {
 					if (world instanceof Level _level) {
 						if (!_level.isClientSide()) {
-							_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("pixelator:automatic_pixelator_screen_activation")), SoundSource.BLOCKS, 1, 1);
+							_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pixelator:automatic_pixelator_screen_activation")), SoundSource.BLOCKS, 1, 1);
 						} else {
-							_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("pixelator:automatic_pixelator_screen_activation")), SoundSource.BLOCKS, 1, 1, false);
+							_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pixelator:automatic_pixelator_screen_activation")), SoundSource.BLOCKS, 1, 1, false);
 						}
 					}
 				}
@@ -60,9 +61,9 @@ public class RouterActivationProcedure {
 				if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == PixelatorModBlocks.ROUTER.get()) {
 					if (world instanceof Level _level) {
 						if (!_level.isClientSide()) {
-							_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("pixelator:automatic_pixelator_screen_activation")), SoundSource.BLOCKS, 1, 1);
+							_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pixelator:automatic_pixelator_screen_activation")), SoundSource.BLOCKS, 1, 1);
 						} else {
-							_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("pixelator:automatic_pixelator_screen_activation")), SoundSource.BLOCKS, 1, 1, false);
+							_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("pixelator:automatic_pixelator_screen_activation")), SoundSource.BLOCKS, 1, 1, false);
 						}
 					}
 				}
@@ -73,8 +74,9 @@ public class RouterActivationProcedure {
 						BlockPos _bp = BlockPos.containing(x, y, z);
 						BlockEntity _blockEntity = world.getBlockEntity(_bp);
 						BlockState _bs = world.getBlockState(_bp);
-						if (_blockEntity != null)
+						if (_blockEntity != null) {
 							_blockEntity.getPersistentData().putBoolean("activated", false);
+						}
 						if (world instanceof Level _level)
 							_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 					}

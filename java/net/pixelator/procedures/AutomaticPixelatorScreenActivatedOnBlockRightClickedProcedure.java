@@ -23,11 +23,11 @@ public class AutomaticPixelatorScreenActivatedOnBlockRightClickedProcedure {
 		if (entity == null)
 			return;
 		{
-			String _setval = "auto";
-			entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-				capability.teleport_type = _setval;
-				capability.syncPlayerVariables(entity);
-			});
+			var _playerVars = entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElse(null);
+			if (_playerVars != null) {
+				_playerVars.teleport_type = "auto";
+				_playerVars.markSyncDirty();
+			}
 		}
 		if (entity instanceof ServerPlayer _ent) {
 			BlockPos _bpos = BlockPos.containing(x, y, z);

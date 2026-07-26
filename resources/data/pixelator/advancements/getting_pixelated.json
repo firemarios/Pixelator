@@ -16,18 +16,12 @@
     "hidden": false
   },
   "criteria": {
-    "getting_pixelated_0": {
+    "getting_pixelated_1": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": [
-              "pixelator:bounder"
-            ],
-            "count": {
-              "min": 1,
-              "max": 128
-            }
+            "items": "pixelator:bounder"
           }
         ]
       }

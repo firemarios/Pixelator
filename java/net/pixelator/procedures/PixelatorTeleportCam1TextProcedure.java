@@ -11,7 +11,7 @@ public class PixelatorTeleportCam1TextProcedure {
 		if (entity == null)
 			return "";
 		String key = "";
-		if (PixelatorModVariables.cameras_decoded.size() >= 6 * (entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).teleport_page - 5) {
+		if (PixelatorModVariables.cameras_decoded.size() >= 6 * entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).teleport_page - 5) {
 			key = /*@String*/(new Object() {
 				private <E> E getListElement(ArrayList<Object> objects, int index, Class<E> eClass, Object defaultValue) {
 					if (index < objects.size()) {
@@ -22,8 +22,7 @@ public class PixelatorTeleportCam1TextProcedure {
 					}
 					return eClass.cast(defaultValue);
 				}
-			}.getListElement(PixelatorModVariables.cameras_decoded, (int) ((6 * (entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).teleport_page - 5) - 1), String.class,
-					""));
+			}.getListElement(PixelatorModVariables.cameras_decoded, (int) ((6 * entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).teleport_page - 5) - 1), String.class, ""));
 		}
 		return key;
 	}

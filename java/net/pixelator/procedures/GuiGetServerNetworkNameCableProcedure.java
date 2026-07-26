@@ -8,6 +8,6 @@ public class GuiGetServerNetworkNameCableProcedure {
 	public static String execute(Entity entity) {
 		if (entity == null)
 			return "";
-		return (entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).itemstack_server_bound_network;
+		return entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).itemstack_server_bound_network;
 	}
 }

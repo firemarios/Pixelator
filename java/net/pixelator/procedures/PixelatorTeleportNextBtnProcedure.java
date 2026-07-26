@@ -10,7 +10,7 @@ public class PixelatorTeleportNextBtnProcedure {
 		if (entity == null)
 			return false;
 		boolean show = false;
-		if (PixelatorModVariables.MapVariables.get(world).teleport_max_pages == (entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).teleport_page) {
+		if (PixelatorModVariables.MapVariables.get(world).teleport_max_pages == entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).teleport_page) {
 			show = false;
 		} else {
 			show = true;

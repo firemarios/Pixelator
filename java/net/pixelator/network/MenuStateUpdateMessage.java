@@ -20,6 +20,12 @@ public class MenuStateUpdateMessage {
 	private final String name;
 	private final Object elementState;
 
+	public MenuStateUpdateMessage(int elementType, String name, Object elementState) {
+		this.elementType = elementType;
+		this.name = name;
+		this.elementState = elementState;
+	}
+
 	public MenuStateUpdateMessage(FriendlyByteBuf buffer) {
 		this.elementType = buffer.readInt();
 		this.name = buffer.readUtf();
@@ -28,13 +34,9 @@ public class MenuStateUpdateMessage {
 			elementState = buffer.readUtf();
 		} else if (elementType == 1) {
 			elementState = buffer.readBoolean();
+		} else if (elementType == 2) {
+			elementState = buffer.readDouble();
 		}
-		this.elementState = elementState;
-	}
-
-	public MenuStateUpdateMessage(int elementType, String name, Object elementState) {
-		this.elementType = elementType;
-		this.name = name;
 		this.elementState = elementState;
 	}
 
@@ -45,6 +47,8 @@ public class MenuStateUpdateMessage {
 			buffer.writeUtf((String) message.elementState);
 		} else if (message.elementType == 1) {
 			buffer.writeBoolean((boolean) message.elementState);
+		} else if (message.elementType == 2 && message.elementState instanceof Number n) {
+			buffer.writeDouble(n.doubleValue());
 		}
 	}
 

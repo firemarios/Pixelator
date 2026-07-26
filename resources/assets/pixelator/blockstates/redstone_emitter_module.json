@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "pixelator:block/redstone_emitter_module"
+    }
+  }
+}

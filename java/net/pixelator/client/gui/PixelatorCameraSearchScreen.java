@@ -11,8 +11,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.Minecraft;
 
@@ -23,9 +23,13 @@ public class PixelatorCameraSearchScreen extends AbstractContainerScreen<Pixelat
 	private final int x, y, z;
 	private final Player entity;
 	private boolean menuStateUpdateActive = false;
-	EditBox searchTeleport;
-	EditBox network;
-	Button button_done;
+	private EditBox searchTeleport;
+	private EditBox network;
+	private ImageButton imagebutton_done_btn;
+	private static final ResourceLocation BACKGROUND = new ResourceLocation("pixelator:textures/screens/pixelator_camera_search.png");
+	private static final ResourceLocation IMAGE_0 = new ResourceLocation("pixelator:textures/screens/title_island.png");
+	private static final ResourceLocation IMAGE_1 = new ResourceLocation("pixelator:textures/screens/search_icon.png");
+	private static final ResourceLocation IMAGE_2 = new ResourceLocation("pixelator:textures/screens/arrow_exit.png");
 
 	public PixelatorCameraSearchScreen(PixelatorCameraSearchMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -35,16 +39,20 @@ public class PixelatorCameraSearchScreen extends AbstractContainerScreen<Pixelat
 		this.z = container.z;
 		this.entity = container.entity;
 		this.imageWidth = 140;
-		this.imageHeight = 110;
+		this.imageHeight = 89;
 	}
 
 	@Override
 	public void updateMenuState(int elementType, String name, Object elementState) {
 		menuStateUpdateActive = true;
+		if (elementType == 0 && elementState instanceof String stringState) {
+			if (name.equals("searchTeleport"))
+				searchTeleport.setValue(stringState);
+			else if (name.equals("network"))
+				network.setValue(stringState);
+		}
 		menuStateUpdateActive = false;
 	}
-
-	private static final ResourceLocation texture = ResourceLocation.parse("pixelator:textures/screens/pixelator_camera_search.png");
 
 	@Override
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
@@ -60,8 +68,10 @@ public class PixelatorCameraSearchScreen extends AbstractContainerScreen<Pixelat
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
-		guiGraphics.blit(texture, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
-		guiGraphics.blit(ResourceLocation.parse("pixelator:textures/screens/search_icon.png"), this.leftPos + 1, this.topPos + 1, 0, 0, 16, 16, 16, 16);
+		guiGraphics.blit(BACKGROUND, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
+		guiGraphics.blit(IMAGE_0, this.leftPos + 10, this.topPos + -6, 0, 0, 120, 15, 120, 15);
+		guiGraphics.blit(IMAGE_1, this.leftPos + 11, this.topPos + -6, 0, 0, 16, 16, 16, 16);
+		guiGraphics.blit(IMAGE_2, this.leftPos + 136, this.topPos + 62, 0, 0, 12, 19, 12, 19);
 		RenderSystem.disableBlend();
 	}
 
@@ -79,13 +89,6 @@ public class PixelatorCameraSearchScreen extends AbstractContainerScreen<Pixelat
 	}
 
 	@Override
-	protected void containerTick() {
-		super.containerTick();
-		searchTeleport.tick();
-		network.tick();
-	}
-
-	@Override
 	public void resize(Minecraft minecraft, int width, int height) {
 		String searchTeleportValue = searchTeleport.getValue();
 		String networkValue = network.getValue();
@@ -96,36 +99,43 @@ public class PixelatorCameraSearchScreen extends AbstractContainerScreen<Pixelat
 
 	@Override
 	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-		guiGraphics.drawString(this.font, Component.translatable("gui.pixelator.pixelator_camera_search.label_search"), 16, 5, -12829636, false);
+		guiGraphics.drawString(this.font, Component.translatable("gui.pixelator.pixelator_camera_search.label_search"), 25, -1, -12829636, false);
 	}
 
 	@Override
 	public void init() {
 		super.init();
-		searchTeleport = new EditBox(this.font, this.leftPos + 11, this.topPos + 52, 118, 18, Component.translatable("gui.pixelator.pixelator_camera_search.searchTeleport"));
-		searchTeleport.setHint(Component.translatable("gui.pixelator.pixelator_camera_search.searchTeleport"));
+		searchTeleport = new EditBox(this.font, this.leftPos + 11, this.topPos + 38, 120, 20, Component.translatable("gui.pixelator.pixelator_camera_search.searchTeleport"));
 		searchTeleport.setMaxLength(8192);
 		searchTeleport.setResponder(content -> {
 			if (!menuStateUpdateActive)
 				menu.sendMenuStateUpdate(entity, 0, "searchTeleport", content, false);
 		});
+		searchTeleport.setHint(Component.translatable("gui.pixelator.pixelator_camera_search.searchTeleport"));
 		this.addWidget(this.searchTeleport);
-		network = new EditBox(this.font, this.leftPos + 11, this.topPos + 25, 118, 18, Component.translatable("gui.pixelator.pixelator_camera_search.network"));
-		network.setHint(Component.translatable("gui.pixelator.pixelator_camera_search.network"));
+		network = new EditBox(this.font, this.leftPos + 10, this.topPos + 14, 120, 20, Component.translatable("gui.pixelator.pixelator_camera_search.network"));
 		network.setMaxLength(8192);
 		network.setResponder(content -> {
 			if (!menuStateUpdateActive)
 				menu.sendMenuStateUpdate(entity, 0, "network", content, false);
 		});
+		network.setHint(Component.translatable("gui.pixelator.pixelator_camera_search.network"));
 		this.addWidget(this.network);
-		button_done = Button.builder(Component.translatable("gui.pixelator.pixelator_camera_search.button_done"), e -> {
+		imagebutton_done_btn = new ImageButton(this.leftPos + 113, this.topPos + 62, 18, 18, 0, 0, 18, new ResourceLocation("pixelator:textures/screens/atlas/imagebutton_done_btn.png"), 18, 36, e -> {
 			int x = PixelatorCameraSearchScreen.this.x;
 			int y = PixelatorCameraSearchScreen.this.y;
 			if (true) {
 				PixelatorMod.PACKET_HANDLER.sendToServer(new PixelatorCameraSearchButtonMessage(0, x, y, z));
 				PixelatorCameraSearchButtonMessage.handleButtonAction(entity, 0, x, y, z);
 			}
-		}).bounds(this.leftPos + 46, this.topPos + 78, 46, 20).build();
-		this.addRenderableWidget(button_done);
+		});
+		this.addRenderableWidget(imagebutton_done_btn);
+	}
+
+	@Override
+	protected void containerTick() {
+		super.containerTick();
+		searchTeleport.tick();
+		network.tick();
 	}
 }

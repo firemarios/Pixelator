@@ -11,21 +11,15 @@ import net.minecraft.core.BlockPos;
 public class PixelatorScreenAnimationLeverProcedure {
 	public static boolean execute(LevelAccessor world, double x, double y, double z) {
 		boolean activated = false;
-		if (new Object() {
-			public boolean getValue(LevelAccessor world, BlockPos pos, String tag) {
-				BlockEntity blockEntity = world.getBlockEntity(pos);
-				if (blockEntity != null)
-					return blockEntity.getPersistentData().getBoolean(tag);
-				return false;
-			}
-		}.getValue(world, BlockPos.containing(x, y, z), "activated")) {
+		if (getBlockNBTLogic(world, BlockPos.containing(x, y, z), "activated")) {
 			PixelatorMod.queueServerWork(30, () -> {
 				if (!world.isClientSide()) {
 					BlockPos _bp = BlockPos.containing(x, y, z);
 					BlockEntity _blockEntity = world.getBlockEntity(_bp);
 					BlockState _bs = world.getBlockState(_bp);
-					if (_blockEntity != null)
+					if (_blockEntity != null) {
 						_blockEntity.getPersistentData().putBoolean("activated", false);
+					}
 					if (world instanceof Level _level)
 						_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 				}
@@ -35,5 +29,12 @@ public class PixelatorScreenAnimationLeverProcedure {
 			activated = false;
 		}
 		return activated;
+	}
+
+	private static boolean getBlockNBTLogic(LevelAccessor world, BlockPos pos, String tag) {
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity != null)
+			return blockEntity.getPersistentData().getBoolean(tag);
+		return false;
 	}
 }

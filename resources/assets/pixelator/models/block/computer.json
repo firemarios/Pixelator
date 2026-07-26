@@ -1,0 +1,9 @@
+{
+  "parent": "pixelator:custom/computer",
+  "textures": {
+    "all": "pixelator:block/computer",
+    "particle": "pixelator:block/computer",
+    "0": "pixelator:block/computer"
+  },
+  "render_type": "solid"
+}

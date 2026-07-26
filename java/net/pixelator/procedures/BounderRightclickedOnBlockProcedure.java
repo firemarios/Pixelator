@@ -41,73 +41,16 @@ public class BounderRightclickedOnBlockProcedure {
 		if ((world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == PixelatorModBlocks.PIXELATOR_CAMERA_LEFT.get() || (world.getBlockState(BlockPos.containing(x, y, z))).getBlock() == PixelatorModBlocks.PIXELATOR_CAMERA_RIGHT.get()) {
 			if (entity instanceof Player _player)
 				_player.getCooldowns().addCooldown(itemstack.getItem(), 5);
-			if (!((new Object() {
-				public String getResult(LevelAccessor world, Vec3 pos, String _command) {
-					StringBuilder _result = new StringBuilder();
-					if (world instanceof ServerLevel _level) {
-						CommandSource _dataConsumer = new CommandSource() {
-							@Override
-							public void sendSystemMessage(Component message) {
-								_result.append(message.getString());
-							}
-
-							@Override
-							public boolean acceptsSuccess() {
-								return true;
-							}
-
-							@Override
-							public boolean acceptsFailure() {
-								return true;
-							}
-
-							@Override
-							public boolean shouldInformAdmins() {
-								return false;
-							}
-						};
-						_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(_dataConsumer, pos, Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null), _command);
+			if (!(executeCommandGetResult(world, new Vec3(x, y, z), "execute positioned ~ ~ ~ if entity @e[type=minecraft:interaction,distance=..1.8]")).contains("passed")) {
+				{
+					var _playerVars = entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElse(null);
+					if (_playerVars != null) {
+						_playerVars.cam_x = x;
+						_playerVars.cam_y = y;
+						_playerVars.cam_z = z;
+						_playerVars.cam_face = getDirectionFromBlockState(blockstate);
+						_playerVars.markSyncDirty();
 					}
-					return _result.toString();
-				}
-			}.getResult(world, new Vec3(x, y, z), "execute positioned ~ ~ ~ if entity @e[type=minecraft:interaction,distance=..1.8]")).contains("passed"))) {
-				{
-					double _setval = x;
-					entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.cam_x = _setval;
-						capability.syncPlayerVariables(entity);
-					});
-				}
-				{
-					double _setval = y;
-					entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.cam_y = _setval;
-						capability.syncPlayerVariables(entity);
-					});
-				}
-				{
-					double _setval = z;
-					entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.cam_z = _setval;
-						capability.syncPlayerVariables(entity);
-					});
-				}
-				{
-					Direction _setval = new Object() {
-						public Direction getDirection(BlockState _bs) {
-							Property<?> _prop = _bs.getBlock().getStateDefinition().getProperty("facing");
-							if (_prop instanceof DirectionProperty _dp)
-								return _bs.getValue(_dp);
-							_prop = _bs.getBlock().getStateDefinition().getProperty("axis");
-							return _prop instanceof EnumProperty _ep && _ep.getPossibleValues().toArray()[0] instanceof Direction.Axis
-									? Direction.fromAxisAndDirection((Direction.Axis) _bs.getValue(_ep), Direction.AxisDirection.POSITIVE)
-									: Direction.NORTH;
-						}
-					}.getDirection(blockstate);
-					entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.cam_face = _setval;
-						capability.syncPlayerVariables(entity);
-					});
 				}
 				if (entity instanceof ServerPlayer _ent) {
 					BlockPos _bpos = BlockPos.containing(x, y, z);
@@ -124,68 +67,11 @@ public class BounderRightclickedOnBlockProcedure {
 					}, _bpos);
 				}
 			} else {
-				if (!((new Object() {
-					public String getResult(LevelAccessor world, Vec3 pos, String _command) {
-						StringBuilder _result = new StringBuilder();
-						if (world instanceof ServerLevel _level) {
-							CommandSource _dataConsumer = new CommandSource() {
-								@Override
-								public void sendSystemMessage(Component message) {
-									_result.append(message.getString());
-								}
-
-								@Override
-								public boolean acceptsSuccess() {
-									return true;
-								}
-
-								@Override
-								public boolean acceptsFailure() {
-									return true;
-								}
-
-								@Override
-								public boolean shouldInformAdmins() {
-									return false;
-								}
-							};
-							_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(_dataConsumer, pos, Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null), _command);
-						}
-						return _result.toString();
-					}
-				}.getResult(world, new Vec3(x, y, z), "execute positioned ~ ~ ~ as @e[type=minecraft:interaction,distance=..1.8] at @s if entity @s[tag=private]")).contains("passed"))) {
+				if (!(executeCommandGetResult(world, new Vec3(x, y, z), "execute positioned ~ ~ ~ as @e[type=minecraft:interaction,distance=..1.8] at @s if entity @s[tag=private]")).contains("passed")) {
 					index = 0;
-					delete_text = ((((((new Object() {
-						public String getResult(LevelAccessor world, Vec3 pos, String _command) {
-							StringBuilder _result = new StringBuilder();
-							if (world instanceof ServerLevel _level) {
-								CommandSource _dataConsumer = new CommandSource() {
-									@Override
-									public void sendSystemMessage(Component message) {
-										_result.append(message.getString());
-									}
-
-									@Override
-									public boolean acceptsSuccess() {
-										return true;
-									}
-
-									@Override
-									public boolean acceptsFailure() {
-										return true;
-									}
-
-									@Override
-									public boolean shouldInformAdmins() {
-										return false;
-									}
-								};
-								_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(_dataConsumer, pos, Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null), _command);
-							}
-							return _result.toString();
-						}
-					}.getResult(world, new Vec3(x, y, z), "tag @e[type=minecraft:interaction,distance=..1,limit=1] list")).substring(24)).replace("right", "")).replace("left", "")).replace("netcon", "")).replace(" ", "")).replace(",", "");
-					for (int index0 = 0; index0 < (int) PixelatorModVariables.cameras_decoded.size(); index0++) {
+					delete_text = ((((((executeCommandGetResult(world, new Vec3(x, y, z), "tag @e[type=minecraft:interaction,distance=..1,limit=1] list")).substring(24)).replace("right", "")).replace("left", "")).replace("netcon", "")).replace(" ",
+							"")).replace(",", "");
+					for (int index4 = 0; index4 < (int) PixelatorModVariables.cameras_decoded.size(); index4++) {
 						if ((/*@String*/(new Object() {
 							private <E> E getListElement(ArrayList<Object> objects, int index, Class<E> eClass, Object defaultValue) {
 								if (index < objects.size()) {
@@ -215,5 +101,51 @@ public class BounderRightclickedOnBlockProcedure {
 				}
 			}
 		}
+	}
+
+	private static String executeCommandGetResult(LevelAccessor world, Vec3 pos, String command) {
+		StringBuilder result = new StringBuilder();
+		if (world instanceof ServerLevel level) {
+			CommandSource dataConsumer = new CommandSource() {
+				@Override
+				public void sendSystemMessage(Component message) {
+					result.append(message.getString());
+				}
+
+				@Override
+				public boolean acceptsSuccess() {
+					return true;
+				}
+
+				@Override
+				public boolean acceptsFailure() {
+					return true;
+				}
+
+				@Override
+				public boolean shouldInformAdmins() {
+					return false;
+				}
+			};
+			level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(dataConsumer, pos, Vec2.ZERO, level, 4, "", Component.literal(""), level.getServer(), null), command);
+		}
+		return result.toString();
+	}
+
+	private static Direction getDirectionFromBlockState(BlockState blockState) {
+		Property<?> prop = getPropertyByName(blockState, "facing");
+		if (prop instanceof DirectionProperty dp)
+			return blockState.getValue(dp);
+		prop = getPropertyByName(blockState, "axis");
+		return prop instanceof EnumProperty ep && ep.getPossibleValues().toArray()[0] instanceof Direction.Axis ? Direction.fromAxisAndDirection((Direction.Axis) blockState.getValue(ep), Direction.AxisDirection.POSITIVE) : Direction.NORTH;
+	}
+
+	private static Property<?> getPropertyByName(BlockState state, String name) {
+		for (Property<?> property : state.getProperties()) {
+			if (property.getName().equals(name)) {
+				return property;
+			}
+		}
+		return null;
 	}
 }

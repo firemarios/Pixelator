@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Direction;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.RenderType;
@@ -36,7 +35,7 @@ public class PixelatorCameraLeftRenderer implements BlockEntityRenderer<Pixelato
 
 	PixelatorCameraLeftRenderer(BlockEntityRendererProvider.Context context) {
 		this.model = new CustomHierarchicalModel(context.bakeLayer(Modelpixelator_camera.LAYER_LOCATION));
-		this.texture = ResourceLocation.parse("pixelator:textures/block/pixelator_camera.png");
+		this.texture = new ResourceLocation("pixelator:textures/block/pixelator_camera.png");
 	}
 
 	private void updateRenderState(PixelatorCameraLeftBlockEntity blockEntity) {
@@ -63,7 +62,7 @@ public class PixelatorCameraLeftRenderer implements BlockEntityRenderer<Pixelato
 		poseStack.translate(0, -1, 0);
 		VertexConsumer builder = renderer.getBuffer(RenderType.entityCutout(texture));
 		model.setupBlockEntityAnim(blockEntity, blockEntity.getLevel().getGameTime() + partialTick);
-		model.renderToBuffer(poseStack, builder, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+		model.renderToBuffer(poseStack, builder, light, overlayLight, 1, 1, 1, 1);
 		poseStack.popPose();
 	}
 
@@ -84,10 +83,6 @@ public class PixelatorCameraLeftRenderer implements BlockEntityRenderer<Pixelato
 		public void setupBlockEntityAnim(PixelatorCameraLeftBlockEntity blockEntity, float ageInTicks) {
 			animator.setupBlockEntityAnim(blockEntity, ageInTicks);
 			super.setupAnim(null, 0, 0, ageInTicks, 0, 0);
-		}
-
-		public ModelPart getRoot() {
-			return root;
 		}
 
 		private class BlockEntityHierarchicalModel extends HierarchicalModel<Entity> {

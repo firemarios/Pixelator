@@ -3,11 +3,7 @@
  */
 package net.pixelator.init;
 
-import net.pixelator.client.gui.ServerPropertiesScreen;
-import net.pixelator.client.gui.PixelatorSelectorScreen;
-import net.pixelator.client.gui.PixelatorCameraSearchScreen;
-import net.pixelator.client.gui.CameraBoundToServerScreen;
-import net.pixelator.client.gui.CameraBoundScreen;
+import net.pixelator.client.gui.*;
 
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,6 +22,11 @@ public class PixelatorModScreens {
 			MenuScreens.register(PixelatorModMenus.PIXELATOR_CAMERA_SEARCH.get(), PixelatorCameraSearchScreen::new);
 			MenuScreens.register(PixelatorModMenus.SERVER_PROPERTIES.get(), ServerPropertiesScreen::new);
 			MenuScreens.register(PixelatorModMenus.CAMERA_BOUND_TO_SERVER.get(), CameraBoundToServerScreen::new);
+			MenuScreens.register(PixelatorModMenus.COMPUTER_LOGIN.get(), ComputerLoginScreen::new);
+			MenuScreens.register(PixelatorModMenus.COMPUTER_REGISTER.get(), ComputerRegisterScreen::new);
+			MenuScreens.register(PixelatorModMenus.COMPUTER_GUI.get(), ComputerGUIScreen::new);
+			MenuScreens.register(PixelatorModMenus.CAMERA_VIEW_PROPERTIES.get(), CameraViewPropertiesScreen::new);
+			MenuScreens.register(PixelatorModMenus.ALARM_SETTINGS.get(), AlarmSettingsScreen::new);
 		});
 	}
 

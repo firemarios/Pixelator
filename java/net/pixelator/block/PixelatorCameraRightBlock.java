@@ -1,6 +1,8 @@
 package net.pixelator.block;
 
+import net.pixelator.procedures.PixelatorCameraRedstoneOutputProcedure;
 import net.pixelator.procedures.PixelatorCameraPlacementProcedure;
+import net.pixelator.procedures.PixelatorCameraOnTickProcedure;
 import net.pixelator.procedures.PixelatorCameraAutoDeleteProcedure;
 import net.pixelator.procedures.PixelatorCameraAutoDeleteExplosionProcedure;
 import net.pixelator.block.entity.PixelatorCameraRightBlockEntity;
@@ -15,14 +17,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
@@ -33,16 +28,38 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Containers;
+import net.minecraft.util.RandomSource;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+
+import com.google.common.collect.ImmutableMap;
 
 public class PixelatorCameraRightBlock extends Block implements EntityBlock {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty SPAWNING = BooleanProperty.create("spawning");
+	public static final BooleanProperty REDSTONE_OUTPUT = BooleanProperty.create("redstone_output");
+	private final ImmutableMap<BlockState, VoxelShape> shapes = this.makeShapes();
 
 	public PixelatorCameraRightBlock() {
-		super(BlockBehaviour.Properties.of().sound(SoundType.STONE).strength(1f, 10f).noOcclusion().isRedstoneConductor((bs, br, bp) -> false));
-		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(SPAWNING, false));
+		super(BlockBehaviour.Properties.of().strength(1f, 10f).noOcclusion().isRedstoneConductor((bs, br, bp) -> false));
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(SPAWNING, false).setValue(REDSTONE_OUTPUT, false));
+	}
+
+	private ImmutableMap<BlockState, VoxelShape> makeShapes() {
+		return this.getShapeForEachState(state -> {
+			return switch (state.getValue(FACING)) {
+				case NORTH -> box(5, 0, 15, 11, 6, 16);
+				case EAST -> box(0, 0, 5, 1, 6, 11);
+				case WEST -> box(15, 0, 5, 16, 6, 11);
+				default -> box(5, 0, 0, 11, 6, 1);
+			};
+		});
+	}
+
+	@Override
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+		return shapes.get(state);
 	}
 
 	@Override
@@ -51,41 +68,24 @@ public class PixelatorCameraRightBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
-		return true;
-	}
-
-	@Override
-	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
-		return 0;
-	}
-
-	@Override
 	public VoxelShape getVisualShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		return Shapes.empty();
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-		return switch (state.getValue(FACING)) {
-			default -> box(5, 0, 0, 11, 6, 1);
-			case NORTH -> box(5, 0, 15, 11, 6, 16);
-			case EAST -> box(0, 0, 5, 1, 6, 11);
-			case WEST -> box(15, 0, 5, 16, 6, 11);
-		};
-	}
-
-	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
-		builder.add(FACING, SPAWNING);
+		builder.add(FACING, SPAWNING, REDSTONE_OUTPUT);
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		BlockState state = super.getStateForPlacement(context);
+		if (state == null)
+			return null;
 		if (context.getClickedFace().getAxis() == Direction.Axis.Y)
-			return super.getStateForPlacement(context).setValue(FACING, Direction.NORTH).setValue(SPAWNING, false);
-		return super.getStateForPlacement(context).setValue(FACING, context.getClickedFace()).setValue(SPAWNING, false);
+			return state.setValue(FACING, Direction.NORTH).setValue(SPAWNING, false).setValue(REDSTONE_OUTPUT, false);
+		return state.setValue(FACING, context.getClickedFace()).setValue(SPAWNING, false).setValue(REDSTONE_OUTPUT, false);
 	}
 
 	public BlockState rotate(BlockState state, Rotation rot) {
@@ -110,6 +110,36 @@ public class PixelatorCameraRightBlock extends Block implements EntityBlock {
 	@Override
 	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
 		return !state.canSurvive(world, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, facing, facingState, world, currentPos, facingPos);
+	}
+
+	@Override
+	public boolean isSignalSource(BlockState state) {
+		return true;
+	}
+
+	@Override
+	public int getSignal(BlockState blockstate, BlockGetter blockAccess, BlockPos pos, Direction direction) {
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
+		Level world = (Level) blockAccess;
+		return (int) PixelatorCameraRedstoneOutputProcedure.execute(blockstate);
+	}
+
+	@Override
+	public void onPlace(BlockState blockstate, Level world, BlockPos pos, BlockState oldState, boolean moving) {
+		super.onPlace(blockstate, world, pos, oldState, moving);
+		world.scheduleTick(pos, this, 10);
+	}
+
+	@Override
+	public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, RandomSource random) {
+		super.tick(blockstate, world, pos, random);
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
+		PixelatorCameraOnTickProcedure.execute(world, x, y, z, blockstate);
+		world.scheduleTick(pos, this, 10);
 	}
 
 	@Override
@@ -140,7 +170,7 @@ public class PixelatorCameraRightBlock extends Block implements EntityBlock {
 	public boolean triggerEvent(BlockState state, Level world, BlockPos pos, int eventID, int eventParam) {
 		super.triggerEvent(state, world, pos, eventID, eventParam);
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		return blockEntity == null ? false : blockEntity.triggerEvent(eventID, eventParam);
+		return blockEntity != null && blockEntity.triggerEvent(eventID, eventParam);
 	}
 
 	@Override

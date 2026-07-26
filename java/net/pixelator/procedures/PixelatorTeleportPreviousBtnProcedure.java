@@ -9,7 +9,7 @@ public class PixelatorTeleportPreviousBtnProcedure {
 		if (entity == null)
 			return false;
 		boolean show = false;
-		if (1 == (entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PixelatorModVariables.PlayerVariables())).teleport_page) {
+		if (1 == entity.getCapability(PixelatorModVariables.PLAYER_VARIABLES).orElseGet(PixelatorModVariables.PlayerVariables::new).teleport_page) {
 			show = false;
 		} else {
 			show = true;

@@ -3,13 +3,7 @@ package net.pixelator;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
-import net.pixelator.init.PixelatorModTabs;
-import net.pixelator.init.PixelatorModSounds;
-import net.pixelator.init.PixelatorModParticleTypes;
-import net.pixelator.init.PixelatorModMenus;
-import net.pixelator.init.PixelatorModItems;
-import net.pixelator.init.PixelatorModBlocks;
-import net.pixelator.init.PixelatorModBlockEntities;
+import net.pixelator.init.*;
 
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.network.NetworkRegistry;
@@ -22,6 +16,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.common.MinecraftForge;
 
+import net.minecraft.server.TickTask;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.FriendlyByteBuf;
 
@@ -29,10 +24,12 @@ import java.util.function.Supplier;
 import java.util.function.Function;
 import java.util.function.BiConsumer;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.List;
-import java.util.Collection;
-import java.util.ArrayList;
-import java.util.AbstractMap;
+import java.util.Queue;
+import java.util.PriorityQueue;
+import java.util.Comparator;
+
+import it.unimi.dsi.fastutil.ints.IntObjectPair;
+import it.unimi.dsi.fastutil.ints.IntObjectImmutablePair;
 
 @Mod("pixelator")
 public class PixelatorMod {
@@ -48,13 +45,9 @@ public class PixelatorMod {
 		PixelatorModBlocks.REGISTRY.register(bus);
 		PixelatorModBlockEntities.REGISTRY.register(bus);
 		PixelatorModItems.REGISTRY.register(bus);
-
 		PixelatorModTabs.REGISTRY.register(bus);
-
-		PixelatorModParticleTypes.REGISTRY.register(bus);
-
 		PixelatorModMenus.REGISTRY.register(bus);
-
+		PixelatorModParticleTypes.REGISTRY.register(bus);
 		// Start of user code block mod init
 		// End of user code block mod init
 	}
@@ -62,7 +55,7 @@ public class PixelatorMod {
 	// Start of user code block mod methods
 	// End of user code block mod methods
 	private static final String PROTOCOL_VERSION = "1";
-	public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(ResourceLocation.fromNamespaceAndPath(MODID, MODID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
+	public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(new ResourceLocation(MODID, MODID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 	private static int messageID = 0;
 
 	public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {
@@ -70,24 +63,25 @@ public class PixelatorMod {
 		messageID++;
 	}
 
-	private static final Collection<AbstractMap.SimpleEntry<Runnable, Integer>> workQueue = new ConcurrentLinkedQueue<>();
+	private static final Queue<IntObjectPair<Runnable>> workToBeScheduled = new ConcurrentLinkedQueue<>();
+	private static final PriorityQueue<TickTask> workQueue = new PriorityQueue<>(Comparator.comparingInt(TickTask::getTick));
 
-	public static void queueServerWork(int tick, Runnable action) {
+	public static void queueServerWork(int delay, Runnable action) {
 		if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
-			workQueue.add(new AbstractMap.SimpleEntry<>(action, tick));
+			workToBeScheduled.add(new IntObjectImmutablePair<>(delay, action));
 	}
 
 	@SubscribeEvent
 	public void tick(TickEvent.ServerTickEvent event) {
 		if (event.phase == TickEvent.Phase.END) {
-			List<AbstractMap.SimpleEntry<Runnable, Integer>> actions = new ArrayList<>();
-			workQueue.forEach(work -> {
-				work.setValue(work.getValue() - 1);
-				if (work.getValue() == 0)
-					actions.add(work);
-			});
-			actions.forEach(e -> e.getKey().run());
-			workQueue.removeAll(actions);
+			int currentTick = event.getServer().getTickCount();
+			IntObjectPair<Runnable> work;
+			while ((work = workToBeScheduled.poll()) != null) {
+				workQueue.add(new TickTask(currentTick + work.leftInt(), work.right()));
+			}
+			while (!workQueue.isEmpty() && currentTick >= workQueue.peek().getTick()) {
+				workQueue.poll().run();
+			}
 		}
 	}
 }

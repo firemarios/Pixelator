@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "aba",
+    "cdc",
+    "efe"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:iron_ingot"
+    },
+    "b": {
+      "tag": "forge:stained_glass"
+    },
+    "c": {
+      "item": "minecraft:redstone"
+    },
+    "d": {
+      "item": "pixelator:bounder"
+    },
+    "e": {
+      "item": "minecraft:obsidian"
+    },
+    "f": {
+      "item": "minecraft:quartz_block"
+    }
+  },
+  "result": {
+    "item": "pixelator:computer",
+    "count": 1
+  }
+}
