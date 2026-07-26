@@ -12,7 +12,7 @@
 
 <h2>New update</h2>
 
-<p>Go and download the new update 1.4.0</p>
+<p>Go and download the new update 1.4.1</p>
 
 <h2>Licence</h2>
 
